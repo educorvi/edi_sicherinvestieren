@@ -57,6 +57,19 @@
                     } else {
                         router.push("/" + this.$route.params.fragebogen + "/" + (parseInt(this.$route.params.frage) + 1));
                     }
+                } else {
+                    let index = null;
+                    for (let i = 0; i < this.fragen.length; i++) {
+                        if (button.aktion === this.fragen[i]["@id"]) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index !== null) {
+                        router.push("/" + this.$route.params.fragebogen + "/" + index);
+                    } else {
+                        alert("Ungültige Referenz")
+                    }
                 }
             },
             letzte() {

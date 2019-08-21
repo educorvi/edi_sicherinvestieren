@@ -48,24 +48,17 @@ export default new Vuex.Store({
             state.fragen = array;
             state.current.loading = false;
         },
-        // getFrage(state, f) {
-        //     if (Object.keys(f).length === 2) {
-        //         const item = f.res.data;
-        //         if (item["@type"] === "Frage") {
-        //             for (let i = 0; i < f.fragen.length; i++) {
-        //                 if (item["@id"] === f.fragen[i]["@id"]) {
-        //                     state.current.aktuellerIndex = i;
-        //                     break;
-        //                 }
-        //             }
-        //             state.isFrage = true;
-        //         }
-        //         state.frage = item;
-        //     } else {
-        //         state.frage = f.data;
-        //     }
-        //
-        // },
+        getFragenAndStart(state, p) {
+            let array = p.res.data.items;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]["@type"] !== "Frage") {
+                    array.splice(i, 1);
+                }
+            }
+            state.fragen = array;
+            this.dispatch("getFrage", p.i);
+            state.current.loading = false;
+        },
         getFrage(state, f) {
             state.frage = f;
         },
@@ -100,43 +93,17 @@ export default new Vuex.Store({
                 }
             }).then(r => context.commit("getFragen", r));
         },
+        getFragenAndStart(context, pay) {
+            axios.get(pay.url, {
+                headers: {
+                    Accept: "application/json"
+                }
+            }).then(r => context.commit("getFragenAndStart", {res: r, i: pay.i}));
+        },
         getFrage(context, i) {
             axios.get(context.getters.fragen[i]["@id"],
                 {headers: {Accept: "application/json"}}
             ).then(res => context.commit("getFrage", res.data));
-        },
-        // getFrage(context, payload) {
-        //     if (payload instanceof Object) {
-        //         axios.get(payload.ziel, {
-        //             headers: {
-        //                 Accept: "application/json"
-        //             }
-        //         }).then(r => context.commit("getFrage", {
-        //             res: r,
-        //             fragen: payload.fragen
-        //         })).catch(err => console.log(err));
-        //     } else {
-        //         axios.get(payload, {
-        //             headers: {
-        //                 Accept: "application/json"
-        //             }
-        //         }).then(r => context.commit("getFrage", r)).catch(err => console.log(err));
-        //     }
-        // },
-        // //TODO
-        // naechsteFrage(context, ziel) {
-        //     context.commit("addZuletztBesucht", context.getters.aktuellerIndex);
-        //     if (ziel === null) {
-        //         context.commit("incrementIndex");
-        //         this.dispatch("getFrage", context.getters.fragen[context.getters.aktuellerIndex]["@id"])
-        //     } else {
-        //         context.dispatch("getFrage", {ziel: ziel, fragen: context.getters.fragen});
-        //     }
-        // },
-        letzteFrage(context) {
-            context.commit("setAktuellerIndex", context.getters.zuletztBesucht[context.getters.zuletztBesucht.length - 2]);
-            context.commit("removeLetztesBesucht");
-            this.dispatch("getFrage", context.getters.fragen[context.getters.aktuellerIndex]["@id"])
         },
         addZuletztBesucht(context, i) {
             context.commit("addZuletztBesucht", i)
