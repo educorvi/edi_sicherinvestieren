@@ -1,0 +1,21 @@
+{
+  "name": "Sicher Investieren",
+  "short_name": "Investieren",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "description": "Eine einfach lesbare Hacker News App.",
+  "icons": [
+    {
+      "src": "images/logo.png",
+      "sizes": "1240x456",
+      "type": "image/png"
+    },
+    {
+      "src": "images/logoSQ.png",
+      "sizes": "322x322",
+      "type": "image/png"
+    }
+  ]
+}
