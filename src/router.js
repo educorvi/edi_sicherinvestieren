@@ -13,17 +13,17 @@ export default new Router({
             component: Home
         },
         {
-            path: '/:fID',
-            name: 'fragebogen',
-            component: Fragebogen
-        },
-        {
-            path: '/listen/:offen',
+            path: '/liste/:offen',
             name: 'listen',
             // route level code-splitting
             // this generates a separate chunk (about.[hash].js) for this route
             // which is lazy-loaded when the route is visited.
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            component: () => import(/* webpackChunkName: "about" */ './views/Listen.vue')
+        },
+        {
+            path: '/:fragebogen/:frage',
+            name: 'fragebogen',
+            component: Fragebogen
         }
     ]
 })

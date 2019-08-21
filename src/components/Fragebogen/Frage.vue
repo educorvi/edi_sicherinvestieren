@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h6 class="mb-0 text-center bereich">{{frage.thema.title}}</h6>
+        <h6 class="mb-0 text-center bereich" v-if="frage.thema">{{frage.thema.title}}</h6>
         <p class="text-center bereich">{{frage.parent.title}}</p>
 
         <!--        Frage und Buttons-->
@@ -24,14 +24,15 @@
             </b-collapse>
         </b-card>
 
+        <!--        Notiz-->
         <b-card class="mt-2" no-body>
             <b-card-header v-b-toggle="'notizen'">Notizen</b-card-header>
             <b-collapse id="notizen" role="tabpanel">
-                <b-textarea v-model="notiz"></b-textarea>
+                <b-textarea v-model="notizen[$route.params.frage]"></b-textarea>
             </b-collapse>
         </b-card>
 
-        <b-button :disabled="aktuellerIndex === 0" @click="letzte" class="float-left mt-2">Zurück</b-button>
+        <b-button @click="letzte" class="float-left mt-2">Zurück</b-button>
     </div>
 
 
@@ -40,24 +41,39 @@
 <script>
     import {mapGetters} from "vuex";
     import ButtonGruppe from "@/components/Fragebogen/ButtonGruppe";
+    import router from "../../router"
 
     export default {
         name: "Frage",
         components: {ButtonGruppe},
         computed: {
-            ...mapGetters(["frage", "aktuellerIndex"])
-        },
-        data() {
-            return {
-                notiz: ""
-            }
+            ...mapGetters(["frage", "fragen", "notizen"])
         },
         methods: {
             naechste(button) {
-                this.$store.dispatch("naechsteFrage", button.aktion)
+                if (button.aktion === null) {
+                    if (parseInt(this.$route.params.frage) > this.fragen.length - 2) {
+                        router.push("/abschluss")
+                    } else {
+                        router.push("/" + this.$route.params.fragebogen + "/" + (parseInt(this.$route.params.frage) + 1));
+                    }
+                } else {
+                    let index = null;
+                    for (let i = 0; i < this.fragen.length; i++) {
+                        if (button.aktion === this.fragen[i]["@id"]) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index !== null) {
+                        router.push("/" + this.$route.params.fragebogen + "/" + index);
+                    } else {
+                        alert("Ungültige Referenz")
+                    }
+                }
             },
             letzte() {
-                this.$store.dispatch("letzteFrage")
+                router.go(-1)
             }
         },
     }

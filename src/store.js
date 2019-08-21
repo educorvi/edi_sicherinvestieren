@@ -8,12 +8,13 @@ export default new Vuex.Store({
     state: {
         placeholders: {},
         current: {
-            loading: false,
-            aktuellerIndex: 0
+            loading: false
         },
         folderstructure: {},
         fragen: [],
-        frage: {},
+        frage: {
+            title: ""
+        },
         isFrage: false,
         hinweise: [
             {
@@ -24,7 +25,9 @@ export default new Vuex.Store({
             }
         ],
 
-        save: {},
+        save: {
+            notizen: []
+        },
         zuletztBesucht: []
 
     },
@@ -43,35 +46,21 @@ export default new Vuex.Store({
                 }
             }
             state.fragen = array;
-            this.dispatch("getFrage", array[0]["@id"]);
+            state.current.loading = false;
+        },
+        getFragenAndStart(state, p) {
+            let array = p.res.data.items;
+            for (let i = 0; i < array.length; i++) {
+                if (array[i]["@type"] !== "Frage") {
+                    array.splice(i, 1);
+                }
+            }
+            state.fragen = array;
+            this.dispatch("getFrage", p.i);
             state.current.loading = false;
         },
         getFrage(state, f) {
-            if (Object.keys(f).length === 2) {
-                const item = f.res.data;
-                if (item["@type"] === "Frage") {
-                    for (let i = 0; i < f.fragen.length; i++) {
-                        if (item["@id"] === f.fragen[i]["@id"]) {
-                            state.current.aktuellerIndex = i;
-                            break;
-                        }
-                    }
-                    state.isFrage = true;
-                }
-                state.frage = item;
-            } else {
-                state.frage = f.data;
-            }
-
-        },
-        setAktuellerIndex(state, i) {
-            state.current.aktuellerIndex = i;
-        },
-        incrementIndex(state) {
-            state.current.aktuellerIndex++;
-        },
-        decrementIndex(state) {
-            state.current.aktuellerIndex--;
+            state.frage = f;
         },
         addZuletztBesucht(state, i) {
             state.zuletztBesucht.push(i);
@@ -104,41 +93,20 @@ export default new Vuex.Store({
                 }
             }).then(r => context.commit("getFragen", r));
         },
-        getFrage(context, payload) {
-            if (payload instanceof Object) {
-                axios.get(payload.ziel, {
-                    headers: {
-                        Accept: "application/json"
-                    }
-                }).then(r => context.commit("getFrage", {
-                    res: r,
-                    fragen: payload.fragen
-                })).catch(err => console.log(err));
-            } else {
-                axios.get(payload, {
-                    headers: {
-                        Accept: "application/json"
-                    }
-                }).then(r => context.commit("getFrage", r)).catch(err => console.log(err));
-            }
+        getFragenAndStart(context, pay) {
+            axios.get(pay.url, {
+                headers: {
+                    Accept: "application/json"
+                }
+            }).then(r => context.commit("getFragenAndStart", {res: r, i: pay.i}));
         },
-        //TODO
-        naechsteFrage(context, ziel) {
-            context.commit("addZuletztBesucht", context.getters.aktuellerIndex);
-            if (ziel === null) {
-                context.commit("incrementIndex");
-                this.dispatch("getFrage", context.getters.fragen[context.getters.aktuellerIndex]["@id"])
-            } else {
-                context.dispatch("getFrage", {ziel: ziel, fragen: context.getters.fragen});
-            }
+        getFrage(context, i) {
+            axios.get(context.getters.fragen[i]["@id"],
+                {headers: {Accept: "application/json"}}
+            ).then(res => context.commit("getFrage", res.data));
         },
-        letzteFrage(context) {
-            context.commit("setAktuellerIndex", context.getters.zuletztBesucht[context.getters.zuletztBesucht.length - 2]);
-            context.commit("removeLetztesBesucht");
-            this.dispatch("getFrage", context.getters.fragen[context.getters.aktuellerIndex]["@id"])
-        },
-        setAktuellerIndex(context, i) {
-            context.commit("setAktuellerIndex", i);
+        addZuletztBesucht(context, i) {
+            context.commit("addZuletztBesucht", i)
         },
         removeLetztesBesucht(context) {
             context.commit("removeLetztesBesucht");
@@ -161,8 +129,8 @@ export default new Vuex.Store({
         frage: state => state.frage,
         fragen: state => state.fragen,
         loading: state => state.current.loading,
-        aktuellerIndex: state => state.current.aktuellerIndex,
         isFrage: state => state.isFrage,
-        zuletztBesucht: state => state.zuletztBesucht
+        zuletztBesucht: state => state.zuletztBesucht,
+        notizen: state => state.save.notizen
     }
 })
