@@ -59,8 +59,7 @@
             startFragebogen() {
                 this.$bvModal.hide('modal-start');
                 store.dispatch("setLoading", true);
-                store.dispatch("getFragen", "test/testFragebogen.json");
-                this.$router.push("/0");
+                store.dispatch("getFragen", "http://192.168.86.52:8080/investieren/offsetdruck/");
             }
         },
         created() {

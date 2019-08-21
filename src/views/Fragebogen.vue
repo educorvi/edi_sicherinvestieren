@@ -7,14 +7,28 @@
 
 <script>
     import Frage from "@/components/Fragebogen/Frage";
-    import {mapGetters} from 'vuex';
+    import {mapGetters, mapMutations} from 'vuex';
 
     export default {
         name: "Fragebogen",
         components: {Frage},
         computed: {
             ...mapGetters(["frage", "fragen", "aktuellerIndex"])
-        }
+        },
+        watch: {
+            "$route.params.frage"(newValue, oldValue) {
+                this.$store.dispatch("addZuletztBesucht", parseInt(oldValue));
+                this.$store.dispatch("getFrage", newValue)
+            }
+        },
+        created() {
+            if (this.fragen.length === 0) {
+                this.$store.dispatch("getFragen", "http://192.168.86.52:8080/investieren/offsetdruck/")
+            }
+        },
+        methods: {
+            ...mapMutations(["getFrage"])
+        },
     }
 </script>
 
