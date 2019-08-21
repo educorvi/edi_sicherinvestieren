@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Druckvorstufe",
+    "ueberordner": true,
+    "children": [
+      {
+        "title": "Offset, Flexo",
+        "ueberordner": false
+      },
+      {
+        "title": "Teilewaschanlage",
+        "ueberordner": false
+      },
+      {
+        "title": "Sonstige",
+        "ueberordner": false
+      }
+    ]
+  },
+  {
+    "title": "Druck",
+    "ueberordner": true,
+    "children": [
+      {
+        "title": "Digitaldruck",
+        "ueberordner": false
+      },
+      {
+        "title": "Offsetdruck",
+        "ueberordner": false
+      },
+      {
+        "title": "Etikettendruck",
+        "ueberordner": false
+      },
+      {
+        "title": "Tief-/Flexodruck",
+        "ueberordner": false
+      }
+    ]
+  },
+  {
+    "title": "Hygieneartikel",
+    "ueberordner": false
+  }
+]
