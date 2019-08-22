@@ -4,12 +4,12 @@
         <!--        Fragebogenauswahl-->
         <div v-else>
             <div :key="index" v-for="(folder, index) in folderstructure">
-                <b-card class="mb-2" no-body v-if="folder['ueberordner']">
+                <b-card class="mb-2" no-body v-if="folder['@type']!=='Fragebogen'">
                     <b-button v-b-toggle="'folder_'+index">{{folder.title}}</b-button>
                     <b-collapse :id="'folder_'+index" role="tabpanel">
                         <b-card :key="cIndex"
                                 @click="$emit('childPressed', {folder: folder, child: child, cIndex: cIndex, index: index})"
-                                v-for="(child, cIndex) in folder.children">
+                                v-for="(child, cIndex) in folder.items">
                             {{child.title}}
                         </b-card>
                     </b-collapse>
@@ -26,7 +26,7 @@
 
 <script>
     import Hinweis from "@/components/Hinweis";
-    import {mapGetters} from 'vuex'
+    import {mapGetters} from 'vuex';
 
     export default {
         name: 'home',

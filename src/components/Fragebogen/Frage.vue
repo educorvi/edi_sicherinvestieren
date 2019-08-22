@@ -47,7 +47,7 @@
         name: "Frage",
         components: {ButtonGruppe},
         computed: {
-            ...mapGetters(["frage", "fragen", "notizen"])
+            ...mapGetters(["frage", "fragen", "notizen", "fragebogenIDraw"])
         },
         methods: {
             naechste(button) {
@@ -55,7 +55,7 @@
                     if (parseInt(this.$route.params.frage) > this.fragen.length - 2) {
                         router.push("/abschluss")
                     } else {
-                        router.push("/" + this.$route.params.fragebogen + "/" + (parseInt(this.$route.params.frage) + 1));
+                        router.push("/" + this.fragebogenIDraw + "/" + (parseInt(this.$route.params.frage) + 1));
                     }
                 } else {
                     let index = null;
@@ -66,9 +66,9 @@
                         }
                     }
                     if (index !== null) {
-                        router.push("/" + this.$route.params.fragebogen + "/" + index);
+                        router.push("/" + this.fragebogenIDraw + "/" + index);
                     } else {
-                        alert("Ungültige Referenz")
+                        alert("Ungültige Referenz: " + button.aktion);
                     }
                 }
             },
