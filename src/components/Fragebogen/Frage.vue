@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex";
+    import {mapActions, mapGetters} from "vuex";
     import ButtonGruppe from "@/components/Fragebogen/ButtonGruppe";
     import router from "../../router"
 
@@ -50,6 +50,7 @@
             ...mapGetters(["frage", "fragen", "notizen", "fragebogenIDraw"])
         },
         methods: {
+            ...mapActions(["setLoading"]),
             naechste(button) {
                 if (button.aktion === null) {
                     if (parseInt(this.$route.params.frage) > this.fragen.length - 2) {

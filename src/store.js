@@ -72,6 +72,7 @@ export default new Vuex.Store({
         },
         getFrage(state, f) {
             state.frage = f;
+            state.current.loading = false;
         },
         addZuletztBesucht(state, i) {
             state.zuletztBesucht.push(i);
@@ -142,6 +143,7 @@ export default new Vuex.Store({
             }).then(r => context.commit("getFragenAndStart", {res: r, i: pay.i}));
         },
         getFrage(context, i) {
+            context.dispatch("setLoading", true);
             axios.get(context.getters.fragen[i]["@id"],
                 {headers: {Accept: "application/json"}}
             ).then(res => context.commit("getFrage", res.data));
