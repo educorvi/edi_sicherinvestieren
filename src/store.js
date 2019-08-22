@@ -9,7 +9,7 @@ export default new Vuex.Store({
     state: {
         config: {},
         current: {
-            loading: false
+            loading: true
         },
         folderstructure: {},
         //  "/" ersetzt durch "§"
@@ -44,6 +44,7 @@ export default new Vuex.Store({
         },
         getFolderstructure(state, r) {
             state.folderstructure = r;
+            state.current.loading = false;
         },
         addSubitems(state, data) {
             Vue.set(state.folderstructure[data.i], "items", data["items"]);

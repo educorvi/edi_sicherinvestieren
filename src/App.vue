@@ -4,34 +4,38 @@
         <Headbar/>
 
 
-        <div v-if="loading">
-            <b-spinner id="spinner" variant="light"/>
-        </div>
-        <div v-else>
-
-            <div class="container-fluid" id="root">
-                <Transition mode="out-in" name="animation">
-                    <router-view @childPressed="initiateFragebogen"/>
-                </Transition>
+        <Transition name="fade">
+            <div v-if="loading">
+                <b-spinner id="spinner" variant="light"/>
             </div>
+            <div v-else>
 
-
-            <!--        StartModal mit Dateneingabe-->
-            <b-modal centered id="modal-start" scrollable title="Maschinendaten">
-                <b-form>
-                    <b-input class="mb-1" placeholder="Dateiname (notwendig)" required
-                             v-model="save['dateiname']"></b-input>
-                    <b-input class="mb-1" placeholder="Hersteller" v-model="save['hersteller']"></b-input>
-                    <b-input class="mb-1" placeholder="Maschienennummer" v-model="save['maschienennummer']"></b-input>
-                </b-form>
-                <div class="w-100" slot="modal-footer">
-                    <b-button :disabled="!isModalCorrect" @click="startFragebogen" block class="mt-1" variant="success">
-                        Start
-                    </b-button>
-                    <b-button @click="$bvModal.hide('modal-start')" block class="mt-1">Abbrechen</b-button>
+                <div class="container-fluid" id="root">
+                    <Transition mode="out-in" name="animation">
+                        <router-view @childPressed="initiateFragebogen"/>
+                    </Transition>
                 </div>
-            </b-modal>
-        </div>
+
+
+                <!--        StartModal mit Dateneingabe-->
+                <b-modal centered id="modal-start" scrollable title="Maschinendaten">
+                    <b-form>
+                        <b-input class="mb-1" placeholder="Dateiname (notwendig)" required
+                                 v-model="save['dateiname']"></b-input>
+                        <b-input class="mb-1" placeholder="Hersteller" v-model="save['hersteller']"></b-input>
+                        <b-input class="mb-1" placeholder="Maschienennummer"
+                                 v-model="save['maschienennummer']"></b-input>
+                    </b-form>
+                    <div class="w-100" slot="modal-footer">
+                        <b-button :disabled="!isModalCorrect" @click="startFragebogen" block class="mt-1"
+                                  variant="success">
+                            Start
+                        </b-button>
+                        <b-button @click="$bvModal.hide('modal-start')" block class="mt-1">Abbrechen</b-button>
+                    </div>
+                </b-modal>
+            </div>
+        </Transition>
 
         <BottomBar/>
     </div>
@@ -84,8 +88,8 @@
         padding-bottom: 70px;
     }
 
-    .animation-enter-active, .animation-leave-active {
-        transition: all .3s;
+    .animation-enter-active, .animation-leave-active, .fade-enter-active, .fade-leave-active {
+        transition: opacity .3s;
     }
 
     .animation-enter {
@@ -95,6 +99,10 @@
 
     .animation-leave-to {
         transform: translateX(10px);
+        opacity: 0;
+    }
+
+    .fade-enter, .fade-leave-to {
         opacity: 0;
     }
 </style>

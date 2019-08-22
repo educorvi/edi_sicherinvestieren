@@ -15,11 +15,11 @@
         </b-card>
 
         <!--Tipp-->
-        <b-card class="mt-2" no-body>
+        <b-card class="mt-2" no-body v-if="frage.tipp">
             <b-card-header v-b-toggle="'tipp'">Tipp</b-card-header>
             <b-collapse id="tipp" role="tabpanel">
                 <b-card-body>
-                    <span v-html="frage.tipp.data"></span>
+                    <span v-html="frage['tipp']['data']"></span>
                 </b-card-body>
             </b-collapse>
         </b-card>
