@@ -13,7 +13,7 @@
         name: "Fragebogen",
         components: {Frage},
         computed: {
-            ...mapGetters(["frage", "fragen"])
+            ...mapGetters(["frage", "fragen", "config"])
         },
         watch: {
             "$route.params.frage"(newValue, oldValue) {
@@ -24,7 +24,7 @@
         created() {
             if (this.fragen.length === 0) {
                 this.$store.dispatch("getFragenAndStart", {
-                    url: "http://192.168.86.52:8080/investieren/offsetdruck/",
+                    url: this.config["URLzuTestfragebogen"],
                     i: this.$route.params.frage
                 })
             }

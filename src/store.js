@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from "axios";
+import router from "@/router";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        placeholders: {},
+        config: {},
         current: {
             loading: false
         },
@@ -28,7 +29,11 @@ export default new Vuex.Store({
         save: {
             notizen: []
         },
-        zuletztBesucht: []
+        zuletztBesucht: [],
+        listen: {
+            fertig: [],
+            angefangen: []
+        },
 
     },
     mutations: {
@@ -57,6 +62,7 @@ export default new Vuex.Store({
             }
             state.fragen = array;
             this.dispatch("getFrage", p.i);
+            router.push("/0/" + p.i);
             state.current.loading = false;
         },
         getFrage(state, f) {
@@ -76,6 +82,19 @@ export default new Vuex.Store({
         },
         setLoading(state, b) {
             state.current.loading = b;
+        },
+        getListen(state, l) {
+            for (let i = 0; i < l.length; i++) {
+                if (l[i].fertig) {
+                    state.listen.fertig.push(l[i]);
+                } else {
+                    state.listen.angefangen.push(l[i]);
+                }
+
+            }
+        },
+        getConfig(state, c) {
+            state.config = c;
         }
     },
     actions: {
@@ -119,6 +138,20 @@ export default new Vuex.Store({
         },
         setLoading(context, b) {
             context.commit("setLoading", b);
+        },
+        getListen(context, url) {
+            axios.get(url, {
+                headers: {
+                    Accept: "application/json"
+                }
+            }).then(r => context.commit("getListen", r.data));
+        },
+        getConfig(context,) {
+            axios.get("config.json", {
+                headers: {
+                    Accept: "application/json"
+                }
+            }).then(r => context.commit("getConfig", r.data));
         }
     },
     getters: {
@@ -131,6 +164,8 @@ export default new Vuex.Store({
         loading: state => state.current.loading,
         isFrage: state => state.isFrage,
         zuletztBesucht: state => state.zuletztBesucht,
-        notizen: state => state.save.notizen
+        notizen: state => state.save.notizen,
+        listen: state => state.listen,
+        config: state => state.config
     }
 })

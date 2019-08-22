@@ -10,7 +10,7 @@
         <div v-else>
 
             <div class="container-fluid" id="root">
-                <Transition name="slide">
+                <Transition mode="out-in" name="animation">
                     <router-view @childPressed="initiateFragebogen"/>
                 </Transition>
             </div>
@@ -47,7 +47,7 @@
     export default {
         components: {BottomBar, Headbar},
         computed: {
-            ...mapGetters(["current", "frage", "loading", "fragen"]),
+            ...mapGetters(["current", "frage", "loading", "fragen", "config"]),
             isModalCorrect() {
                 return (this.save.dateiname !== undefined && this.save.dateiname !== "")
             }
@@ -59,11 +59,14 @@
             startFragebogen() {
                 this.$bvModal.hide('modal-start');
                 store.dispatch("setLoading", true);
-                store.dispatch("getFragen", "http://192.168.86.52:8080/investieren/offsetdruck/");
+                store.dispatch("getFragenAndStart", {url: this.config["URLzuTestfragebogen"], i: 0});
+
             }
         },
         created() {
             store.dispatch("getFolderstructure", "test/testStructure.json");
+            store.dispatch("getListen", "test/listen.json");
+            store.dispatch("getConfig");
         },
         data() {
             return {
@@ -79,18 +82,24 @@
         padding-top: 72px;
         padding-bottom: 70px;
     }
+
+    .animation-enter-active, .animation-leave-active {
+        transition: all .3s;
+    }
+
+    .animation-enter {
+        transform: translateX(-10px);
+        opacity: 0;
+    }
+
+    .animation-leave-to {
+        transform: translateX(10px);
+        opacity: 0;
+    }
 </style>
 
 
 <style scoped>
-    .slide-enter-active, .slide-leave-active {
-        transition: all .5s;
-    }
-
-    .slide-enter, .slide-leave-to {
-        transform: translateX(10px);
-        opacity: 0;
-    }
 
 
     #spinner {

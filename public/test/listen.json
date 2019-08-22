@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Krasse Maschine",
+    "maschinennummer": "AX2BB3z",
+    "hersteller": "Bosch",
+    "fertig": true
+  },
+  {
+    "name": "Krasse Maschine 2",
+    "maschinennummer": "A6531",
+    "hersteller": "Siemens",
+    "fertig": true
+  },
+  {
+    "name": "Krasseste Maschine",
+    "maschinennummer": "7752A",
+    "hersteller": "Google",
+    "fertig": false,
+    "progress": 80
+  }
+]
