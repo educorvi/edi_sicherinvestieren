@@ -45,6 +45,12 @@
     import store from "@/store";
 
     export default {
+        data() {
+            return {
+                ausgewaehlterFragebogen: {},
+                save: {}
+            }
+        },
         components: {BottomBar, Headbar},
         computed: {
             ...mapGetters(["current", "frage", "loading", "fragen", "config"]),
@@ -55,23 +61,18 @@
         methods: {
             initiateFragebogen(data) {
                 this.$bvModal.show('modal-start');
+                this.ausgewaehlterFragebogen = data;
             },
             startFragebogen() {
                 this.$bvModal.hide('modal-start');
                 store.dispatch("setLoading", true);
-                store.dispatch("getFragenAndStart", {url: this.config["URLzuTestfragebogen"], i: 0});
+                store.dispatch("getFragenAndStart", {url: this.ausgewaehlterFragebogen.child["@id"], i: 0});
 
             }
         },
         created() {
-            store.dispatch("getFolderstructure", "test/testStructure.json");
-            store.dispatch("getListen", "test/listen.json");
             store.dispatch("getConfig");
-        },
-        data() {
-            return {
-                save: {}
-            }
+
         }
     }
 </script>

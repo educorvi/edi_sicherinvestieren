@@ -23,8 +23,9 @@
         },
         created() {
             if (this.fragen.length === 0) {
+                this.$route.params.fragebogen.replace(/§/g, "/");
                 this.$store.dispatch("getFragenAndStart", {
-                    url: this.config["URLzuTestfragebogen"],
+                    url: this.$route.params.fragebogen.replace(/§/g, "/"),
                     i: this.$route.params.frage
                 })
             }

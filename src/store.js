@@ -12,6 +12,8 @@ export default new Vuex.Store({
             loading: false
         },
         folderstructure: {},
+        //  "/" ersetzt durch "§"
+        fragebogenID: "",
         fragen: [],
         frage: {
             title: ""
@@ -41,7 +43,10 @@ export default new Vuex.Store({
             state.current.title = s;
         },
         getFolderstructure(state, r) {
-            state.folderstructure = r.data;
+            state.folderstructure = r;
+        },
+        addSubitems(state, data) {
+            Vue.set(state.folderstructure[data.i], "items", data["items"]);
         },
         getFragen(state, f) {
             let array = f.data.items;
@@ -62,7 +67,7 @@ export default new Vuex.Store({
             }
             state.fragen = array;
             this.dispatch("getFrage", p.i);
-            router.push("/0/" + p.i);
+            router.push("/" + state.fragebogenID + "/" + p.i);
             state.current.loading = false;
         },
         getFrage(state, f) {
@@ -95,17 +100,33 @@ export default new Vuex.Store({
         },
         getConfig(state, c) {
             state.config = c;
+        },
+        setFragebogenID(state, url) {
+            state.fragebogenID = url.replace(/\//g, "§");
         }
     },
     actions: {
-        getFolderstructure(context, url) {
-            axios.get(url, {
+        getFolderstructure(context) {
+            axios.get(context.getters.config["rootURL"], {
                 headers: {
                     Accept: "application/json"
                 }
-            }).then(r => context.commit("getFolderstructure", r));
+            }).then(r => context.dispatch("getSubstructure", r.data.items));
+        },
+        getSubstructure(context, items) {
+            context.commit("getFolderstructure", items);
+            for (let i = 0; i < items.length; i++) {
+                if (items[i]["@type"] === "Folder") {
+                    axios.get(items[i]["@id"], {
+                        headers: {
+                            Accept: "application/json"
+                        }
+                    }).then(r => context.commit("addSubitems", {i: i, items: r.data.items}));
+                }
+            }
         },
         getFragen(context, url) {
+            context.commit("setFragebogenID", url);
             axios.get(url, {
                 headers: {
                     Accept: "application/json"
@@ -113,6 +134,7 @@ export default new Vuex.Store({
             }).then(r => context.commit("getFragen", r));
         },
         getFragenAndStart(context, pay) {
+            context.commit("setFragebogenID", pay.url);
             axios.get(pay.url, {
                 headers: {
                     Accept: "application/json"
@@ -146,12 +168,18 @@ export default new Vuex.Store({
                 }
             }).then(r => context.commit("getListen", r.data));
         },
-        getConfig(context,) {
+        getConfig(context) {
             axios.get("config.json", {
                 headers: {
                     Accept: "application/json"
                 }
-            }).then(r => context.commit("getConfig", r.data));
+            }).then(r => context.dispatch("start", {config: r.data}));
+        },
+
+        start(context, p) {
+            context.commit("getConfig", p.config);
+            context.dispatch("getFolderstructure");
+            context.dispatch("getListen", "test/listen.json");
         }
     },
     getters: {
@@ -166,6 +194,9 @@ export default new Vuex.Store({
         zuletztBesucht: state => state.zuletztBesucht,
         notizen: state => state.save.notizen,
         listen: state => state.listen,
-        config: state => state.config
+        config: state => state.config,
+        fragebogenID: state => state.fragebogenID.replace(/§/g, "/"),
+        fragebogenIDraw: state => state.fragebogenID
+
     }
 })
