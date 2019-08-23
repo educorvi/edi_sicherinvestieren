@@ -9,7 +9,8 @@ export default new Vuex.Store({
     state: {
         config: {},
         current: {
-            loading: true
+            loading: true,
+            loadingFrage: true
         },
         folderstructure: {},
         //  "/" ersetzt durch "§"
@@ -73,7 +74,7 @@ export default new Vuex.Store({
         },
         getFrage(state, f) {
             state.frage = f;
-            state.current.loading = false;
+            state.current.loadingFrage = false;
         },
         addZuletztBesucht(state, i) {
             state.zuletztBesucht.push(i);
@@ -89,6 +90,9 @@ export default new Vuex.Store({
         },
         setLoading(state, b) {
             state.current.loading = b;
+        },
+        setLoadingFrage(state, b) {
+            state.current.loadingFrage = b;
         },
         getListen(state, l) {
             for (let i = 0; i < l.length; i++) {
@@ -144,7 +148,7 @@ export default new Vuex.Store({
             }).then(r => context.commit("getFragenAndStart", {res: r, i: pay.i}));
         },
         getFrage(context, i) {
-            context.dispatch("setLoading", true);
+            context.dispatch("setLoadingFrage", true);
             axios.get(context.getters.fragen[i]["@id"],
                 {headers: {Accept: "application/json"}}
             ).then(res => context.commit("getFrage", res.data));
@@ -163,6 +167,9 @@ export default new Vuex.Store({
         },
         setLoading(context, b) {
             context.commit("setLoading", b);
+        },
+        setLoadingFrage(context, b) {
+            context.commit("setLoadingFrage", b);
         },
         getListen(context, url) {
             axios.get(url, {
@@ -193,6 +200,7 @@ export default new Vuex.Store({
         frage: state => state.frage,
         fragen: state => state.fragen,
         loading: state => state.current.loading,
+        loadingFrage: state => state.current.loadingFrage,
         isFrage: state => state.isFrage,
         zuletztBesucht: state => state.zuletztBesucht,
         notizen: state => state.save.notizen,

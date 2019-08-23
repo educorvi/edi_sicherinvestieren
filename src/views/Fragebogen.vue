@@ -1,6 +1,7 @@
 <template>
     <div>
-        <b-progress-bar :max="fragen.length" :value="parseInt(this.$route.params.frage)+1"></b-progress-bar>
+        <b-progress :max="fragen.length" :value="parseInt($route.params.frage)" class="w-100 mt-n1 mb-2" height="6px"
+                    variant="success"></b-progress>
         <Frage/>
     </div>
 </template>

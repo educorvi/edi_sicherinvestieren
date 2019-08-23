@@ -19,11 +19,11 @@
 
                 <!--        StartModal mit Dateneingabe-->
                 <b-modal centered id="modal-start" scrollable title="Maschinendaten">
-                    <b-form>
-                        <b-input class="mb-1" placeholder="Dateiname (notwendig)" required
+                    <b-form autocomplete="off">
+                        <b-input autocomplete="off" class="mb-1" placeholder="Dateiname (notwendig)" required
                                  v-model="save['dateiname']"></b-input>
                         <b-input class="mb-1" placeholder="Hersteller" v-model="save['hersteller']"></b-input>
-                        <b-input class="mb-1" placeholder="Maschienennummer"
+                        <b-input autocomplete="off" class="mb-1" placeholder="Maschienennummer"
                                  v-model="save['maschienennummer']"></b-input>
                     </b-form>
                     <div class="w-100" slot="modal-footer">
@@ -84,8 +84,8 @@
 
 <style>
     #root {
-        padding-top: 72px;
-        padding-bottom: 70px;
+        padding-top: 70px;
+        padding-bottom: 112px;
     }
 
     .animation-enter-active, .animation-leave-active, .fade-enter-active, .fade-leave-active {

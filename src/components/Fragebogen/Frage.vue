@@ -9,8 +9,11 @@
             <b-card-body>
                 <span v-html="frage.frage.data"></span>
 
+                <div class="text-center" v-if="loadingFrage">
+                    <b-spinner id="spinner" variant="dark"/>
+                </div>
                 <!--                Buttons-->
-                <ButtonGruppe @click="naechste"/>
+                <ButtonGruppe @click="naechste" v-else/>
             </b-card-body>
         </b-card>
 
@@ -32,14 +35,15 @@
             </b-collapse>
         </b-card>
 
-        <b-button @click="letzte" class="float-left mt-2">Zurück</b-button>
+        <!--        Zurück-->
+        <b-button :disabled="loadingFrage" @click="letzte" class="float-left mt-2">Zurück</b-button>
     </div>
 
 
 </template>
 
 <script>
-    import {mapActions, mapGetters} from "vuex";
+    import {mapGetters} from "vuex";
     import ButtonGruppe from "@/components/Fragebogen/ButtonGruppe";
     import router from "../../router"
 
@@ -47,10 +51,9 @@
         name: "Frage",
         components: {ButtonGruppe},
         computed: {
-            ...mapGetters(["frage", "fragen", "notizen", "fragebogenIDraw"])
+            ...mapGetters(["frage", "fragen", "notizen", "fragebogenIDraw", "loadingFrage"])
         },
         methods: {
-            ...mapActions(["setLoading"]),
             naechste(button) {
                 if (button.aktion === null) {
                     if (parseInt(this.$route.params.frage) > this.fragen.length - 2) {
