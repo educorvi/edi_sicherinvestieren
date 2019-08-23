@@ -23,7 +23,7 @@
         methods: {
             ok() {
                 if (this.ausblendenChecked) {
-                    //    do something with Server Or Settings
+                    this.$ls.set("hinweis_" + this.id + "_ausblenden", true);
                 }
                 this.$emit("ok")
             }

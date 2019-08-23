@@ -23,7 +23,7 @@ export default new Vuex.Store({
         hinweise: [
             {
                 okText: "weiter",
-                dismissed: true,
+                dismissed: false,
                 text: "<p>Sie planen die Investition in eine neue Maschine oder Anlage? Neben vielen anderen Aspekten , spielen dabei auch die Sicherheit und die Gesundheit ihrer beschäftigten eine wichtige Rolle. Die BG ETEM unterstützt sie mit dieser App bei der Auswahl sichere Maschinen Punkt das hilft ihnen auch, teure Nachrüstungen zu vermeiden. Bitte beachten Sie Komma dass diese Anwendung eine vollständige Bewertung der konkreten Gefährdung der Maschine am vorgesehenen Einsatzort nicht ersetzen kann.\n" +
                     "Wählen sie aus, welchen Maschinen Typ sie bewerten möchten.<p>"
             }
@@ -190,24 +190,56 @@ export default new Vuex.Store({
             context.commit("getConfig", p.config);
             context.dispatch("getFolderstructure");
             context.dispatch("getListen", "test/listen.json");
+        },
+        sendAntwort(context, p) {
+            const data = {optionen: {}, notiz: "", index: p.i};
+            const options = context.getters.frage.optionen;
+            for (const option of options) {
+                data.optionen[option.antwort] = false;
+            }
+            data.optionen[p.antwort] = true;
+            data.notiz = context.getters.notizen[p.i];
+            const axiosOptions = {
+                method: 'POST',
+                headers: {'content-type': 'application/json'},
+                data: data,
+                // url: "https://ptsv2.com/t/neferin/post"
+                url: "http://httpbin.org/post"
+            };
+            axios(axiosOptions).then(res => console.log(res.data));
+            // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
         }
     },
     getters: {
         placeholders: state => state.placeholders,
-        current: state => state.current,
-        hinweise: state => state.hinweise,
-        folderstructure: state => state.folderstructure,
-        frage: state => state.frage,
-        fragen: state => state.fragen,
-        loading: state => state.current.loading,
-        loadingFrage: state => state.current.loadingFrage,
-        isFrage: state => state.isFrage,
-        zuletztBesucht: state => state.zuletztBesucht,
-        notizen: state => state.save.notizen,
-        listen: state => state.listen,
-        config: state => state.config,
-        fragebogenID: state => state.fragebogenID.replace(/§/g, "/"),
-        fragebogenIDraw: state => state.fragebogenID
+        current:
+            state => state.current,
+        hinweise:
+            state => state.hinweise,
+        folderstructure:
+            state => state.folderstructure,
+        frage:
+            state => state.frage,
+        fragen:
+            state => state.fragen,
+        loading:
+            state => state.current.loading,
+        loadingFrage:
+            state => state.current.loadingFrage,
+        isFrage:
+            state => state.isFrage,
+        zuletztBesucht:
+            state => state.zuletztBesucht,
+        notizen:
+            state => state.save.notizen,
+        listen:
+            state => state.listen,
+        config:
+            state => state.config,
+        fragebogenID:
+            state => state.fragebogenID.replace(/§/g, "/"),
+        fragebogenIDraw:
+            state => state.fragebogenID
 
     }
 })

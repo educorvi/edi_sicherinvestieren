@@ -21,10 +21,10 @@
                 <b-modal centered id="modal-start" scrollable title="Maschinendaten">
                     <b-form autocomplete="off">
                         <b-input autocomplete="off" class="mb-1" placeholder="Dateiname (notwendig)" required
-                                 v-model="save['dateiname']"></b-input>
-                        <b-input class="mb-1" placeholder="Hersteller" v-model="save['hersteller']"></b-input>
+                                 v-model.trim="save['dateiname']"></b-input>
+                        <b-input class="mb-1" placeholder="Hersteller" v-model.trim="save['hersteller']"></b-input>
                         <b-input autocomplete="off" class="mb-1" placeholder="Maschienennummer"
-                                 v-model="save['maschienennummer']"></b-input>
+                                 v-model.trim="save['maschienennummer']"></b-input>
                     </b-form>
                     <div class="w-100" slot="modal-footer">
                         <b-button :disabled="!isModalCorrect" @click="startFragebogen" block class="mt-1"
@@ -76,7 +76,9 @@
         },
         created() {
             store.dispatch("getConfig");
-
+        },
+        mounted() {
+            store.dispatch("setDismissed", {i: 0, b: this.$ls.get("hinweis_0_ausblenden", false)})
         }
     }
 </script>

@@ -13,6 +13,7 @@
     "bootstrap-vue": "^2.0.0-rc.28",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
+    "vue-ls": "^3.2.1",
     "vue-material": "^1.0.0-beta-11",
     "vue-radial-progress": "^0.2.10",
     "vue-router": "^3.0.3",

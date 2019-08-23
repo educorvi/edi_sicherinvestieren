@@ -55,6 +55,7 @@
         },
         methods: {
             naechste(button) {
+                this.$store.dispatch("sendAntwort", {antwort: button.antwort, i: this.$route.params.frage});
                 if (button.aktion === null) {
                     if (parseInt(this.$route.params.frage) > this.fragen.length - 2) {
                         router.push("/abschluss")
