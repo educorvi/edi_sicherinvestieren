@@ -11,6 +11,11 @@ export default new Router({
             component: () => import('./views/Home.vue')
         },
         {
+            path: "/abschluss",
+            name: "abschluss",
+            component: () => import('./views/Abschluss.vue')
+        },
+        {
             path: '/liste/:offen',
             name: 'listen',
             component: () => import('./views/Listen.vue')

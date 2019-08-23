@@ -17,9 +17,13 @@
 </template>
 
 <script>
+    import {mapGetters} from "vuex";
 
     export default {
-        name: "Headbar"
+        name: "Headbar",
+        computed: {
+            ...mapGetters(["frage", "fragen"])
+        },
     }
 </script>
 

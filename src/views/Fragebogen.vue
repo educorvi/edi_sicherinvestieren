@@ -1,8 +1,10 @@
 <template>
     <div>
-        <b-progress :max="fragen.length" :value="parseInt($route.params.frage)" class="w-100 mt-n1 mb-2" height="6px"
-                    variant="success"></b-progress>
-        <Frage/>
+        <div id="progress">
+            <b-progress :max="fragen.length" :value="parseInt($route.params.frage)" height="6px"
+                        variant="success"></b-progress>
+        </div>
+        <Frage style="padding-top: 5px"/>
     </div>
 </template>
 
@@ -41,5 +43,19 @@
 </script>
 
 <style scoped>
-
+    #progress {
+        position: fixed;
+        /* fixing the position takes it out of html flow - knows
+                          nothing about where to locate itself except by browser
+                          coordinates */
+        left: 0; /* top left corner should start at leftmost spot */
+        top: 65px; /* top left corner should start at topmost spot */
+        width: 100vw; /* take up the full browser width */
+        z-index: 200;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 4px;
+        background: white;
+        margin-top: -5px;
+    }
 </style>

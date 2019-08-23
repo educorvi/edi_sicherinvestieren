@@ -4,7 +4,7 @@
         <Headbar/>
 
 
-        <Transition name="fade">
+        <Transition mode="out-in" name="fade">
             <div v-if="loading">
                 <b-spinner id="spinner" variant="light"/>
             </div>
