@@ -23,8 +23,8 @@
                         <b-input autocomplete="off" class="mb-1" placeholder="Dateiname (notwendig)" required
                                  v-model.trim="save['dateiname']"></b-input>
                         <b-input class="mb-1" placeholder="Hersteller" v-model.trim="save['hersteller']"></b-input>
-                        <b-input autocomplete="off" class="mb-1" placeholder="Maschienennummer"
-                                 v-model.trim="save['maschienennummer']"></b-input>
+                        <b-input autocomplete="off" class="mb-1" placeholder="Maschinennummer"
+                                 v-model.trim="save['maschinennummer']"></b-input>
                     </b-form>
                     <div class="w-100" slot="modal-footer">
                         <b-button :disabled="!isModalCorrect" @click="startFragebogen" block class="mt-1"
