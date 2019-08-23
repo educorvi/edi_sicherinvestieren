@@ -203,9 +203,9 @@ export default new Vuex.Store({
                 headers: {'content-type': 'application/json'},
                 data: data,
                 // url: "https://ptsv2.com/t/neferin/post"
-                // url: "http://httpbin.org/post"
+                url: "http://httpbin.org/post"
             };
-            axios(axiosOptions).then(res => console.log(res.data));
+            // axios(axiosOptions).then(res => console.log(res.data));
             // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
         }
     },
