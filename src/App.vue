@@ -89,7 +89,7 @@
     }
 
     .animation-enter-active, .animation-leave-active, .fade-enter-active, .fade-leave-active {
-        transition: opacity .3s;
+        transition: all .3s;
     }
 
     .animation-enter {
