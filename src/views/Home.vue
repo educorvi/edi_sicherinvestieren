@@ -1,5 +1,14 @@
 <template>
     <div>
+
+        <b-alert :show="!loggedIn" dismissible variant="warning">
+            <h4 class="alert-heading">Sie sind nicht angemeldet!</h4>
+            <p>
+                Um alle Funktionen nutzen zu können, müssen Sie sich identifizieren
+            </p>
+            <router-link :to="'/login'">Hier anmelden</router-link>
+        </b-alert>
+
         <Hinweis :id="0" @ok="$store.dispatch('setDismissed', {i: 0, b: true})" v-if="!hinweise[0].dismissed"/>
         <!--        Fragebogenauswahl-->
         <div v-else>
@@ -34,7 +43,7 @@
             Hinweis
         },
         computed: {
-            ...mapGetters(["hinweise", "folderstructure"])
+            ...mapGetters(["hinweise", "folderstructure", "loggedIn"])
         },
     }
 </script>

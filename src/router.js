@@ -16,6 +16,11 @@ export default new Router({
             component: () => import('./views/Abschluss.vue')
         },
         {
+            path: "/login",
+            name: "login",
+            component: () => import('./views/Login.vue')
+        },
+        {
             path: '/liste/:offen',
             name: 'listen',
             component: () => import('./views/Listen.vue')

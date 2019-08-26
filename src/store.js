@@ -7,7 +7,13 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        //Werte werden durch Inhalt von config.json überschrieben
         config: {},
+
+        auth: {
+            token: null
+        },
+
         current: {
             loading: true,
             loadingFrage: true
@@ -108,6 +114,9 @@ export default new Vuex.Store({
         },
         setFragebogenID(state, url) {
             state.fragebogenID = url.replace(/\//g, "§");
+        },
+        setToken(state, token) {
+            state.auth.token = token;
         }
     },
     actions: {
@@ -191,7 +200,13 @@ export default new Vuex.Store({
             context.dispatch("getListen", "test/listen.json");
         },
         sendAntwort(context, p) {
-            const data = {optionen: {}, notiz: "", index: p.i};
+            const data = {
+                optionen: {},
+                notiz: "",
+                index: p.i,
+                fragebogenID: context.getters.fragebogenID,
+                keyword: context.getters.token
+            };
             const options = context.getters.frage.optionen;
             for (const option of options) {
                 data.optionen[option.antwort] = false;
@@ -200,13 +215,26 @@ export default new Vuex.Store({
             data.notiz = context.getters.notizen[p.i];
             const axiosOptions = {
                 method: 'POST',
-                headers: {'content-type': 'application/json'},
+                headers: {'Content-Type': 'application/json'},
                 data: data,
+                url: "https://webapps.educorvi.de/checklistdata"
+                // url: "https://postman-echo.com/post"
+            };
+            axios(axiosOptions).then(res => console.log(res.data));
+            // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
+        },
+        sendFragebogenstarted(context, p) {
+            const axiosOptions = {
+                method: 'POST',
+                headers: {'content-type': 'application/json'},
+                data: {id: p.id, details: p.details},
                 // url: "https://ptsv2.com/t/neferin/post"
                 url: "http://httpbin.org/post"
             };
             // axios(axiosOptions).then(res => console.log(res.data));
-            // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
+        },
+        setToken(context, t) {
+            context.commit("setToken", t);
         }
     },
     getters: {
@@ -238,7 +266,10 @@ export default new Vuex.Store({
         fragebogenID:
             state => state.fragebogenID.replace(/§/g, "/"),
         fragebogenIDraw:
-            state => state.fragebogenID
-
+            state => state.fragebogenID,
+        token:
+            state => state.auth.token,
+        loggedIn:
+            state => state.auth.token !== null && state.auth.token !== undefined
     }
 })

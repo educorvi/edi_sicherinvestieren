@@ -79,6 +79,7 @@
         },
         mounted() {
             store.dispatch("setDismissed", {i: 0, b: this.$ls.get("hinweis_0_ausblenden", false)})
+            store.dispatch("setToken", this.$ls.get("token", null));
         }
     }
 </script>
@@ -113,8 +114,8 @@
 <style scoped>
 
 
-    #spinner {
-        margin-top: 70%;
-        margin-left: 45%;
-    }
+    /*#spinner {*/
+    /*    margin-top: 70%;*/
+    /*    margin-left: 45%;*/
+    /*}*/
 </style>
