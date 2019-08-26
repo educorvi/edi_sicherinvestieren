@@ -49,7 +49,6 @@
                 if (res.status < 300) {
                     //    save Token
                     this.$store.dispatch("setToken", res.data.keyword);
-                    this.$ls.set("token", res.data.keyword);
                     this.$router.replace("/")
                 }
             }

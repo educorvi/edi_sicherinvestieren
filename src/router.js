@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from "@/store";
+import router from "@/router";
 
 Vue.use(Router);
 
@@ -19,6 +21,15 @@ export default new Router({
             path: "/login",
             name: "login",
             component: () => import('./views/Login.vue')
+        },
+        {
+            path: "/logout",
+            name: "logout",
+            beforeEnter: (to, from, next) => {
+                store.dispatch("setToken", null);
+                router.replace(from.path);
+                alert("Erfolgreich abgemeldet")
+            }
         },
         {
             path: '/liste/:offen',

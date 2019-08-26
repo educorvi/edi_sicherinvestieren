@@ -8,6 +8,7 @@
         <b-collapse class="ml-n3 mr-n3" id="collapse" is-nav style="background: white">
             <b-navbar-nav class="ml-auto">
                 <b-nav-item :to="'/login'" class="text-center" v-if="!loggedIn">Login</b-nav-item>
+                <b-nav-item :to="'/logout'" class="text-center" v-else>Logout</b-nav-item>
                 <b-nav-item class="text-center" href="#">Hilfe</b-nav-item>
                 <b-nav-item class="text-center" href="#">Einstellungen</b-nav-item>
                 <b-nav-item class="text-center" href="#">Kontakt</b-nav-item>

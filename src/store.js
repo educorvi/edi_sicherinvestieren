@@ -235,6 +235,7 @@ export default new Vuex.Store({
         },
         setToken(context, t) {
             context.commit("setToken", t);
+            Vue.ls.set("token", t);
         }
     },
     getters: {
