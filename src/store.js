@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from "axios";
+import Vue from 'vue';
+import Vuex from 'vuex';
 import router from "@/router";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -207,9 +207,10 @@ export default new Vuex.Store({
             const data = {
                 optionen: {},
                 notiz: "",
-                index: p.i,
-                fragebogenID: context.getters.fragebogenID,
-                keyword: context.getters.token
+                id: p.id,
+                fragebogen: context.getters.fragebogenID,
+                keyword: context.getters.token,
+                maschine: context.getters.savefile
             };
             const options = context.getters.frage.optionen;
             for (const option of options) {
@@ -221,10 +222,10 @@ export default new Vuex.Store({
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 data: data,
-                url: "https://webapps.educorvi.de/checklistdata"
+                url: context.getters.config["dataSendURL"]
                 // url: "https://postman-echo.com/post"
             };
-            axios(axiosOptions).then(res => console.log(res.data));
+            axios(axiosOptions).then(res => console.log(res));
             // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
         },
         sendFragebogenstarted(context, p) {
