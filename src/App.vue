@@ -5,7 +5,7 @@
 
 
         <Transition mode="out-in" name="fade">
-            <div v-if="loading">
+            <div class="text-center w-100" v-if="loading">
                 <b-spinner id="spinner" variant="light"/>
             </div>
             <div v-else>
@@ -114,10 +114,7 @@
 
 
 <style scoped>
-
-
-    /*#spinner {*/
-    /*    margin-top: 70%;*/
-    /*    margin-left: 45%;*/
-    /*}*/
+    #spinner {
+        margin-top: 100px;
+    }
 </style>
