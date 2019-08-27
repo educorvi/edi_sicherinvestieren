@@ -21,10 +21,10 @@
                 <b-modal centered id="modal-start" scrollable title="Maschinendaten">
                     <b-form autocomplete="off">
                         <b-input autocomplete="off" class="mb-1" placeholder="Dateiname (notwendig)" required
-                                 v-model.trim="save['dateiname']"></b-input>
+                                 v-model.trim="save['title']"></b-input>
                         <b-input class="mb-1" placeholder="Hersteller" v-model.trim="save['hersteller']"></b-input>
                         <b-input autocomplete="off" class="mb-1" placeholder="Maschinennummer"
-                                 v-model.trim="save['maschinennummer']"></b-input>
+                                 v-model.trim="save['maschnr']"></b-input>
                     </b-form>
                     <div class="w-100" slot="modal-footer">
                         <b-button :disabled="!isModalCorrect" @click="startFragebogen" block class="mt-1"
@@ -59,7 +59,7 @@
         computed: {
             ...mapGetters(["current", "frage", "loading", "fragen", "config"]),
             isModalCorrect() {
-                return (this.save.dateiname !== undefined && this.save.dateiname !== "")
+                return (this.save.title !== undefined && this.save.title !== "")
             }
         },
         methods: {
