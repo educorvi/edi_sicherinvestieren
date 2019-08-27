@@ -30,7 +30,7 @@
             }
         },
         computed: {
-            ...mapGetters(["loggedIn"])
+            ...mapGetters(["loggedIn", "config"])
 
         },
         methods: {
@@ -40,8 +40,7 @@
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     data: this.user,
-                    url: "https://webapps.educorvi.de/checklistlogin"
-                    // url: "http://httpbin.org/post"
+                    url: this.config["loginURL"]
                 };
                 axios(axiosOptions).then(res => this.verarbeiteLogin(res));
             },

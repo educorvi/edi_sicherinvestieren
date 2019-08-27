@@ -1,18 +1,18 @@
 [
   {
-    "name": "Krasse Maschine",
+    "name": "Abgeschlossene Maschine",
     "maschinennummer": "AX2BB3z",
     "hersteller": "Bosch",
     "fertig": true
   },
   {
-    "name": "Krassere Maschine",
+    "name": "Abgeschlossene Maschine 2",
     "maschinennummer": "A6531",
     "hersteller": "Siemens",
     "fertig": true
   },
   {
-    "name": "Krasseste Maschine",
+    "name": "Offene Maschine",
     "maschinennummer": "7752A",
     "hersteller": "Google",
     "fertig": false,

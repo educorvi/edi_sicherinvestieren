@@ -23,7 +23,8 @@
                         </b-card>
                     </b-collapse>
                 </b-card>
-                <b-card @click="$emit('childPressed', {folder: null, child: folder, index: index})" no-body v-else>
+                <b-card @click="$emit('childPressed', {folder: null, child: folder, index: index})" class="mb-2" no-body
+                        v-else>
                     <b-button>{{folder.title}}</b-button>
                 </b-card>
             </div>
@@ -34,9 +35,9 @@
 </template>
 
 <script>
-    import Hinweis from "@/components/Hinweis";
     import {mapGetters} from 'vuex';
 
+    const Hinweis = () => import("../components/Hinweis.vue");
     export default {
         name: 'home',
         components: {
