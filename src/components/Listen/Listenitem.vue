@@ -1,7 +1,7 @@
 <template>
     <b-card class="mb-2 ">
         <radial-progress-bar :completed-steps="item.progress" :diameter="60" :stroke-width="5" class="float-left mr-3"
-                             total-steps=100
+                             :total-steps=100
                              v-if="item.progress">{{item.progress}}%
         </radial-progress-bar>
         <div>

@@ -1,14 +1,20 @@
 <template>
     <md-bottom-bar id="bottomBar" md-sync-route>
-        <md-bottom-bar-item md-icon="icons/list.svg" md-label="Offene Listen" to="/liste/true"></md-bottom-bar-item>
+        <md-bottom-bar-item :disabled="!loggedIn" md-icon="icons/list.svg" md-label="Offene Listen"
+                            to="/liste/true"></md-bottom-bar-item>
         <md-bottom-bar-item exact md-icon="icons/home.svg" md-label="Start" to="/"></md-bottom-bar-item>
-        <md-bottom-bar-item md-icon="icons/listC.svg" md-label="Fertige Listen"
+        <md-bottom-bar-item :disabled="!loggedIn" md-icon="icons/listC.svg" md-label="Fertige Listen"
                             to="/liste/false"></md-bottom-bar-item>
     </md-bottom-bar>
 </template>
 <script>
+    import {mapGetters} from "vuex"
+
     export default {
-        name: 'BottomBar'
+        name: 'BottomBar',
+        computed: {
+            ...mapGetters(["loggedIn"])
+        }
     }
 </script>
 <style>
