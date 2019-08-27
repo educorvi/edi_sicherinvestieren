@@ -39,6 +39,10 @@
             ...mapMutations(["getFrage"]),
             ...mapActions(["setLoading"])
         },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch("setSavefile", null);
+            next();
+        }
     }
 </script>
 

@@ -35,7 +35,8 @@ export default new Vuex.Store({
         ],
 
         save: {
-            notizen: []
+            notizen: [],
+            file: {}
         },
         zuletztBesucht: [],
         listen: {
@@ -117,6 +118,9 @@ export default new Vuex.Store({
         },
         setToken(state, token) {
             state.auth.token = token;
+        },
+        setSavefile(state, save) {
+            state.save.file = save;
         }
     },
     actions: {
@@ -236,6 +240,9 @@ export default new Vuex.Store({
         setToken(context, t) {
             context.commit("setToken", t);
             Vue.ls.set("token", t);
+        },
+        setSavefile(context, file) {
+            context.commit("setSavefile", file);
         }
     },
     getters: {
@@ -271,6 +278,8 @@ export default new Vuex.Store({
         token:
             state => state.auth.token,
         loggedIn:
-            state => state.auth.token !== null && state.auth.token !== undefined
+            state => state.auth.token !== null && state.auth.token !== undefined,
+        savefile:
+            state => state.save.file
     }
 })

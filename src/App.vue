@@ -71,14 +71,16 @@
                 this.$bvModal.hide('modal-start');
                 store.dispatch("setLoading", true);
                 store.dispatch("getFragenAndStart", {url: this.ausgewaehlterFragebogen.child["@id"], i: 0});
-
+                store.dispatch("setSavefile", this.save);
+                this.save = {};
+                this.ausgewaehlterFragebogen = {};
             }
         },
         created() {
             store.dispatch("getConfig");
         },
         mounted() {
-            store.dispatch("setDismissed", {i: 0, b: this.$ls.get("hinweis_0_ausblenden", false)})
+            store.dispatch("setDismissed", {i: 0, b: this.$ls.get("hinweis_0_ausblenden", false)});
             store.dispatch("setToken", this.$ls.get("token", null));
         }
     }
