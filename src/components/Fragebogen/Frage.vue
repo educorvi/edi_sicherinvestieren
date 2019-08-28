@@ -36,7 +36,7 @@
         </b-card>
 
         <!--        Zurück-->
-        <b-button :disabled="loadingFrage" @click="letzte" class="float-left mt-2">Zurück</b-button>
+        <b-button :disabled="zuletztBesucht.length === 0" @click="letzte" class="float-left mt-2">Zurück</b-button>
     </div>
 
 
@@ -51,7 +51,7 @@
         name: "Frage",
         components: {ButtonGruppe},
         computed: {
-            ...mapGetters(["frage", "fragen", "notizen", "fragebogenIDraw", "loadingFrage"])
+            ...mapGetters(["frage", "fragen", "notizen", "fragebogenIDraw", "loadingFrage", "letztes", "zuletztBesucht"])
         },
         methods: {
             naechste(button) {

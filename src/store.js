@@ -87,6 +87,9 @@ export default new Vuex.Store({
         removeLetztesBesucht(state) {
             state.zuletztBesucht.pop();
         },
+        setHistory(state, history) {
+            state.zuletztBesucht = history;
+        },
         setNotizen(state, not) {
             state.save.notizen = not;
         },
@@ -166,6 +169,9 @@ export default new Vuex.Store({
         },
         removeLetztesBesucht(context) {
             context.commit("removeLetztesBesucht");
+        },
+        setHistory(context, history) {
+            context.commit("setHistory", history)
         },
         setNotizen(context, obj) {
             context.commit("setNotizen", obj)
@@ -274,6 +280,8 @@ export default new Vuex.Store({
             state => state.isFrage,
         zuletztBesucht:
             state => state.zuletztBesucht,
+        letztes:
+            state => state.zuletztBesucht[state.zuletztBesucht.length - 1],
         notizen:
             state => state.save.notizen,
         listen:

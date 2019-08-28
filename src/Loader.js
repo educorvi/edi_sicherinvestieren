@@ -53,6 +53,12 @@ async function process(res) {
         }
     })).data;
 
+    //Sync History
+    const indexHistory = historyIdToIndex(fragen, history);
+    store.dispatch("setHistory", indexHistory);
+    for (const indexHistoryElement of indexHistory) {
+        router.push("/" + store.getters.fragebogenIDraw + "/" + indexHistoryElement);
+    }
 
     //Sprungziel bestimmen
     let aktion = null;
@@ -100,7 +106,20 @@ async function process(res) {
         }
     }
 
+
     store.dispatch("setLoading", false);
+}
+
+function historyIdToIndex(fragen, history) {
+    let retHistory = [];
+    for (const historyElement of history) {
+        for (let i = 0; i < fragen.length; i++) {
+            if (fragen[i]["@id"] === historyElement) {
+                retHistory.push(i);
+            }
+        }
+    }
+    return retHistory;
 }
 
 
