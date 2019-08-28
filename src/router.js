@@ -27,14 +27,19 @@ export default new Router({
             name: "logout",
             beforeEnter: (to, from, next) => {
                 store.dispatch("setToken", null);
-                router.replace(from.path);
+                router.replace("/");
                 alert("Erfolgreich abgemeldet")
             }
         },
         {
             path: '/liste/:offen',
             name: 'listen',
-            component: () => import('./views/Listen.vue')
+            component: () => import('./views/Listen.vue'),
+            beforeEnter: (to, from, next) => {
+                store.commit("setListen", {fertig: [], angefangen: []});
+                store.dispatch("getListen");
+                next()
+            }
         },
         {
             path: '/:fragebogen/:frage',

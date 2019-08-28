@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from "axios";
+import Vue from 'vue';
+import Vuex from 'vuex';
 import router from "@/router";
+import axios from "axios";
 
 Vue.use(Vuex);
 
@@ -36,6 +36,7 @@ export default new Vuex.Store({
 
         save: {
             notizen: [],
+            selected: [],
             file: {}
         },
         zuletztBesucht: [],
@@ -64,7 +65,6 @@ export default new Vuex.Store({
                 }
             }
             state.fragen = array;
-            state.current.loading = false;
         },
         getFragenAndStart(state, p) {
             let array = p.res.data.items;
@@ -88,8 +88,11 @@ export default new Vuex.Store({
         removeLetztesBesucht(state) {
             state.zuletztBesucht.pop();
         },
-        setSave(state, obj) {
-            state.save = obj;
+        setHistory(state, history) {
+            state.zuletztBesucht = history;
+        },
+        setNotizen(state, not) {
+            state.save.notizen = not;
         },
         setDismissed(state, p) {
             state.hinweise[p.i].dismissed = p.b;
@@ -100,15 +103,15 @@ export default new Vuex.Store({
         setLoadingFrage(state, b) {
             state.current.loadingFrage = b;
         },
-        getListen(state, l) {
-            for (let i = 0; i < l.length; i++) {
-                if (l[i].fertig) {
-                    state.listen.fertig.push(l[i]);
-                } else {
-                    state.listen.angefangen.push(l[i]);
-                }
-
+        addListenItem(state, l) {
+            if (parseFloat(l["fortschritt"]) === 100) {
+                state.listen.fertig.push(l);
+            } else {
+                state.listen.angefangen.push(l);
             }
+        },
+        setListen(state, l) {
+            state.listen = l;
         },
         getConfig(state, c) {
             state.config = c;
@@ -121,6 +124,12 @@ export default new Vuex.Store({
         },
         setSavefile(state, save) {
             state.save.file = save;
+        },
+        addSelected(state, details) {
+            state.save.selected[details.i] = details.antwort;
+        },
+        setSelected(state, s) {
+            state.save.selected = s;
         }
     },
     actions: {
@@ -171,8 +180,11 @@ export default new Vuex.Store({
         removeLetztesBesucht(context) {
             context.commit("removeLetztesBesucht");
         },
-        setSave(context, obj) {
-            context.commit("setSave", obj)
+        setHistory(context, history) {
+            context.commit("setHistory", history)
+        },
+        setNotizen(context, obj) {
+            context.commit("setNotizen", obj)
         },
         setDismissed(context, p) {
             context.commit("setDismissed", p)
@@ -183,12 +195,21 @@ export default new Vuex.Store({
         setLoadingFrage(context, b) {
             context.commit("setLoadingFrage", b);
         },
-        getListen(context, url) {
-            axios.get(url, {
+        getListen(context) {
+            axios.get(context.getters.config["dataURL"] + "/" + context.getters.token, {
                 headers: {
                     Accept: "application/json"
                 }
-            }).then(r => context.commit("getListen", r.data));
+            }).then(r => {
+                console.log(r.data.items);
+                for (const item of r.data.items) {
+                    axios.get(item["@id"], {
+                        headers: {
+                            Accept: "application/json"
+                        }
+                    }).then(res => context.commit("addListenItem", res.data));
+                }
+            });
         },
         getConfig(context) {
             axios.get("config.json", {
@@ -201,15 +222,21 @@ export default new Vuex.Store({
         start(context, p) {
             context.commit("getConfig", p.config);
             context.dispatch("getFolderstructure");
-            context.dispatch("getListen", "test/listen.json");
+            context.dispatch("getListen");
         },
         sendAntwort(context, p) {
+            //lokales
+            context.commit("addSelected", {i: p.i, antwort: p.antwort});
+
+
+            //server
             const data = {
                 optionen: {},
                 notiz: "",
-                index: p.i,
-                fragebogenID: context.getters.fragebogenID,
-                keyword: context.getters.token
+                id: p.id,
+                fragebogen: context.getters.fragebogenID,
+                keyword: context.getters.token,
+                maschine: context.getters.savefile
             };
             const options = context.getters.frage.optionen;
             for (const option of options) {
@@ -221,10 +248,10 @@ export default new Vuex.Store({
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 data: data,
-                url: "https://webapps.educorvi.de/checklistdata"
+                url: context.getters.config["dataSendURL"]
                 // url: "https://postman-echo.com/post"
             };
-            axios(axiosOptions).then(res => console.log(res.data));
+            axios(axiosOptions).then(res => console.log(res));
             // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
         },
         sendFragebogenstarted(context, p) {
@@ -243,6 +270,9 @@ export default new Vuex.Store({
         },
         setSavefile(context, file) {
             context.commit("setSavefile", file);
+        },
+        setFragebogenID(context, id) {
+            context.commit("setFragebogenID", id)
         }
     },
     getters: {
@@ -265,6 +295,8 @@ export default new Vuex.Store({
             state => state.isFrage,
         zuletztBesucht:
             state => state.zuletztBesucht,
+        letztes:
+            state => state.zuletztBesucht[state.zuletztBesucht.length - 1],
         notizen:
             state => state.save.notizen,
         listen:
@@ -280,6 +312,8 @@ export default new Vuex.Store({
         loggedIn:
             state => state.auth.token !== null && state.auth.token !== undefined,
         savefile:
-            state => state.save.file
+            state => state.save.file,
+        selected:
+            state => state.save.selected
     }
 })
