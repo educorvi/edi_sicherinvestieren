@@ -5,7 +5,7 @@
 
         <!--        Frage und Buttons-->
         <b-card no-body>
-            <h6 class="mb-0" slot="header">{{frage.title}}</h6>
+            <h5 class="mb-0" slot="header">{{frage.title}}</h5>
             <b-card-body>
                 <span v-html="frage.frage.data"></span>
 
