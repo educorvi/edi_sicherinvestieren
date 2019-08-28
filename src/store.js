@@ -36,6 +36,7 @@ export default new Vuex.Store({
 
         save: {
             notizen: [],
+            selected: [],
             file: {}
         },
         zuletztBesucht: [],
@@ -109,6 +110,9 @@ export default new Vuex.Store({
                 state.listen.angefangen.push(l);
             }
         },
+        setListen(state, l) {
+            state.listen = l;
+        },
         getConfig(state, c) {
             state.config = c;
         },
@@ -120,6 +124,12 @@ export default new Vuex.Store({
         },
         setSavefile(state, save) {
             state.save.file = save;
+        },
+        addSelected(state, details) {
+            state.save.selected[details.i] = details.antwort;
+        },
+        setSelected(state, s) {
+            state.save.selected = s;
         }
     },
     actions: {
@@ -215,6 +225,11 @@ export default new Vuex.Store({
             context.dispatch("getListen");
         },
         sendAntwort(context, p) {
+            //lokales
+            context.commit("addSelected", {i: p.i, antwort: p.antwort});
+
+
+            //server
             const data = {
                 optionen: {},
                 notiz: "",
@@ -297,6 +312,8 @@ export default new Vuex.Store({
         loggedIn:
             state => state.auth.token !== null && state.auth.token !== undefined,
         savefile:
-            state => state.save.file
+            state => state.save.file,
+        selected:
+            state => state.save.selected
     }
 })

@@ -42,6 +42,8 @@
         beforeRouteLeave(to, from, next) {
             this.$store.dispatch("setSavefile", null);
             this.$store.dispatch("setNotizen", []);
+            this.$store.commit("setSelected", []);
+            this.$store.dispatch("setHistory", []);
             next();
         }
     }

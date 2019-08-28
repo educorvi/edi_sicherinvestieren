@@ -56,9 +56,34 @@ async function process(res) {
     //Sync History
     const indexHistory = historyIdToIndex(fragen, history);
     store.dispatch("setHistory", indexHistory);
+
     for (const indexHistoryElement of indexHistory) {
-        router.push("/" + store.getters.fragebogenIDraw + "/" + indexHistoryElement);
+        try {
+            await router.push("/" + store.getters.fragebogenIDraw + "/" + indexHistoryElement);
+        } catch (e) {
+            console.log(e)
+        }
     }
+    console.log("History synced");
+
+    //Sync selected
+    const daten = data["daten"];
+    console.log("Anzahl an Fragen: " + fragen.length);
+    for (let i = 0; i < fragen.length; i++) {
+        if (daten[fragen[i]["@id"]] !== null && daten[fragen[i]["@id"]] !== undefined) {
+            const antworten = Object.entries(daten[fragen[i]["@id"]]);
+            let antwort = undefined;
+            for (let j = 0; j < antworten.length; j++) {
+                if (antworten[j][1]) {
+                    antwort = antworten[j][0];
+                }
+
+            }
+            store.commit("addSelected", {i: i, antwort: antwort});
+        }
+    }
+    console.log("Selected synced");
+
 
     //Sprungziel bestimmen
     let aktion = null;
@@ -66,14 +91,12 @@ async function process(res) {
     for (let i = 0; i < Object.keys(antworten).length; i++) {
         if (Object.entries(antworten)[i][1] === true) {
             const key = Object.keys(antworten)[i];
-            console.log(key);
             const optionen = vorletzte["optionen"];
             for (const option of optionen) {
                 if (option.antwort === key) {
                     aktion = option["aktion"];
                 }
             }
-            console.log(aktion)
         }
     }
 
