@@ -64,7 +64,6 @@ export default new Vuex.Store({
                 }
             }
             state.fragen = array;
-            state.current.loading = false;
         },
         getFragenAndStart(state, p) {
             let array = p.res.data.items;
@@ -88,8 +87,8 @@ export default new Vuex.Store({
         removeLetztesBesucht(state) {
             state.zuletztBesucht.pop();
         },
-        setSave(state, obj) {
-            state.save = obj;
+        setNotizen(state, not) {
+            state.save.notizen = not;
         },
         setDismissed(state, p) {
             state.hinweise[p.i].dismissed = p.b;
@@ -101,9 +100,9 @@ export default new Vuex.Store({
             state.current.loadingFrage = b;
         },
         addListenItem(state, l) {
-            if (l) {
+            if (parseFloat(l["fortschritt"]) === 100) {
                 state.listen.fertig.push(l);
-                } else {
+            } else {
                 state.listen.angefangen.push(l);
             }
         },
@@ -168,8 +167,8 @@ export default new Vuex.Store({
         removeLetztesBesucht(context) {
             context.commit("removeLetztesBesucht");
         },
-        setSave(context, obj) {
-            context.commit("setSave", obj)
+        setNotizen(context, obj) {
+            context.commit("setNotizen", obj)
         },
         setDismissed(context, p) {
             context.commit("setDismissed", p)
@@ -250,6 +249,9 @@ export default new Vuex.Store({
         },
         setSavefile(context, file) {
             context.commit("setSavefile", file);
+        },
+        setFragebogenID(context, id) {
+            context.commit("setFragebogenID", id)
         }
     },
     getters: {

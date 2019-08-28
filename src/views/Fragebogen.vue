@@ -41,6 +41,7 @@
         },
         beforeRouteLeave(to, from, next) {
             this.$store.dispatch("setSavefile", null);
+            this.$store.dispatch("setNotizen", []);
             next();
         }
     }
