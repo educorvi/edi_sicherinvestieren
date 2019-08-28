@@ -100,14 +100,11 @@ export default new Vuex.Store({
         setLoadingFrage(state, b) {
             state.current.loadingFrage = b;
         },
-        getListen(state, l) {
-            for (let i = 0; i < l.length; i++) {
-                if (l[i].fertig) {
-                    state.listen.fertig.push(l[i]);
+        addListenItem(state, l) {
+            if (l) {
+                state.listen.fertig.push(l);
                 } else {
-                    state.listen.angefangen.push(l[i]);
-                }
-
+                state.listen.angefangen.push(l);
             }
         },
         getConfig(state, c) {
@@ -183,12 +180,21 @@ export default new Vuex.Store({
         setLoadingFrage(context, b) {
             context.commit("setLoadingFrage", b);
         },
-        getListen(context, url) {
-            axios.get(url, {
+        getListen(context) {
+            axios.get(context.getters.config["dataURL"] + "/" + context.getters.token, {
                 headers: {
                     Accept: "application/json"
                 }
-            }).then(r => context.commit("getListen", r.data));
+            }).then(r => {
+                console.log(r.data.items);
+                for (const item of r.data.items) {
+                    axios.get(item["@id"], {
+                        headers: {
+                            Accept: "application/json"
+                        }
+                    }).then(res => context.commit("addListenItem", res.data));
+                }
+            });
         },
         getConfig(context) {
             axios.get("config.json", {
@@ -201,7 +207,7 @@ export default new Vuex.Store({
         start(context, p) {
             context.commit("getConfig", p.config);
             context.dispatch("getFolderstructure");
-            context.dispatch("getListen", "test/listen.json");
+            context.dispatch("getListen");
         },
         sendAntwort(context, p) {
             const data = {

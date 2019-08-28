@@ -5,10 +5,10 @@
                              v-if="item.progress">{{item.progress}}%
         </radial-progress-bar>
         <div>
-            <p v-if="item['maschinennummer']">{{item["maschinennummer"]}}</p>
-            <p v-if="item['maschinennummer'] && item['hersteller']"> von </p>
+            <p v-if="item['maschnr']">{{item["maschnr"]}}</p>
+            <p v-if="item['maschnr'] && item['hersteller']"> von </p>
             <p v-if="item['hersteller']">{{item["hersteller"]}}</p>
-            <h5>{{item.name}}</h5>
+            <h5>{{item.title}}</h5>
         </div>
     </b-card>
 </template>
