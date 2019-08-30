@@ -21,7 +21,10 @@
                 <b-modal centered id="modal-start" scrollable title="Maschinendaten">
                     <b-form autocomplete="off">
                         <b-input autocomplete="off" class="mb-1" placeholder="Dateiname (notwendig)" required
-                                 v-model.trim="save['title']"></b-input>
+                                 :state="validation" v-model.trim="save['title']"></b-input>
+                        <b-form-invalid-feedback :state="validation">
+                            Dieser Titel ist bereits vergeben!
+                        </b-form-invalid-feedback>
                         <b-input class="mb-1" placeholder="Hersteller" v-model.trim="save['hersteller']"></b-input>
                         <b-input autocomplete="off" class="mb-1" placeholder="Maschinennummer"
                                  v-model.trim="save['maschnr']"></b-input>
@@ -52,12 +55,13 @@
         data() {
             return {
                 ausgewaehlterFragebogen: {},
-                save: {}
+                save: {},
+                validation: null
             }
         },
         components: {BottomBar, Headbar},
         computed: {
-            ...mapGetters(["current", "frage", "loading", "fragen", "config"]),
+            ...mapGetters(["current", "frage", "loading", "fragen", "config", "listen"]),
             isModalCorrect() {
                 return (this.save.title !== undefined && this.save.title !== "")
             }
@@ -68,12 +72,33 @@
                 this.ausgewaehlterFragebogen = data;
             },
             startFragebogen() {
-                this.$bvModal.hide('modal-start');
-                store.dispatch("setLoading", true);
-                store.dispatch("getFragenAndStart", {url: this.ausgewaehlterFragebogen.child["@id"], i: 0});
-                store.dispatch("setSavefile", this.save);
-                this.save = {};
-                this.ausgewaehlterFragebogen = {};
+                if (!this.isTaken(this.save["title"])) {
+                    this.validation = null;
+                    this.$bvModal.hide('modal-start');
+                    store.dispatch("setLoading", true);
+                    store.dispatch("getFragenAndStart", {url: this.ausgewaehlterFragebogen.child["@id"], i: 0});
+                    store.dispatch("setSavefile", this.save);
+                    this.save = {};
+                    this.ausgewaehlterFragebogen = {};
+                } else {
+                    this.validation = false;
+                }
+            },
+            isTaken(title) {
+                let taken = false;
+                const angefangen = this.listen.angefangen;
+                const fertig = this.listen.fertig;
+                for (const element of angefangen) {
+                    if (title === element.title) {
+                        taken = true;
+                    }
+                }
+                for (const element of fertig) {
+                    if (this.title === element.title) {
+                        taken = true;
+                    }
+                }
+                return taken;
             }
         },
         created() {
