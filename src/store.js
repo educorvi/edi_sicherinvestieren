@@ -234,6 +234,7 @@ export default new Vuex.Store({
                 optionen: {},
                 notiz: "",
                 id: p.id,
+                fortschritt: p.progress,
                 fragebogen: context.getters.fragebogenID,
                 keyword: context.getters.token,
                 maschine: context.getters.savefile
@@ -253,16 +254,6 @@ export default new Vuex.Store({
             };
             axios(axiosOptions).then(res => console.log(res));
             // axios.post("https://ptsv2.com/t/neferin/post", JSON.stringify(data)).then(r => console.log(r.status));
-        },
-        sendFragebogenstarted(context, p) {
-            const axiosOptions = {
-                method: 'POST',
-                headers: {'content-type': 'application/json'},
-                data: {id: p.id, details: p.details},
-                // url: "https://ptsv2.com/t/neferin/post"
-                url: "http://httpbin.org/post"
-            };
-            // axios(axiosOptions).then(res => console.log(res.data));
         },
         setToken(context, t) {
             context.commit("setToken", t);

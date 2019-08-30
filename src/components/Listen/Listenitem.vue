@@ -1,8 +1,9 @@
 <template>
     <b-card @click="$emit('load', item)" class="mb-2 ">
-        <radial-progress-bar :completed-steps="item.progress" :diameter="60" :stroke-width="5" class="float-left mr-3"
+        <radial-progress-bar :completed-steps="item['fortschritt']" :diameter="60" :stroke-width="5"
+                             class="float-left mr-3"
                              :total-steps=100
-                             v-if="item.progress">{{item.progress}}%
+                             v-if="item['fortschritt']">{{item['fortschritt']}}%
         </radial-progress-bar>
         <div>
             <p v-if="item['maschnr']">{{item["maschnr"]}}</p>

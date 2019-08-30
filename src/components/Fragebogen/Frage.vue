@@ -58,7 +58,8 @@
                 this.$store.dispatch("sendAntwort", {
                     antwort: button.antwort,
                     i: this.$route.params.frage,
-                    id: this.frage["@id"]
+                    id: this.frage["@id"],
+                    progress: Math.round(((parseInt(this.$route.params.frage) + 1) / this.fragen.length) * 100)
                 });
                 if (button.aktion === null) {
                     if (parseInt(this.$route.params.frage) > this.fragen.length - 2) {
