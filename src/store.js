@@ -196,6 +196,7 @@ export default new Vuex.Store({
             context.commit("setLoadingFrage", b);
         },
         getListen(context) {
+            context.commit("setListen", {angefangen: [], fertig: []});
             axios.get(context.getters.config["dataURL"] + "/" + context.getters.token, {
                 headers: {
                     Accept: "application/json"
