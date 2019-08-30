@@ -3,7 +3,7 @@
         <radial-progress-bar :completed-steps="item['fortschritt']" :diameter="60" :stroke-width="5"
                              class="float-left mr-3"
                              :total-steps=100
-                             v-if="item['fortschritt']">{{item['fortschritt']}}%
+                             v-if="item['fortschritt'] && item['fortschritt'] !==100">{{item['fortschritt']}}%
         </radial-progress-bar>
         <div>
             <p v-if="item['maschnr']">{{item["maschnr"]}}</p>
