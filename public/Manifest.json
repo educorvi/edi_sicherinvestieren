@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#fff",
   "theme_color": "#fff",
-  "description": "Eine einfach lesbare Hacker News App.",
+  "description": "Dies App hilft Ihnen, Investitionsentscheidungen zu treffen.",
   "icons": [
     {
       "src": "images/logo.png",
@@ -13,9 +13,9 @@
       "type": "image/png"
     },
     {
-      "src": "images/logoSQ.png",
-      "sizes": "134x134",
-      "type": "image/png"
+      "src": "icons/app_icon.jpg",
+      "sizes": "190x190",
+      "type": "image/jpg"
     }
   ]
 }
