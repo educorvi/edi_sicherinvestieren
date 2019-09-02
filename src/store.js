@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import Vue from 'vue';
 import Vuex from 'vuex';
 import router from "@/router";
@@ -19,6 +20,7 @@ export default new Vuex.Store({
             loadingFrage: true
         },
         folderstructure: {},
+
         //  "/" ersetzt durch "§"
         fragebogenID: "",
         fragen: [],
