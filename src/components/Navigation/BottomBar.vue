@@ -5,6 +5,7 @@
                       v-if="listen.angefangen.length !== 0">
                 <md-icon class="md-bottom-bar-icon  mr-3 ml-3" md-src="icons/list.svg"></md-icon>
             </md-badge>
+            <md-icon class="md-bottom-bar-icon  mr-3 ml-3" md-src="icons/list.svg" v-else></md-icon>
 
             <!--            <md-icon class="md-bottom-bar-icon" md-src="icons/list.svg"></md-icon>-->
 
