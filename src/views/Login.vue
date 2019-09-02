@@ -6,8 +6,8 @@
         </div>
         <b-form v-else>
             <h6>Bitte geben Sie Ihre Login-Daten ein:</h6>
-            <b-input class="rounded-0" name="email" placeholder="E-Mail" type="text" v-model="user.email"></b-input>
-            <b-input class="rounded-0" name="password" placeholder="Passwort" type="password"
+            <b-input class="top" name="email" placeholder="E-Mail" type="text" v-model="user.email"></b-input>
+            <b-input class="bottom" name="password" placeholder="Passwort" type="password"
                      v-model="user.pin"></b-input>
             <b-button :disabled="working" @click="login" class="float-right mt-2">Einloggen</b-button>
         </b-form>
@@ -57,5 +57,11 @@
 </script>
 
 <style scoped>
+    .top {
+        border-radius: 5px 5px 0 0 !important;
+    }
 
+    .bottom {
+        border-radius: 0 0 5px 5px !important;
+    }
 </style>
