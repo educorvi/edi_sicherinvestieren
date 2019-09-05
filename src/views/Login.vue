@@ -52,6 +52,10 @@
                     this.$router.replace("/")
                 }
             }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.$store.dispatch("getListen");
+            next();
         }
     }
 </script>

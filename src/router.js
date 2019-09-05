@@ -27,6 +27,7 @@ export default new Router({
             name: "logout",
             beforeEnter: (to, from, next) => {
                 store.dispatch("setToken", null);
+                store.commit("setListen", {angefangen: [], fertig: []});
                 router.replace("/");
                 alert("Erfolgreich abgemeldet")
             }

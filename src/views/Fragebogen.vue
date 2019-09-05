@@ -44,6 +44,7 @@
             this.$store.dispatch("setNotizen", []);
             this.$store.commit("setSelected", []);
             this.$store.dispatch("setHistory", []);
+            this.$store.dispatch("getListen");
             next();
         }
     }
