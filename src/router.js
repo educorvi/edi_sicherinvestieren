@@ -33,19 +33,35 @@ export default new Router({
             }
         },
         {
-            path: '/liste/:offen',
-            name: 'listen',
-            component: () => import('./views/Listen.vue'),
-            beforeEnter: (to, from, next) => {
-                store.commit("setListen", {fertig: [], angefangen: []});
-                store.dispatch("getListen");
-                next()
-            }
+            path: "/settings",
+            name: "einstellungen",
+            component: () => import("./views/Menuepages/Settings.vue")
         },
         {
+            path: "/impressum",
+            name: "impressum",
+            component: () => import("./views/Menuepages/Impressum.vue")
+        },
+        {
+            path: '/liste/:offen',
+            name:
+                'listen',
+            component:
+                () => import('./views/Listen.vue'),
+            beforeEnter:
+                (to, from, next) => {
+                    store.commit("setListen", {fertig: [], angefangen: []});
+                    store.dispatch("getListen");
+                    next()
+                }
+        }
+        ,
+        {
             path: '/:fragebogen/:frage',
-            name: 'fragebogen',
-            component: () => import('./views/Fragebogen.vue')
+            name:
+                'fragebogen',
+            component:
+                () => import('./views/Fragebogen.vue')
         }
     ]
 })

@@ -10,9 +10,9 @@
                 <b-nav-item :to="'/login'" class="text-center" v-if="!loggedIn">Login</b-nav-item>
                 <b-nav-item :to="'/logout'" class="text-center" v-else>Logout</b-nav-item>
                 <b-nav-item class="text-center" href="#">Hilfe</b-nav-item>
-                <b-nav-item class="text-center" href="#">Einstellungen</b-nav-item>
+                <b-nav-item :to="'/settings'" class="text-center">Einstellungen</b-nav-item>
                 <b-nav-item class="text-center" href="#">Kontakt</b-nav-item>
-                <b-nav-item class="text-center" href="#">Impressum</b-nav-item>
+                <b-nav-item :to="'/impressum'" class="text-center">Impressum</b-nav-item>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
