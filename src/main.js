@@ -24,6 +24,10 @@ Vue.use(MdButton);
 Vue.use(MdBottomBar);
 Vue.use(MdBadge);
 
+// Vue.config.errorHandler = function (err, vm, info) {
+//     alert(`Error: ${err.toString()}\nInfo: ${info}`);
+// };
+
 const options = {
     namespace: 'vuejs__', // key prefix
     name: 'ls', // name variable Vue.[ls] or this.[$ls],
