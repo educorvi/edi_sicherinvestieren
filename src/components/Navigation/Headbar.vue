@@ -6,7 +6,7 @@
         <b-navbar-toggle target="collapse"></b-navbar-toggle>
 
         <b-collapse class="ml-n3 mr-n3" id="collapse" is-nav style="background: white">
-            <b-navbar-nav class="ml-auto">
+            <b-navbar-nav class="ml-auto border-bottom border-dark">
                 <b-nav-item :to="'/login'" class="text-center" v-if="!loggedIn">Login</b-nav-item>
                 <b-nav-item :to="'/logout'" class="text-center" v-else>Logout</b-nav-item>
                 <b-nav-item class="text-center" href="#">Hilfe</b-nav-item>

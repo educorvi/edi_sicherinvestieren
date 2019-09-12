@@ -1,16 +1,22 @@
 <template>
     <Transition mode="out-in" name="animation">
         <!--Angefangene Listen-->
-        <div :key="'offen'" v-if="$route.params.offen==='true'">
-            <p style="color: white" v-if="listen.angefangen.length === 0">Keine gespeicherte Liste</p>
-            <Listenitem :item="liste" :key="index" @load="loadAngefangen"
-                        v-for="(liste, index) in listen.angefangen"></Listenitem>
-        </div>
+        <div v-if="!loadingListe">
+            <div :key="'offen'" v-if="$route.params.offen==='true'">
+                <p style="color: white" v-if="listen.angefangen.length === 0">Keine gespeicherte Liste</p>
+                <Listenitem :item="liste" :key="index" @load="load"
+                            v-for="(liste, index) in listen.angefangen"></Listenitem>
+            </div>
 
-        <!--Fertige Listen-->
-        <div :key="'fertig'" v-else>
-            <p style="color: white" v-if="listen.fertig.length === 0">Keine gespeicherte Liste</p>
-            <Listenitem :item="liste" :key="index" v-for="(liste, index) in listen.fertig"></Listenitem>
+            <!--Fertige Listen-->
+            <div :key="'fertig'" v-else>
+                <p style="color: white" v-if="listen.fertig.length === 0">Keine gespeicherte Liste</p>
+                <Listenitem :item="liste" :key="index" @load="load"
+                            v-for="(liste, index) in listen.fertig"></Listenitem>
+            </div>
+        </div>
+        <div class="w-100 text-center mt-5" v-else>
+            <b-spinner variant="white"></b-spinner>
         </div>
     </Transition>
 </template>
@@ -24,10 +30,10 @@
         name: "Listen",
         components: {Listenitem},
         computed: {
-            ...mapGetters(["listen"])
+            ...mapGetters(["listen", "loadingListe"])
         },
         methods: {
-            loadAngefangen(item) {
+            load(item) {
                 load(item["@id"])
             }
         },

@@ -40,11 +40,13 @@
             ...mapActions(["setLoading"])
         },
         beforeRouteLeave(to, from, next) {
-            this.$store.dispatch("setSavefile", null);
-            this.$store.dispatch("setNotizen", []);
-            this.$store.commit("setSelected", []);
-            this.$store.dispatch("setHistory", []);
-            this.$store.dispatch("getListen");
+            if (to.name !== "abschluss") {
+                this.$store.dispatch("setSavefile", null);
+                this.$store.dispatch("setNotizen", []);
+                this.$store.commit("setSelected", []);
+                this.$store.dispatch("setHistory", []);
+                this.$store.dispatch("getListen");
+            }
             next();
         }
     }

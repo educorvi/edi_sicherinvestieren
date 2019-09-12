@@ -17,7 +17,8 @@ export default new Vuex.Store({
 
         current: {
             loading: true,
-            loadingFrage: true
+            loadingFrage: true,
+            loadingListe: false
         },
         folderstructure: {},
 
@@ -104,6 +105,9 @@ export default new Vuex.Store({
         },
         setLoadingFrage(state, b) {
             state.current.loadingFrage = b;
+        },
+        setLoadingListe(state, b) {
+            state.current.loadingListe = b;
         },
         addListenItem(state, l) {
             if (parseFloat(l["fortschritt"]) === 100) {
@@ -308,6 +312,8 @@ export default new Vuex.Store({
         savefile:
             state => state.save.file,
         selected:
-            state => state.save.selected
+            state => state.save.selected,
+        loadingListe:
+            state => state.current.loadingListe
     }
 })
