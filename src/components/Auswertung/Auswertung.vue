@@ -1,6 +1,6 @@
 <template>
     <div class="text-center" v-if="loading">
-        <b-spinner variant="light"></b-spinner>
+        <b-spinner variant="dark"></b-spinner>
     </div>
     <div v-else>
         <Auswertungsfrage :frage="frage" :key="index" :selected="selected[index]"
