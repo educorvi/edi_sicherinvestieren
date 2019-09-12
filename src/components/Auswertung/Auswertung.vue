@@ -1,5 +1,5 @@
 <template>
-    <div class="text-center" v-if="loading">
+    <div class="text-center w-100" v-if="loading">
         <b-spinner variant="dark"></b-spinner>
     </div>
     <div v-else>
