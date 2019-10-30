@@ -12,7 +12,10 @@
         <Hinweis :id="0" @ok="$store.dispatch('setDismissed', {i: 0, b: true})" v-if="!hinweise[0].dismissed"/>
         <!--        Fragebogenauswahl-->
         <div v-else>
+            <!--            Fragebogenliste-->
             <div :key="index" v-for="(folder, index) in folderstructure">
+
+                <!--                Unterordner-->
                 <b-card class="mb-2" no-body v-if="folder['@type']!=='Fragebogen'">
                     <b-button v-b-toggle="'folder_'+index">{{folder.title}}</b-button>
                     <b-collapse :id="'folder_'+index" role="tabpanel">
@@ -23,6 +26,8 @@
                         </b-card>
                     </b-collapse>
                 </b-card>
+
+                <!--                Einträge, die kein Ordner sind, aber im root angezeigt werden-->
                 <b-card @click="$emit('childPressed', {folder: null, child: folder, index: index})" class="mb-2" no-body
                         v-else>
                     <b-button>{{folder.title}}</b-button>
