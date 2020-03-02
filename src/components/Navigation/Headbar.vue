@@ -44,6 +44,6 @@
         width: 100vw; /* take up the full browser width */
         z-index: 200; /* high z index so other content scrolls underneath */
         background: white;
-        height: 60px;
+        height: 10vh;
     }
 </style>

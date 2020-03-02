@@ -44,6 +44,7 @@
                         this.forceFileDownload(response);
 
                     })
+                    // eslint-disable-next-line no-console
                     .catch(() => console.log('error occured'))
             },
             forceFileDownload(response) {

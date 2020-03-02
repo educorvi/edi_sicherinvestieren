@@ -112,11 +112,8 @@
 </script>
 
 
-<style>
-    #root {
-        padding-top: 70px;
-        padding-bottom: 112px;
-    }
+<style lang="scss">
+    @import "style";
 
     .animation-enter-active, .animation-leave-active, .fade-enter-active, .fade-leave-active {
         transition: all .3s;
@@ -134,6 +131,13 @@
 
     .fade-enter, .fade-leave-to {
         opacity: 0;
+    }
+
+    #app {
+        background-color: $primary;
+        height: 100vh;
+        padding-top: 12vh;
+        padding-bottom: 12vh;
     }
 </style>
 

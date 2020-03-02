@@ -16,6 +16,7 @@
                     <p v-if="item['maschnr'] && item['hersteller']"> von </p>
                     <p v-if="item['hersteller']">{{item["hersteller"]}}</p>
                     <h5>{{item.title}}</h5>
+                    <p class="text-muted" v-if="fragebogenName">{{fragebogenName}}</p>
                 </div>
             </div>
 
@@ -29,6 +30,8 @@
 </template>
 
 <script>
+    /* eslint-disable no-console */
+
     import RadialProgressBar from 'vue-radial-progress';
     import axios from "axios";
 
@@ -37,6 +40,14 @@
         props: ["item"],
         components: {
             RadialProgressBar
+        },
+        data() {
+            return {
+                fragebogenName: null
+            }
+        },
+        created() {
+            // axios.get()
         },
         methods: {
             confirm() {

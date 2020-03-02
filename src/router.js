@@ -25,7 +25,7 @@ export default new Router({
         {
             path: "/logout",
             name: "logout",
-            beforeEnter: (to, from, next) => {
+            beforeEnter: () => {
                 store.dispatch("setToken", null);
                 store.commit("setListen", {angefangen: [], fertig: []});
                 router.replace("/");
