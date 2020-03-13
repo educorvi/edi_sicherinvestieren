@@ -1,5 +1,5 @@
 <template>
-    <p class="text-muted" v-if="listen.length<=0">Noch keine {{$route.params.fertig?"beendeten":"fertigen"}} Listen</p>
+    <p class="text-muted" v-if="listen.length<=0">Noch keine {{$route.params.fertig === "true"?"beendeten":"offenen"}} Listen</p>
     <div v-else>
         <Listenitem :item="list" :key="list.name" :last="index===listen.length-1" @deleted="getListen()"
                     v-for="(list, index) in listen"/>

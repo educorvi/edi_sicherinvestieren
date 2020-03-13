@@ -12,7 +12,9 @@
         </b-card-body>
       </b-card>
     </div>
-    <BottomBar id="bottombar"/>
+    <div id="bottomDiv" class="d-flex justify-content-center">
+      <BottomBar id="bottombar"/>
+    </div>
   </div>
 </template>
 
@@ -32,7 +34,13 @@
     margin-bottom: 60px;
   }
 
-  #bottombar {
+  $breakpoint: 576px;
+
+  #bottomDiv{
+    text-align: center;
+    /*padding-left: 30%;*/
+    /*padding-right: 30%;*/
+
     position: fixed;
     /* fixing the position takes it out of html flow - knows
                       nothing about where to locate itself except by browser
@@ -40,7 +48,16 @@
     left: 0; /* top left corner should start at leftmost spot */
     bottom: 0; /* top left corner should start at topmost spot */
     z-index: 200; /* high z index so other content scrolls underneath */
-    height: 60px;
+    height: 55px;
+    width: 100vw;
+    background-color: white;
+  }
+
+  @media(min-width: $breakpoint){
+    #bottombar {
+      width: fit-content;
+      min-width: fit-content !important;
+    }
   }
 
 
