@@ -7,7 +7,8 @@
             <p :style="getStyle(getOption().color)" class="mb-0">Gewählte Antwort: <b>{{selected}}</b></p>
         </b-card-header>
         <b-collapse :id="'col_'+frage['@id']">
-            <b-card-body style="background-color: white"><span v-html="frage.frage.data"></span></b-card-body>
+            <b-card-body style="background-color: white; text-align: left"><span v-html="frage.frage.data"></span>
+            </b-card-body>
         </b-collapse>
     </b-card>
 </template>
@@ -15,7 +16,16 @@
 <script>
     export default {
         name: "Auswertungsfrage",
-        props: ["frage", "selected"],
+        props: {
+            frage: {
+                type: Object,
+                required: true
+            },
+            selected: {
+                type: String,
+                required: true
+            }
+        },
         computed: {
             Color() {
                 return this.getOption().color;
