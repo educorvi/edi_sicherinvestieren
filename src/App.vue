@@ -1,145 +1,67 @@
 <template>
-    <div id="app">
-
-        <Headbar/>
-
-
-        <Transition mode="out-in" name="fade">
-            <div class="text-center w-100" v-if="loading">
-                <b-spinner id="spinner" variant="light"/>
-            </div>
-            <div v-else>
-
-                <div class="container-fluid" id="root">
-                    <Transition mode="out-in" name="animation">
-                        <router-view @childPressed="initiateFragebogen"/>
-                    </Transition>
-                </div>
-
-
-                <!--        StartModal mit Dateneingabe-->
-                <b-modal centered id="modal-start" scrollable title="Maschinendaten">
-                    <b-form autocomplete="off">
-                        <b-input autocomplete="off" class="mb-1" placeholder="Dateiname (notwendig)" required
-                                 :state="validation" v-model.trim="save['title']"></b-input>
-                        <b-form-invalid-feedback :state="validation">
-                            Dieser Titel ist bereits vergeben!
-                        </b-form-invalid-feedback>
-                        <b-input class="mb-1" placeholder="Hersteller" v-model.trim="save['hersteller']"></b-input>
-                        <b-input autocomplete="off" class="mb-1" placeholder="Maschinennummer"
-                                 v-model.trim="save['maschnr']"></b-input>
-                    </b-form>
-                    <div class="w-100" slot="modal-footer">
-                        <b-button :disabled="!isModalCorrect" @click="startFragebogen" block class="mt-1"
-                                  variant="success">
-                            Start
-                        </b-button>
-                        <b-button @click="$bvModal.hide('modal-start')" block class="mt-1">Abbrechen</b-button>
-                    </div>
-                </b-modal>
-            </div>
-        </Transition>
-
-        <BottomBar/>
+  <div id="app">
+    <Headbar/>
+    <div class="container-fluid pt-3 pb-3" id="view">
+      <b-card no-body>
+        <b-card-header>
+          <h5>{{$route.name!=="Fragebogen"?$route.name:fragebogenData.title}}</h5>
+          <p class="mb-0" v-if="$route.name==='Fragebogen'">{{fragebogenData.thema}}</p>
+        </b-card-header>
+        <b-card-body>
+          <router-view/>
+        </b-card-body>
+      </b-card>
     </div>
+    <BottomBar id="bottombar"/>
+  </div>
 </template>
 
+<style lang="scss">
+  @import "styles";
 
+  #app {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    text-align: center;
+    background-color: $primary;
+  }
+
+  #view {
+    max-width: 800px;
+    margin-bottom: 60px;
+  }
+
+  #bottombar {
+    position: fixed;
+    /* fixing the position takes it out of html flow - knows
+                      nothing about where to locate itself except by browser
+                      coordinates */
+    left: 0; /* top left corner should start at leftmost spot */
+    bottom: 0; /* top left corner should start at topmost spot */
+    z-index: 200; /* high z index so other content scrolls underneath */
+    height: 60px;
+  }
+
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
+  {
+    opacity: 0;
+  }
+</style>
 <script>
-    import Headbar from "@/components/Navigation/Headbar";
-    import BottomBar from "@/components/Navigation/BottomBar";
-    import {mapGetters} from "vuex";
-    import store from "@/store";
+  import Headbar from "@/components/Navigation/Headbar";
+  import BottomBar from "@/components/Navigation/BottomBar";
+  import {mapGetters} from "vuex";
 
-    export default {
-        data() {
-            return {
-                ausgewaehlterFragebogen: {},
-                save: {},
-                validation: null
-            }
-        },
-        components: {BottomBar, Headbar},
-        computed: {
-            ...mapGetters(["current", "frage", "loading", "fragen", "config", "listen"]),
-            isModalCorrect() {
-                return (this.save.title !== undefined && this.save.title !== "")
-            }
-        },
-        methods: {
-            initiateFragebogen(data) {
-                this.$bvModal.show('modal-start');
-                this.ausgewaehlterFragebogen = data;
-            },
-            startFragebogen() {
-                if (!this.isTaken(this.save["title"])) {
-                    this.validation = null;
-                    this.$bvModal.hide('modal-start');
-                    store.dispatch("setLoading", true);
-                    store.dispatch("getFragenAndStart", {url: this.ausgewaehlterFragebogen.child["@id"], i: 0});
-                    store.dispatch("setSavefile", this.save);
-                    this.save = {};
-                    this.ausgewaehlterFragebogen = {};
-                } else {
-                    this.validation = false;
-                }
-            },
-            isTaken(title) {
-                let taken = false;
-                const angefangen = this.listen.angefangen;
-                const fertig = this.listen.fertig;
-                for (const element of angefangen) {
-                    if (title === element.title) {
-                        taken = true;
-                    }
-                }
-                for (const element of fertig) {
-                    if (this.title === element.title) {
-                        taken = true;
-                    }
-                }
-                return taken;
-            }
-        },
-        created() {
-            store.dispatch("getConfig");
-        },
-        mounted() {
-            store.dispatch("setDismissed", {i: 0, b: this.$ls.get("hinweis_0_ausblenden", false)});
-            store.dispatch("setToken", this.$ls.get("token", null));
-        }
-    }
+  export default {
+    components: {BottomBar, Headbar},
+    computed: {
+      ...mapGetters(["fragebogenData"])
+    },
+  }
 </script>
-
-
-<style>
-    #root {
-        padding-top: 70px;
-        padding-bottom: 112px;
-    }
-
-    .animation-enter-active, .animation-leave-active, .fade-enter-active, .fade-leave-active {
-        transition: all .3s;
-    }
-
-    .animation-enter {
-        transform: translateX(-10px);
-        opacity: 0;
-    }
-
-    .animation-leave-to {
-        transform: translateX(10px);
-        opacity: 0;
-    }
-
-    .fade-enter, .fade-leave-to {
-        opacity: 0;
-    }
-</style>
-
-
-<style scoped>
-    #spinner {
-        margin-top: 100px;
-    }
-</style>

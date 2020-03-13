@@ -1,40 +1,34 @@
 <template>
-    <Transition mode="out-in" name="animation">
-        <!--Angefangene Listen-->
-        <div v-if="!loadingListe">
-            <div :key="'offen'" v-if="$route.params.offen==='true'">
-                <p style="color: white" v-if="listen.angefangen.length === 0">Keine gespeicherte Liste</p>
-                <Listenitem :item="liste" :key="index" @load="load"
-                            v-for="(liste, index) in listen.angefangen"></Listenitem>
-            </div>
-
-            <!--Fertige Listen-->
-            <div :key="'fertig'" v-else>
-                <p style="color: white" v-if="listen.fertig.length === 0">Keine gespeicherte Liste</p>
-                <Listenitem :item="liste" :key="index" @load="load"
-                            v-for="(liste, index) in listen.fertig"></Listenitem>
-            </div>
-        </div>
-        <div class="w-100 text-center mt-5" v-else>
-            <b-spinner variant="white"></b-spinner>
-        </div>
-    </Transition>
+    <p class="text-muted" v-if="listen.length<=0">Noch keine {{$route.params.fertig?"beendeten":"fertigen"}} Listen</p>
+    <div v-else>
+        <Listenitem :item="list" :key="list.name" :last="index===listen.length-1" @deleted="getListen()"
+                    v-for="(list, index) in listen"/>
+    </div>
 </template>
 
 <script>
-    import Listenitem from "@/components/Listen/Listenitem";
-    import {mapGetters} from 'vuex';
-    import {load} from "../Loader"
+    import db from "../js/localDatabase"
+    import Listenitem from "@/components/Helper/Listenitem";
 
     export default {
         name: "Listen",
         components: {Listenitem},
-        computed: {
-            ...mapGetters(["listen", "loadingListe"])
+        data() {
+            return {
+                listen: []
+            }
+        },
+        created() {
+            this.getListen();
+        },
+        watch: {
+            "$route.params.fertig": function () {
+                this.getListen();
+            }
         },
         methods: {
-            load(item) {
-                load(item["@id"])
+            getListen() {
+                db.getListen(this.$route.params.fertig === "true").then(res => this.listen = res);
             }
         },
     }

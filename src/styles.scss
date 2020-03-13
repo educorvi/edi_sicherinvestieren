@@ -1,0 +1,8 @@
+$primary: #014B94;
+
+::selection {
+  background-color: $primary !important;
+}
+
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
