@@ -1,36 +1,28 @@
 <template>
     <p class="text-muted" v-if="listen.length<=0">Noch keine {{$route.params.fertig === "true"?"beendeten":"offenen"}} Listen</p>
     <div v-else>
-        <Listenitem :item="list" :key="list.name" :last="index===listen.length-1" @deleted="getListen()"
+        <Listenitem :item="list.doc" :key="list.name" :last="index===listen.length-1" @deleted="deleteList({...list.doc, _rev:list.value.rev})"
                     v-for="(list, index) in listen"/>
     </div>
 </template>
 
 <script>
     import db from "../js/localDatabase"
-    import Listenitem from "@/components/Helper/Listenitem";
+    import Listenitem from "../components/Helper/Listenitem";
+    import {mapGetters} from "vuex"
 
     export default {
         name: "Listen",
         components: {Listenitem},
-        data() {
-            return {
-                listen: []
-            }
-        },
-        created() {
-            this.getListen();
-        },
-        watch: {
-            "$route.params.fertig": function () {
-                this.getListen();
-            }
+        computed: {
+            ...mapGetters(["listen"])
         },
         methods: {
-            getListen() {
-                db.getListen(this.$route.params.fertig === "true").then(res => this.listen = res);
+            deleteList(list) {
+                db.deleteListe(list);
             }
         },
+
     }
 </script>
 

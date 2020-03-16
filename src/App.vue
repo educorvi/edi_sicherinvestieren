@@ -74,11 +74,15 @@
   import Headbar from "@/components/Navigation/Headbar";
   import BottomBar from "@/components/Navigation/BottomBar";
   import {mapGetters} from "vuex";
+  import db from './js/localDatabase'
 
   export default {
     components: {BottomBar, Headbar},
     computed: {
       ...mapGetters(["fragebogenData"])
     },
+    created() {
+      db.getAllListen();
+    }
   }
 </script>

@@ -122,11 +122,11 @@
                     this.$store.commit("setFragebogenData", {progress: this.frageIndex / this.fragebogen.items.length * 100});
                 }
             },
-            // eslint-disable-next-line no-unused-vars
             createDatabaseObject(fertig = false) {
                 const retFertig = (fertig) ? 1 : 0;
                 return {
                     ...this.globalData,
+                    _id: this.globalData.name,
                     selected: this.selected,
                     notizen: this.notizen,
                     history: this.history,
@@ -153,7 +153,7 @@
             this.http.get(this.$route.query.id + "?fullobjects=true").then(res => {
                 const data = res.data;
                 this.fragebogen = data;
-                db.putListe(this.createDatabaseObject());
+                // db.putListe(this.createDatabaseObject());
                 this.$store.commit("setFragebogenData", {
                     title: data.title,
                     thema: data.items[this.frageIndex].thema.title,

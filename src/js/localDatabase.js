@@ -1,9 +1,14 @@
-import Dexie from "dexie";
+/* eslint-disable no-unused-vars */
+import PouchDB from "pouchdb";
+import store from "../store/index"
 
-const db = new Dexie('listen');
-db.version(3).stores({
-    listen: 'name, maschinentyp, hersteller, baujahr, fertig'
-})
+const db = new PouchDB('sicherInvestListen');
+const remoteCouch = false;
+
+db.changes({
+    since: 'now',
+    live: true
+}).on('change', getAllListen)
 
 const retObject = {
     getAllListen,
@@ -15,19 +20,26 @@ const retObject = {
 export default retObject;
 
 export function getAllListen() {
-    return db.listen.toArray();
+    return db.allDocs({include_docs: true, descending: true}, (err, doc) => store.commit("setListen", doc.rows));
 }
 
 export function putListe(liste) {
-    db.listen.put(liste);
+    console.log(liste)
+    db.put(liste, function callback(err, result) {
+        if (!err) {
+            console.log(result);
+            console.log('Successfully put list!');
+        } else {
+            console.log(err);
+        }
+    });
 }
 
-export function deleteListe(name) {
-    return db.listen.where("name").equals(name).delete();
+export function deleteListe(item) {
+    return db.remove(item)
 }
 
 // eslint-disable-next-line no-unused-vars
-export async function getListen(fertig) {
-    const IntFertig = fertig ? 1 : 0;
-    return db.listen.where('fertig').equals(IntFertig).toArray();
+export function getListen(fertig) {
+    return store.state.listen;
 }

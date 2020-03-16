@@ -24,18 +24,19 @@
 </template>
 <script>
     // import {mapGetters} from "vuex"
-    import {getListen} from "@/js/localDatabase";
+
 
     export default {
         name: 'BottomBar',
-        created() {
-            getListen(0).then(res => this.offeneListen = res.length)
-        },
         data() {
             return {
                 //@Todo remove Dummy
-                loggedIn: true,
-                offeneListen: 0
+                loggedIn: true
+            }
+        },
+        computed: {
+            offeneListen() {
+                return this.$store.state.listen.length;
             }
         },
     }

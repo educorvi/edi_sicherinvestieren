@@ -99,8 +99,7 @@
 
 <script>
     import {mapGetters} from "vuex";
-    import CustomSpinner from "@/components/Helper/CustomSpinner";
-    import db from "../js/localDatabase"
+    import CustomSpinner from "../components/Helper/CustomSpinner";
 
     export default {
         name: 'Uebersicht',
@@ -139,7 +138,6 @@
             ...mapGetters(["config"])
         },
         created() {
-            db.getAllListen().then(res => this.listen = res);
             if (this.config === undefined || this.config === null) {
                 this.http.get("./config.json").then(res => {
                     this.$store.commit("setConfig", res.data);
@@ -198,8 +196,6 @@
         },
         watch: {
             "modalData.name": function (newName) {
-                console.log("lol")
-
                 function hasValue(obj) {
                     return obj["name"] === newName;
                 }
