@@ -24,12 +24,8 @@ export function getAllListen() {
 }
 
 export function putListe(liste) {
-    console.log(liste)
     db.put(liste, function callback(err, result) {
-        if (!err) {
-            console.log(result);
-            console.log('Successfully put list!');
-        } else {
+        if (err) {
             console.log(err);
         }
     });
@@ -41,5 +37,5 @@ export function deleteListe(item) {
 
 // eslint-disable-next-line no-unused-vars
 export function getListen(fertig) {
-    return store.state.listen;
+    return store.state.listen.filter(list => fertig === list.doc.fertig);
 }

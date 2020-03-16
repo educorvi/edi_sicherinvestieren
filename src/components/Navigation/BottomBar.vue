@@ -5,7 +5,7 @@
             <md-bottom-bar-item :disabled="!loggedIn" to="/listen/false">
 
                 <!--            @TODO Badge implementieren-->
-                <md-badge v-if="offeneListen>0" :md-content="offeneListen">
+                <md-badge v-if="offeneListen.length>0" :md-content="offeneListen.length">
                     <md-icon class="md-bottom-bar-icon" md-src="icons/list.svg"></md-icon>
                     <span class="md-bottom-bar-label">Offene Listen </span>
                 </md-badge>
@@ -26,6 +26,8 @@
     // import {mapGetters} from "vuex"
 
 
+    import db from "../../js/localDatabase";
+
     export default {
         name: 'BottomBar',
         data() {
@@ -36,7 +38,7 @@
         },
         computed: {
             offeneListen() {
-                return this.$store.state.listen.length;
+                return db.getListen(0)
             }
         },
     }

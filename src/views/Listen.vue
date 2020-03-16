@@ -9,13 +9,14 @@
 <script>
     import db from "../js/localDatabase"
     import Listenitem from "../components/Helper/Listenitem";
-    import {mapGetters} from "vuex"
 
     export default {
         name: "Listen",
         components: {Listenitem},
         computed: {
-            ...mapGetters(["listen"])
+            listen() {
+                return db.getListen(this.$route.params.fertig === "true"?1:0)
+            }
         },
         methods: {
             deleteList(list) {
