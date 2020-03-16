@@ -12,7 +12,9 @@ export default new Vuex.Store({
             progress: 0,
             thema: ""
         },
-        listen: []
+        listen: [],
+        userID: "julian2812",
+        remoteCouch: 'http://admin:krks.d3print@astra2441.server4you.de:5984/listen'
     },
     mutations: {
         setConfig(state, config) {
@@ -43,7 +45,8 @@ export default new Vuex.Store({
         },
         config: state => state.config,
         fragebogenData: state => state.fragebogenData,
-        listen: state => state.listen
+        listen: state => state.listen,
+        userID: state => state.userID
 
     },
 })

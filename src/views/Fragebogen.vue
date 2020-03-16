@@ -39,7 +39,7 @@
 </template>
 
 <script>
-    import CustomSpinner from "@/components/Helper/CustomSpinner";
+    import CustomSpinner from "../components/Helper/CustomSpinner";
     import db from "../js/localDatabase"
 
     export default {
@@ -158,7 +158,8 @@
                     title: data.title,
                     thema: data.items[this.frageIndex].thema.title,
                     progress: this.frageIndex / this.fragebogen.items.length * 100
-                })
+                });
+                db.putListe(this.createDatabaseObject());
             });
         },
         // eslint-disable-next-line no-unused-vars

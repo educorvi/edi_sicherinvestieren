@@ -1,14 +1,31 @@
 /* eslint-disable no-unused-vars */
 import PouchDB from "pouchdb";
-import store from "../store/index"
+import store from "../store/index";
+import {mapGetters} from "vuex";
 
 const db = new PouchDB('sicherInvestListen');
-const remoteCouch = false;
+const remoteCouch = store.state.remoteCouch;
 
 db.changes({
     since: 'now',
     live: true
-}).on('change', getAllListen)
+}).on('change', getAllListen);
+
+function sync() {
+    // syncDom.setAttribute('data-sync-state', 'syncing');
+    const opts = {live: true};
+    db.replicate.to(remoteCouch, opts, syncError);
+    db.replicate.from(remoteCouch, opts, syncError);
+}
+
+if (remoteCouch) {
+    sync()
+}
+
+function syncError(err) {
+    console.error("Fehler");
+    console.error(err)
+}
 
 const retObject = {
     getAllListen,
@@ -24,9 +41,29 @@ export function getAllListen() {
 }
 
 export function putListe(liste) {
-    db.put(liste, function callback(err, result) {
+    const listen = store.state.listen;
+
+
+    let rev = null;
+    let index = null;
+    for (let i = 0; i < listen.length; i++) {
+        if (listen[i].doc.name === liste.name) {
+            rev = listen[i].doc._rev;
+            index = i;
+        }
+
+    }
+
+
+    const put = {
+        ...liste,
+        _rev: rev,
+        user: store.state.userID
+    };
+
+    db.put(put, function callback(err, result) {
         if (err) {
-            console.log(err);
+            console.error(err);
         }
     });
 }
