@@ -1,10 +1,17 @@
 /* eslint-disable no-unused-vars */
 import PouchDB from "pouchdb";
+import pdfind from "pouchdb-find"
+PouchDB.plugin(pdfind);
 import store from "../store/index";
-import {mapGetters} from "vuex";
 
 const db = new PouchDB('sicherInvestListen');
 const remoteCouch = store.state.remoteCouch;
+
+db.createIndex({
+    index: {
+        fields: ['user']
+    }
+}).then(res => console.log(res)).catch(err => console.error(err));
 
 db.changes({
     since: 'now',
@@ -12,7 +19,6 @@ db.changes({
 }).on('change', getAllListen);
 
 function sync() {
-    // syncDom.setAttribute('data-sync-state', 'syncing');
     const opts = {live: true};
     db.replicate.to(remoteCouch, opts, syncError);
     db.replicate.from(remoteCouch, opts, syncError);
