@@ -13,8 +13,8 @@ export default new Vuex.Store({
             thema: ""
         },
         listen: [],
-        userID: "julian2812",
-        remoteCouch: 'http://sicherinvestieren:BZngttoixEtp5ytIJ74p@astra2441.server4you.de:5984/listen'
+        userID: null,
+        remoteCouch: null
     },
     mutations: {
         setConfig(state, config) {
@@ -35,6 +35,15 @@ export default new Vuex.Store({
         },
         setListen(state, listen) {
             state.listen = listen;
+        },
+        setUserID(state, id) {
+            if (id) {
+                state.remoteCouch = 'http://admin:krks.d3print@astra2441.server4you.de:5984/listen_user_' + id;
+            } else {
+                state.remoteCouch = null;
+            }
+
+            state.userID = id;
         }
     },
     actions: {},
@@ -46,7 +55,8 @@ export default new Vuex.Store({
         config: state => state.config,
         fragebogenData: state => state.fragebogenData,
         listen: state => state.listen,
-        userID: state => state.userID
+        userID: state => state.userID,
+        loggedIn: state => !!state.userID
 
     },
 })

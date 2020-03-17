@@ -8,8 +8,8 @@
 
             <b-collapse id="collapse" is-nav>
                 <b-navbar-nav class="">
-                    <b-nav-item :to="'/login'" v-if="true">Login</b-nav-item>
-                    <b-nav-item :to="'/logout'" v-else>Logout</b-nav-item>
+                    <b-nav-item :to="'/login'" v-if="!loggedIn">Login</b-nav-item>
+<!--                    <b-nav-item :to="'/'" @click="logout" v-else>Logout</b-nav-item>-->
                     <b-nav-item href="#">Hilfe</b-nav-item>
                     <b-nav-item :to="'/settings'">Einstellungen</b-nav-item>
                     <b-nav-item-dropdown text="Über">
@@ -29,11 +29,19 @@
 <script>
 
     import ProgressBar from "@/components/Helper/ProgressBar";
+    import {mapGetters} from "vuex"
 
     export default {
         name: "Headbar",
         components: {ProgressBar},
-        computed: {}
+        computed: {
+            ...mapGetters(["loggedIn"])
+        },
+        methods: {
+            logout() {
+                this.$store.commit("setUserID", null)
+            }
+        },
     }
 </script>
 

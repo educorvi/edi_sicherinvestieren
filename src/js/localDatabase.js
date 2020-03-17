@@ -5,7 +5,10 @@ PouchDB.plugin(pdfind);
 import store from "../store/index";
 
 const db = new PouchDB('sicherInvestListen');
-const remoteCouch = store.state.remoteCouch;
+let config = {
+    remoteCouch: store.state.remoteCouch,
+    loggedIn: store.getters.loggedIn
+}
 
 db.createIndex({
     index: {
@@ -18,13 +21,17 @@ db.changes({
     live: true
 }).on('change', getAllListen);
 
-function sync() {
+export function sync() {
+    config = {
+        remoteCouch: store.state.remoteCouch,
+        loggedIn: store.getters.loggedIn
+    }
     const opts = {live: true};
-    db.replicate.to(remoteCouch, opts, syncError);
-    db.replicate.from(remoteCouch, opts, syncError);
+    db.replicate.to(config.remoteCouch, opts, syncError);
+    db.replicate.from(config.remoteCouch, opts, syncError);
 }
 
-if (remoteCouch) {
+if (config.remoteCouch&&config.loggedIn) {
     sync()
 }
 
@@ -44,7 +51,7 @@ export default retObject;
 
 export function getAllListen() {
     return db.find({
-        selector: {user: store.state.userID}
+        selector: {user: {$ne: ""}}
     }).then(res => store.commit("setListen", res.docs));
 }
 
@@ -64,12 +71,11 @@ export function putListe(liste) {
 
 
     const put = {
+        user: store.state.userID || "local",
         ...liste,
         _rev: rev,
-        user: store.state.userID
     };
 
-    console.log(put);
 
     db.put(put, function callback(err, result) {
         if (err) {

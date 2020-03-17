@@ -39,6 +39,11 @@ const routes = [
         component: () => import('../views/Listen')
     },
     {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/Login')
+    },
+    {
         path: '*',
         name: 'Fehler 404',
         component: () => import('../views/notFound')
