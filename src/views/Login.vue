@@ -44,6 +44,7 @@
                 }).then(res => {
                     if (res.data.token) {
                         this.$store.commit("setUserID", res.data.token);
+                        this.$ls.set('userID', res.data.token);
                         sync()
                         this.$router.replace("/")
                     } else {

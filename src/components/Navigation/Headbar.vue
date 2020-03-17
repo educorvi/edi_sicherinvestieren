@@ -9,7 +9,7 @@
             <b-collapse id="collapse" is-nav>
                 <b-navbar-nav class="">
                     <b-nav-item :to="'/login'" v-if="!loggedIn">Login</b-nav-item>
-<!--                    <b-nav-item :to="'/'" @click="logout" v-else>Logout</b-nav-item>-->
+                    <b-nav-item :to="'/'" @click="logout" v-else>Logout</b-nav-item>
                     <b-nav-item href="#">Hilfe</b-nav-item>
                     <b-nav-item :to="'/settings'">Einstellungen</b-nav-item>
                     <b-nav-item-dropdown text="Über">
@@ -40,6 +40,7 @@
         methods: {
             logout() {
                 this.$store.commit("setUserID", null)
+                this.$ls.set('userID', null)
             }
         },
     }

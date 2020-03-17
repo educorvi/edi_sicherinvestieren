@@ -22,6 +22,7 @@ db.changes({
 }).on('change', getAllListen);
 
 export function sync() {
+    log()
     config = {
         remoteCouch: store.state.remoteCouch,
         loggedIn: store.getters.loggedIn
@@ -93,4 +94,8 @@ export function deleteListe(item) {
 // eslint-disable-next-line no-unused-vars
 export function getListen(fertig) {
     return store.state.listen.filter(list => fertig === list.fertig);
+}
+
+function log() {
+    setTimeout(console.log.bind(console, "%cSyncing to Server Database%c", "background: #32bd04;color:#FFF;padding-left:5px;padding-right:5px;border-radius: 5px;line-height: 26px;", ""));
 }
