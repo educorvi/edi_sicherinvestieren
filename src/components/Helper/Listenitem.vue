@@ -28,7 +28,6 @@
 
 <script>
     import radialProgressBar from "vue-radial-progress"
-    import {deleteListe} from "@/js/localDatabase";
 
     export default {
         name: "Listenitem",
@@ -44,7 +43,7 @@
         },
         methods: {
             deleteListeWrapper() {
-                deleteListe(this.item.name).then(() => this.$emit("deleted"))
+                this.$emit("deleted")
             },
             load() {
                 if (this.item.fertig === 0) {

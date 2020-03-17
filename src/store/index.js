@@ -11,7 +11,10 @@ export default new Vuex.Store({
             title: "",
             progress: 0,
             thema: ""
-        }
+        },
+        listen: [],
+        userID: "julian2812",
+        remoteCouch: 'http://sicherinvestieren:BZngttoixEtp5ytIJ74p@astra2441.server4you.de:5984/listen'
     },
     mutations: {
         setConfig(state, config) {
@@ -29,6 +32,9 @@ export default new Vuex.Store({
                 ...state.fragebogenData,
                 ...p
             };
+        },
+        setListen(state, listen) {
+            state.listen = listen;
         }
     },
     actions: {},
@@ -38,7 +44,9 @@ export default new Vuex.Store({
             return state.packageVersion
         },
         config: state => state.config,
-        fragebogenData: state => state.fragebogenData
+        fragebogenData: state => state.fragebogenData,
+        listen: state => state.listen,
+        userID: state => state.userID
 
     },
 })

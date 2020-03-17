@@ -15,6 +15,8 @@
     "dexie": "^2.0.4",
     "liquor-tree": "^0.2.70",
     "node-sass": "^4.13.1",
+    "pouchdb": "^7.2.1",
+    "pouchdb-find": "^7.2.1",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
     "vue-material": "^1.0.0-beta-11",
