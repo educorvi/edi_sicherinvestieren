@@ -200,7 +200,7 @@
                     return obj["name"] === newName;
                 }
 
-                this.validForm = newName.length > 0 && !this.listen.some(function (liste) {
+                this.validForm = newName.length > 0 && newName[0] !== "_" && !this.listen.some(function (liste) {
                     return hasValue(liste)
                 });
             }

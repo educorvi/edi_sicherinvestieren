@@ -14,7 +14,7 @@ export default new Vuex.Store({
         },
         listen: [],
         userID: "julian2812",
-        remoteCouch: 'http://admin:krks.d3print@astra2441.server4you.de:5984/listen'
+        remoteCouch: 'http://sicherinvestieren:BZngttoixEtp5ytIJ74p@astra2441.server4you.de:5984/listen'
     },
     mutations: {
         setConfig(state, config) {

@@ -1,7 +1,7 @@
 <template>
     <p class="text-muted" v-if="listen.length<=0">Noch keine {{$route.params.fertig === "true"?"beendeten":"offenen"}} Listen</p>
     <div v-else>
-        <Listenitem :item="list.doc" :key="list.name" :last="index===listen.length-1" @deleted="deleteList({...list.doc, _rev:list.value.rev})"
+        <Listenitem :item="list" :key="list.name" :last="index===listen.length-1" @deleted="deleteList(list)"
                     v-for="(list, index) in listen"/>
     </div>
 </template>

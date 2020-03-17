@@ -11,7 +11,7 @@ db.createIndex({
     index: {
         fields: ['user']
     }
-}).then(res => console.log(res)).catch(err => console.error(err));
+}).catch(err => console.error(err));
 
 db.changes({
     since: 'now',
@@ -43,7 +43,9 @@ const retObject = {
 export default retObject;
 
 export function getAllListen() {
-    return db.allDocs({include_docs: true, descending: true}, (err, doc) => store.commit("setListen", doc.rows));
+    return db.find({
+        selector: {user: store.state.userID}
+    }).then(res => store.commit("setListen", res.docs));
 }
 
 export function putListe(liste) {
@@ -51,10 +53,10 @@ export function putListe(liste) {
 
 
     let rev = null;
-    let index = null;
+    let index = 0;
     for (let i = 0; i < listen.length; i++) {
-        if (listen[i].doc.name === liste.name) {
-            rev = listen[i].doc._rev;
+        if (listen[i].name === liste.name) {
+            rev = listen[i]._rev;
             index = i;
         }
 
@@ -67,9 +69,13 @@ export function putListe(liste) {
         user: store.state.userID
     };
 
+    console.log(put);
+
     db.put(put, function callback(err, result) {
         if (err) {
             console.error(err);
+        } else {
+            store.state.listen[index]._rev = result.rev;
         }
     });
 }
@@ -80,5 +86,5 @@ export function deleteListe(item) {
 
 // eslint-disable-next-line no-unused-vars
 export function getListen(fertig) {
-    return store.state.listen.filter(list => fertig === list.doc.fertig);
+    return store.state.listen.filter(list => fertig === list.fertig);
 }
