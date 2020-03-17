@@ -17,6 +17,8 @@ import LiquorTree from 'liquor-tree'
 //VuejsDialog
 import VuejsDialog from "vuejs-dialog";
 import "vuejs-dialog/dist/vuejs-dialog.min.css"
+//Vue-ls
+import Storage from "vue-ls"
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
@@ -36,6 +38,15 @@ Vue.use(LiquorTree);
 
 
 Vue.use(VuejsDialog);
+
+
+const options = {
+    namespace: 'sicherinvestieren__', // key prefix
+    name: 'ls', // name variable Vue.[ls] or this.[$ls],
+    storage: 'local', // storage name session, local, memory
+};
+
+Vue.use(Storage, options);
 
 Vue.config.productionTip = false;
 

@@ -40,7 +40,8 @@
 
 <script>
     import CustomSpinner from "../components/Helper/CustomSpinner";
-    import db from "../js/localDatabase"
+    import db from "../js/localDatabase";
+    import {mapGetters} from "vuex"
 
     export default {
         name: "Fragebogen",
@@ -53,10 +54,11 @@
                 history: [],
                 notizen: [],
                 notizVisible: false,
-                globalData: null
+                globalData: null,
             }
         },
         computed: {
+            ...mapGetters(["userID"]),
             frage() {
                 return this.fragebogen.items[this.frageIndex];
             },
@@ -125,8 +127,8 @@
             createDatabaseObject(fertig = false) {
                 const retFertig = (fertig) ? 1 : 0;
                 return {
-                    ...this.globalData,
                     _id: this.globalData.name,
+                    ...this.globalData,
                     selected: this.selected,
                     notizen: this.notizen,
                     history: this.history,

@@ -71,17 +71,22 @@
   }
 </style>
 <script>
-  import Headbar from "@/components/Navigation/Headbar";
-  import BottomBar from "@/components/Navigation/BottomBar";
+  import Headbar from "./components/Navigation/Headbar";
+  import BottomBar from "./components/Navigation/BottomBar";
   import {mapGetters} from "vuex";
+  import {sync} from "./js/localDatabase";
   import db from './js/localDatabase'
 
   export default {
     components: {BottomBar, Headbar},
     computed: {
-      ...mapGetters(["fragebogenData"])
+      ...mapGetters(["fragebogenData", "loggedIn"])
     },
     created() {
+      this.$store.commit('setUserID',this.$ls.get('userID', null));
+      if (this.loggedIn) {
+        sync()
+      }
       db.getAllListen();
     }
   }
