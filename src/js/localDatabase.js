@@ -67,7 +67,6 @@ export function putListe(liste) {
             rev = listen[i]._rev;
             index = i;
         }
-
     }
 
 

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>Sicher investieren</h1>
-        <h3>Version: {{appVersion}}</h3>
+        <h3>Sicher investieren</h3>
+        <h5>Version: {{appVersion}}</h5>
     </div>
 </template>
 

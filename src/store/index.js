@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import hinweise from "../js/hinweise";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,8 @@ export default new Vuex.Store({
         },
         listen: [],
         userID: null,
-        remoteCouch: null
+        remoteCouch: null,
+        hinweise
     },
     mutations: {
         setConfig(state, config) {
@@ -56,7 +58,7 @@ export default new Vuex.Store({
         fragebogenData: state => state.fragebogenData,
         listen: state => state.listen,
         userID: state => state.userID,
-        loggedIn: state => !!state.userID
-
+        loggedIn: state => !!state.userID,
+        hinweise: state => state.hinweise
     },
 })

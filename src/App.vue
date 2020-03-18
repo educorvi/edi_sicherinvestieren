@@ -15,6 +15,9 @@
     <div id="bottomDiv" class="d-flex justify-content-center">
       <BottomBar id="bottombar"/>
     </div>
+
+
+    <Hinweis hinweis="begruessung"/>
   </div>
 </template>
 
@@ -76,9 +79,10 @@
   import {mapGetters} from "vuex";
   import {sync} from "./js/localDatabase";
   import db from './js/localDatabase'
+  import Hinweis from "./components/Hinweis";
 
   export default {
-    components: {BottomBar, Headbar},
+    components: {Hinweis, BottomBar, Headbar},
     computed: {
       ...mapGetters(["fragebogenData", "loggedIn"])
     },
@@ -88,6 +92,10 @@
         sync()
       }
       db.getAllListen();
-    }
+    },
+    data() {
+      return {
+      }
+    },
   }
 </script>

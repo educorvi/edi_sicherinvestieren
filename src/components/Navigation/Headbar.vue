@@ -14,7 +14,7 @@
                     <b-nav-item :to="'/settings'">Einstellungen</b-nav-item>
                     <b-nav-item-dropdown text="Über">
                         <b-dropdown-item :to="'/about'">Info</b-dropdown-item>
-                        <b-dropdown-item href="#">Kontakt</b-dropdown-item>
+                        <b-dropdown-item :to="'/kontakt'">Kontakt</b-dropdown-item>
                         <b-dropdown-item :to="'/impressum'">Impressum</b-dropdown-item>
                     </b-nav-item-dropdown>
 

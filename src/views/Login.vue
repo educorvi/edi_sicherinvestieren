@@ -1,26 +1,31 @@
 <template>
-    <b-form @submit="submit">
-        <b-form-invalid-feedback :state="valid"><h5>Falscher Benutzername/Passwort</h5></b-form-invalid-feedback>
-        <b-form-input
-                class="mb-2"
-                v-model="username"
-                id="user"
-                placeholder="Benutzername"
-                :required="true"
-                type="text"
-                :state="valid"
-        ></b-form-input>
-        <b-form-input
-                class="mb-2"
-                v-model="password"
-                placeholder="Passwort"
-                type="password"
-                id="password"
-                :required="true"
-                :state="valid"
-        ></b-form-input>
-        <b-button type="submit" variant="primary">Anmelden</b-button>
-    </b-form>
+    <div>
+        <b-form @submit="submit">
+            <b-form-invalid-feedback :state="valid"><h5>Falscher Benutzername/Passwort</h5></b-form-invalid-feedback>
+            <b-form-input
+                    class="mb-2"
+                    v-model="username"
+                    id="user"
+                    placeholder="Benutzername"
+                    :required="true"
+                    type="text"
+                    :state="valid"
+            ></b-form-input>
+            <b-form-input
+                    class="mb-2"
+                    v-model="password"
+                    placeholder="Passwort"
+                    type="password"
+                    id="password"
+                    :required="true"
+                    :state="valid"
+            ></b-form-input>
+            <b-button-group class="float-lg-right">
+                <b-button @click="$router.push('/register')">Registrieren</b-button>
+                <b-button type="submit" variant="primary">Anmelden</b-button>
+            </b-button-group>
+        </b-form>
+    </div>
 </template>
 
 <script>
