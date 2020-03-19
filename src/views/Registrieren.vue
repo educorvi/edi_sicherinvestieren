@@ -72,6 +72,9 @@
 </template>
 
 <script>
+    //@group Helper
+    //@vuese
+    //Formular zum Registrieren
     export default {
         name: "Registrieren",
         data() {
@@ -91,14 +94,17 @@
             }
         },
         methods: {
+            //Registrieren
             onSubmit(evt) {
                 evt.preventDefault();
                 if (this.form.passwort.length + this.form.passwortWDH.length > 0 && (this.form.passwort === this.form.passwortWDH) && this.form.datenschutz) {
+                    //@TODO Register
                     console.log("register")
                 }
             }
         },
         computed: {
+            //check if passwords match
             passwortState() {
                 return this.form.passwort.length + this.form.passwortWDH.length > 0 ? (this.form.passwort === this.form.passwortWDH) : null;
             }

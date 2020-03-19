@@ -16,10 +16,13 @@
     </b-modal>
 </template>
 <script>
+    //@vuese
+    //Modal zum Anzeigen von Hinweisen
     import {mapGetters} from 'vuex';
     export default {
         name: "Hinweis",
         props: {
+            //Name des Hinweises, wie in hinweise.js festgelegt
             hinweis: {
                 type: String,
                 required: true
@@ -30,7 +33,9 @@
         },
         data() {
             return {
+                //Wird der Hinweis gezeigt
                 show: true,
+                //Soll der Hinweis in Zukunft versteckt werden?
                 futureHide:false
             }
         },

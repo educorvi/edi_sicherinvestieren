@@ -7,6 +7,9 @@
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //Übersicht über begonnene und beendete Listen
     import db from "../js/localDatabase"
     import Listenitem from "../components/Helper/Listenitem";
 

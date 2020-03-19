@@ -6,6 +6,9 @@
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //404
     export default {
         name: "notFound"
     }

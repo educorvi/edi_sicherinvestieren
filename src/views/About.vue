@@ -6,6 +6,9 @@
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //Über die Anwendung
     import {mapGetters} from "vuex";
 
     export default {

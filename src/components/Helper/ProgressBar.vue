@@ -3,6 +3,9 @@
 </template>
 
 <script>
+    //@group Helper
+    //@vuese
+    //Zeigt den Progress im laufenden Fragebogen
     import {mapGetters} from "vuex";
 
     export default {

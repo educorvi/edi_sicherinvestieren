@@ -98,6 +98,9 @@
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //Übersicht über die verfügbaren Fragebögen
     import {mapGetters} from "vuex";
     import CustomSpinner from "../components/Helper/CustomSpinner";
 
@@ -129,13 +132,12 @@
                     baujahr: new Date().getFullYear(),
                     globalNotizen: ""
                 },
-                listen: [],
                 validForm: false
 
             }
         },
         computed: {
-            ...mapGetters(["config"])
+            ...mapGetters(["config", "listen"])
         },
         created() {
             if (this.config === undefined || this.config === null) {
@@ -148,6 +150,7 @@
             }
         },
         methods: {
+            //Wird ausgeführt wenn neuer Fragebogen ausgewählt
             newSelected(payload) {
                 if (payload.children.length === 0) {
                     const id = Object.values(JSON.parse(JSON.stringify(payload.data))).join("").replace(payload.text, "");
@@ -157,7 +160,7 @@
                 }
 
             },
-
+            //Abrufen der Ordnerstruktur, um die Fragebogen zu bekommen
             getOrdner() {
                 this.http.get(this.config.rootURL).then(res => {
                     this.folders = res.data.items;
@@ -188,6 +191,7 @@
                     notizen: ""
                 };
             },
+            //Starten eines Fragebogens
             submit() {
                 if (this.validForm) {
                     this.$router.push("/fragebogen?id=" + this.lastSelected.id + "&data=" + JSON.stringify(this.modalData));

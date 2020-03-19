@@ -1,7 +1,9 @@
 <template>
     <div style="text-align: left" v-if="fragebogen">
+<!--        Frage-->
         <span v-html="frage.frage.data"></span>
 
+<!--        Hinweis-->
         <b-card class="mb-3" no-body v-if="frage.tipp">
             <b-card-header v-b-toggle.Hinweis>
                 Hinweis
@@ -13,6 +15,7 @@
             </b-collapse>
         </b-card>
 
+<!--        Notiz-->
         <b-card class="mb-3" no-body>
             <b-card-header @click="notizVisible=!notizVisible">
                 Eigene Notizen
@@ -24,7 +27,7 @@
             </b-collapse>
         </b-card>
 
-
+<!--        Antworten-->
         <div style="text-align: center">
             <b-button-group>
                 <b-button :key="index" :style="getStyles[index]" @click="next(option.antwort, option.aktion)"
@@ -33,12 +36,16 @@
             </b-button-group>
         </div>
 
+<!--        Zurück-->
         <b-button @click="zurueck()" class="float-left mt-2" v-if="frageIndex>0">Zurück</b-button>
     </div>
     <custom-spinner v-else/>
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //Durchlaufen eines Fragebogens
     import CustomSpinner from "../components/Helper/CustomSpinner";
     import db from "../js/localDatabase";
     import {mapGetters} from "vuex"
@@ -62,6 +69,7 @@
             frage() {
                 return this.fragebogen.items[this.frageIndex];
             },
+            //Get Styles for Buttons
             getStyles() {
                 let styles = [];
                 for (let i = 0; i < this.frage.optionen.length; i++) {
@@ -89,7 +97,7 @@
             },
         },
         methods: {
-
+            //Springen zur nächsten Frage, respektive der Auswertung des Fragebogens
             next(antwort, aktion) {
                 if (this.frageIndex !== undefined) {
                     this.$set(this.selected, this.frageIndex, antwort);
@@ -105,6 +113,8 @@
 
                 }
             },
+
+            //Liefert den Index zu dem gesprungen werden muss anhand der UID
             getIndex(aktion) {
                 if (!aktion) {
                     return this.frageIndex + 1;
@@ -118,12 +128,16 @@
                 }
                 throw new Error("Frage konnte nicht gefunden werden => " + aktion);
             },
+
+            //Geht einen Schritt zurück
             zurueck() {
                 if (this.history.length > 0) {
                     this.frageIndex = this.history.pop();
                     this.$store.commit("setFragebogenData", {progress: this.frageIndex / this.fragebogen.items.length * 100});
                 }
             },
+
+            //Liefert das Objekt, dass in die Datenbank geschrieben werden soll
             createDatabaseObject(fertig = false) {
                 const retFertig = (fertig) ? 1 : 0;
                 return {
@@ -140,10 +154,13 @@
                 }
             }
         },
+
         created() {
             this.$store.commit("resetFragebogenData");
             this.globalData = JSON.parse(this.$route.query.data);
             const data = this.globalData;
+
+            //Falls ein bereits begonnener Fragebogen geladen werden soll
             if (this.$route.query.load === "true") {
                 this.selected = data.selected;
                 this.notizen = data.notizen;
@@ -164,8 +181,10 @@
                 db.putListe(this.createDatabaseObject());
             });
         },
-        // eslint-disable-next-line no-unused-vars
+
+        //Verhindern dass der Fragebogen versehentlich verlassen wird
         beforeRouteLeave(to, from, next) {
+            //Möglichkeit die Frage beim Verlassen zu überspringen mithilfe von subito
             if (to.query.subito) {
                 next();
             } else {
@@ -183,6 +202,7 @@
             }
         },
         watch: {
+            //Speichern bei ändern der Frage und aktualisieren von NotizVisible
             frageIndex: function (newValue) {
                 if (this.fragebogen) {
                     db.putListe(this.createDatabaseObject());

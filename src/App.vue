@@ -74,6 +74,8 @@
   }
 </style>
 <script>
+  //@vuese
+  //Startpunkt der App
   import Headbar from "./components/Navigation/Headbar";
   import BottomBar from "./components/Navigation/BottomBar";
   import {mapGetters} from "vuex";
@@ -89,8 +91,10 @@
     created() {
       this.$store.commit('setUserID',this.$ls.get('userID', null));
       if (this.loggedIn) {
+        //Starte Synchronisation mit remote
         sync()
       }
+      //Alle Listen abrufen und in store speichern
       db.getAllListen();
     },
     data() {

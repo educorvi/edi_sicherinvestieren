@@ -29,6 +29,9 @@
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //LoginView
     import {sync} from "../js/localDatabase";
 
     export default {
@@ -41,12 +44,14 @@
             }
         },
         methods: {
+            //Login
             submit(evt) {
                 evt.preventDefault();
                 this.http.post("https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/medialogin", {
                     username: this.username,
                     password: this.password
                 }).then(res => {
+                    //Wenn erfolgreich, setzen des Tokens, sonst Feedback
                     if (res.data.token) {
                         this.$store.commit("setUserID", res.data.token);
                         this.$ls.set('userID', res.data.token);

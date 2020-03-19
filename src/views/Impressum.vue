@@ -4,7 +4,10 @@
 </template>
 
 <script>
-    import CustomSpinner from "@/components/Helper/CustomSpinner";
+    //@group Views
+    //@vuese
+    //Impressum
+    import CustomSpinner from "../components/Helper/CustomSpinner";
 
     export default {
         name: "Impressum",
@@ -14,6 +17,7 @@
                 html: null
             }
         },
+        //Daten werden aus dem bgetem Impressum ausgelesen
         created() {
             //@TODO cors anywhere entfernen
             this.http.get("https://cors-anywhere.herokuapp.com/https://www.bgetem.de/die-bgetem/impressum", {headers: {Accept: "text/html"}}).then(res => {

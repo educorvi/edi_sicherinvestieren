@@ -27,6 +27,9 @@
 </template>
 
 <script>
+    //@group Navigation
+    //@vuese
+    //Navbar zur Navigation
 
     import ProgressBar from "@/components/Helper/ProgressBar";
     import {mapGetters} from "vuex"
@@ -38,6 +41,8 @@
             ...mapGetters(["loggedIn"])
         },
         methods: {
+
+            //Ausloggen
             logout() {
                 this.$store.commit("setUserID", null)
                 this.$ls.set('userID', null)

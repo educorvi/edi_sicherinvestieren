@@ -57,9 +57,14 @@
 </template>
 
 <script>
+    //@group Views
+    //@vuese
+    //View für ein Kontaktformular
     export default {
         name: "Kontakt",
         methods: {
+
+            //Absenden des Kontaktformulars
             onSubmit(evt) {
                 evt.preventDefault()
             //    @TODO gimme contact
@@ -68,6 +73,7 @@
         },
         data() {
             return {
+                //Daten des Kontaktformulars
                 form: {
                     //@TODO Ist das die richtige EMail?
                     zielmail: 'medien@bgetem.de',

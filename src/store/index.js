@@ -6,16 +6,23 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        packageVersion: process.env.PACKAGE_VERSION || '0',
+        //Version der App
+        packageVersion: process.env.PACKAGE_VERSION || '0.0.0',
+        //Globale Config
         config: null,
+        //Aktueller Fragebogen (Schnittstelle)
         fragebogenData: {
             title: "",
             progress: 0,
             thema: ""
         },
+        //Alle Listen, fertig und bearbeitet
         listen: [],
+        //ID/Token des Users
         userID: null,
+        //Adresse zur remote CouchDB
         remoteCouch: null,
+        //hinweise
         hinweise
     },
     mutations: {
@@ -40,7 +47,7 @@ export default new Vuex.Store({
         },
         setUserID(state, id) {
             if (id) {
-                state.remoteCouch = 'http://admin:krks.d3print@astra2441.server4you.de:5984/listen_user_' + id;
+                state.remoteCouch = `https://${id}:${id}@couch.kraeks.de/listen_user_` + id;
             } else {
                 state.remoteCouch = null;
             }

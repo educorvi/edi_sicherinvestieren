@@ -10,8 +10,11 @@
 </template>
 
 <script>
-    import CustomSpinner from "@/components/Helper/CustomSpinner";
-    import Auswertungsfrage from "@/components/Auswertungsfrage";
+    //@group Views
+    //@vuese
+    //Auswertungsansicht des Fragebogens
+    import CustomSpinner from "../components/Helper/CustomSpinner";
+    import Auswertungsfrage from "../components/Helper/Auswertungsfrage";
     import Hinweis from "../components/Hinweis";
 
     export default {
@@ -25,6 +28,7 @@
             }
         },
         created() {
+            //Abrufen des Fragebogens
             this.http.get(this.$route.query.id + "?fullobjects=true").then(res => {
                 this.history = JSON.parse(this.$route.query.history);
                 this.selected = JSON.parse(this.$route.query.selected);
