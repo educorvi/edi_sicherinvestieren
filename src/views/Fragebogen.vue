@@ -188,17 +188,18 @@
             if (to.query.subito) {
                 next();
             } else {
-                this.$dialog
-                    .confirm('Willst du den Fragebogen wirklich verlassen?', {
-                        okText: "Verlassen",
-                        cancelText: "Abbrechen"
-                    })
-                    .then(function () {
+                this.$bvModal.msgBoxConfirm("Wollen Sie die Fragebogenansicht verlassen? Ihr Fortschritt wird automatisch gespeichert", {
+                    title: "Verlassen",
+                    // size: "sm",
+                    okVariant: "primary",
+                    okTitle: "Verlassen",
+                    cancelTitle: "Abbrechen",
+                    centered: true
+                }).then(value => {
+                    if (value) {
                         next();
-                    })
-                    .catch(function () {
-                        next(false);
-                    });
+                    }
+                })
             }
         },
         watch: {

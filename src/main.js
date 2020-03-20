@@ -14,9 +14,6 @@ import axios from "axios"
 import {setDefaultInterceptor} from "@/js/axiosInterceptors";
 //Liqour Tree für Übersicht
 import LiquorTree from 'liquor-tree'
-//VuejsDialog
-import VuejsDialog from "vuejs-dialog";
-import "vuejs-dialog/dist/vuejs-dialog.min.css"
 //Vue-ls
 import Storage from "vue-ls"
 
@@ -35,9 +32,6 @@ setDefaultInterceptor(Vue.prototype.http);
 
 
 Vue.use(LiquorTree);
-
-
-Vue.use(VuejsDialog);
 
 
 const options = {

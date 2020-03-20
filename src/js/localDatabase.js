@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import PouchDB from "pouchdb";
 import pdfind from "pouchdb-find"
+
 PouchDB.plugin(pdfind);
 import store from "../store/index";
 
@@ -22,23 +23,28 @@ db.changes({
 }).on('change', getAllListen);
 
 export function sync() {
-    log()
     config = {
         remoteCouch: store.state.remoteCouch,
         loggedIn: store.getters.loggedIn
     }
     const opts = {live: true};
-    db.replicate.to(config.remoteCouch, opts, syncError);
-    db.replicate.from(config.remoteCouch, opts, syncError);
+    db.replicate.to(config.remoteCouch, opts, syncErrorTo);
+    db.replicate.from(config.remoteCouch, opts, syncErrorFrom);
+    log("Syncing Database", "#32bd04")
+
 }
 
-if (config.remoteCouch&&config.loggedIn) {
+if (config.remoteCouch && config.loggedIn) {
     sync()
 }
 
-function syncError(err) {
-    console.error("Fehler");
-    console.error(err)
+
+function syncErrorTo(err) {
+    log("Failed to sync to Database", "#ff0000")
+}
+
+function syncErrorFrom(err) {
+    log("Failed to sync from Database", "#ff0000")
 }
 
 const retObject = {
@@ -90,11 +96,15 @@ export function deleteListe(item) {
     return db.remove(item)
 }
 
+export function deleteAllListen() {
+    db.bulkDocs(store.state.listen.map(obj => ({...obj, _deleted: true})))
+}
+
 // eslint-disable-next-line no-unused-vars
 export function getListen(fertig) {
     return store.state.listen.filter(list => fertig === list.fertig);
 }
 
-function log() {
-    setTimeout(console.log.bind(console, "%cSyncing to Server Database%c", "background: #32bd04;color:#FFF;padding-left:5px;padding-right:5px;border-radius: 5px;line-height: 26px;", ""));
+function log(text, bg) {
+    setTimeout(console.log.bind(console, `%c${text}`, `background: ${bg};color:#FFF;padding-left:5px;padding-right:5px;border-radius: 5px;line-height: 26px;`));
 }
