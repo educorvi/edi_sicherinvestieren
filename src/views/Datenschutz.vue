@@ -10,7 +10,7 @@
     import CustomSpinner from "../components/Helper/CustomSpinner";
 
     export default {
-        name: "Impressum",
+        name: "Datenschutz",
         components: {CustomSpinner},
         data() {
             return {
@@ -20,11 +20,9 @@
         //Daten werden aus dem bgetem Impressum ausgelesen
         created() {
             //@TODO cors anywhere entfernen
-            this.http.get("https://cors-anywhere.herokuapp.com/https://www.bgetem.de/die-bgetem/impressum/impressum").then(res => {
+            //@TODO Eigene Datenschutzerklärung
+            this.http.get("https://cors-anywhere.herokuapp.com/https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung").then(res => {
                 this.html = res.data.text.data;
-                // const el = document.createElement('html');
-                // el.innerHTML = res.data;
-                // this.html = el.querySelector("#content-core").innerHTML;
             })
         }
     }

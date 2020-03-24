@@ -7002,6 +7002,13 @@ progress@^2.0.0:
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
   integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
 
+progressbar.js@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/progressbar.js/-/progressbar.js-1.1.0.tgz#300f99be40ba93fb0867f91dff01771236cade70"
+  integrity sha512-K68/xcyXKo2I6T3PfIkXrRaycxROmWeU4bugb49iulWR25cU94PM0cfZ47S0jDhG5K3vPhZwCOy1fgb5Pgh6UQ==
+  dependencies:
+    shifty "^2.1.2"
+
 promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
@@ -7733,6 +7740,11 @@ shell-quote@^1.6.1:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/shell-quote/-/shell-quote-1.7.2.tgz#67a7d02c76c9da24f99d20808fcaded0e0e04be2"
   integrity sha512-mRz/m/JVscCrkMyPqHc/bczi3OQHkLTqXHEFu0zDhK/qfv3UcOA4SVmRCLmos4bhjr9ekVQubj/R7waKapmiQg==
+
+shifty@^2.1.2:
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/shifty/-/shifty-2.8.3.tgz#6252b5cd0e873b2e23fb6eddf0540034d6cda980"
+  integrity sha512-/5pEfjV279B7gUFFEItEeBEDyyUFD/H2GNXX130jqJKeWVItDgkKOh2SmKT63Oz8dDP16U8o5bbH9OViYwqI9A==
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
@@ -8770,11 +8782,6 @@ vue-material@^1.0.0-beta-11:
   version "1.0.0-beta-11"
   resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-1.0.0-beta-11.tgz#11baf0cdb22a35d35859c619099d6c3cb3cc2cc3"
   integrity sha512-1+dIVkQafMIA/zNONb7OwGaTjAxaWk/JhUA2/FInQvbArxf1ToKB+yIdeSfzopQ1KICnBTAmk9E0Vdr5p4MWNA==
-
-vue-radial-progress@^0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/vue-radial-progress/-/vue-radial-progress-0.2.10.tgz#b4064c5d0750daf0ee6a9e323b3f79bd2bd6dedc"
-  integrity sha1-tAZMXQdQ2vDuap4yOz95vSvW3tw=
 
 vue-router@^3.1.5:
   version "3.1.6"

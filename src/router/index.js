@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Uebersicht.vue'
+import Impressum from "../views/Impressum";
+import Datenschutz from "../views/Datenschutz";
 
 Vue.use(VueRouter)
 
@@ -26,7 +28,7 @@ const routes = [
     {
         path: '/impressum',
         name: 'Impressum',
-        component: () => import('../views/Impressum')
+        component: Impressum
     },
     {
         path: '/auswertung',
@@ -57,6 +59,11 @@ const routes = [
         path: "/settings",
         name: "Einstellungen",
         component: () => import('../views/Einstellungen')
+    },
+    {
+        path: "/datenschutz",
+        name: "Datenschutzerklärung",
+        component: Datenschutz
     },
     {
         path: '*',

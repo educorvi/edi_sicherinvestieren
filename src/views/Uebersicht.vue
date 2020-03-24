@@ -67,7 +67,7 @@
                     <b-form-input
                             id="input-4"
                             type="number"
-                            v-model="modalData.baujahr"
+                            v-model="modalData.jahr"
                     ></b-form-input>
                 </b-form-group>
                 <b-form-group
@@ -78,7 +78,7 @@
                     <b-form-textarea
                             id="input-5"
                             type="text"
-                            v-model="modalData.notizen"
+                            v-model="modalData.globalNotizen"
                     ></b-form-textarea>
                 </b-form-group>
 
@@ -129,7 +129,7 @@
                     maschinentyp: "",
                     maschinennummer: "",
                     hersteller: "",
-                    baujahr: new Date().getFullYear(),
+                    jahr: new Date().getFullYear(),
                     globalNotizen: ""
                 },
                 validForm: false

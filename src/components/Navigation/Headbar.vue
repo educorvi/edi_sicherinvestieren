@@ -16,6 +16,7 @@
                         <b-dropdown-item :to="'/about'">Info</b-dropdown-item>
                         <b-dropdown-item :to="'/kontakt'">Kontakt</b-dropdown-item>
                         <b-dropdown-item :to="'/impressum'">Impressum</b-dropdown-item>
+                        <b-dropdown-item :to="'/datenschutz'">Datenschutz</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                 </b-navbar-nav>
