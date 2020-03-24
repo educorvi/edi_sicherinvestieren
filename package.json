@@ -1,6 +1,6 @@
 {
   "name": "sicher_investieren",
-  "version": "0.7.5",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -24,11 +24,7 @@
     "vue-ls": "^3.2.1",
     "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.1.5",
-    "vuex": "^3.1.2",
-    "workbox-core": "^5.1.1",
-    "workbox-precaching": "^5.1.1",
-    "workbox-routing": "^5.1.1",
-    "workbox-strategies": "^5.1.1"
+    "vuex": "^3.1.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.3",
