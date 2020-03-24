@@ -168,7 +168,7 @@
                 this.frageIndex = data.letzteFrage
             }
 
-            this.notizVisible = (this.notizen[0] && this.notizen[0] !== "");
+            this.notizVisible = (this.notizen[this.frageIndex] && this.notizen[this.frageIndex] !== "");
             this.http.get(this.$route.query.id + "?fullobjects=true").then(res => {
                 const data = res.data;
                 this.fragebogen = data;
@@ -197,6 +197,7 @@
                     centered: true
                 }).then(value => {
                     if (value) {
+                        db.putListe(this.createDatabaseObject());
                         next();
                     }
                 })
