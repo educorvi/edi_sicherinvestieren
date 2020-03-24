@@ -18,16 +18,22 @@
     "pouchdb": "^7.2.1",
     "pouchdb-find": "^7.2.1",
     "progressbar.js": "^1.1.0",
+    "register-service-worker": "^1.6.2",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.11",
     "vue-ls": "^3.2.1",
     "vue-material": "^1.0.0-beta-11",
     "vue-router": "^3.1.5",
-    "vuex": "^3.1.2"
+    "vuex": "^3.1.2",
+    "workbox-core": "^5.1.1",
+    "workbox-precaching": "^5.1.1",
+    "workbox-routing": "^5.1.1",
+    "workbox-strategies": "^5.1.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.3",
     "@vue/cli-plugin-eslint": "^4.2.3",
+    "@vue/cli-plugin-pwa": "^4.2.3",
     "@vue/cli-plugin-router": "^4.2.3",
     "@vue/cli-plugin-vuex": "^4.2.3",
     "@vue/cli-service": "^4.2.3",

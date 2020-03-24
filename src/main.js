@@ -14,8 +14,11 @@ import axios from "axios"
 import {setDefaultInterceptor} from "@/js/axiosInterceptors";
 //Liqour Tree für Übersicht
 import LiquorTree from 'liquor-tree'
+
 //Vue-ls
 import Storage from "vue-ls"
+
+import './registerServiceWorker'
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
