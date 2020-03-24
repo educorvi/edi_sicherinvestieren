@@ -8,7 +8,10 @@
           <p class="mb-0" v-if="$route.name==='Fragebogen'">{{fragebogenData.thema}}</p>
         </b-card-header>
         <b-card-body>
-          <router-view/>
+          <transition mode="out-in" name="fade">
+            <router-view/>
+          </transition>
+
         </b-card-body>
       </b-card>
     </div>
@@ -23,6 +26,13 @@
 
 <style lang="scss">
   @import "styles";
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 
   #app {
     width: 100%;
@@ -65,7 +75,7 @@
 
 
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
+    transition: opacity .15s;
   }
 
   .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */

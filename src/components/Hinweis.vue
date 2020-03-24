@@ -1,5 +1,5 @@
 <template>
-    <b-modal :id="`hinweis_${hinweis}`" v-model="show" :title="hinweise[hinweis].title" visible scrollable>
+    <b-modal :id="`hinweis_${hinweis}`" v-model="show" :title="hinweise[hinweis].title" visible scrollable centered>
         <p>{{hinweise[hinweis].text}}</p>
         <template v-slot:modal-footer>
             <b-row style="width: 100%">

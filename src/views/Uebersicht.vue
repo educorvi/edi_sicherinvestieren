@@ -113,6 +113,7 @@
             return {
                 folders: null,
                 treeOptions: {
+                    emptyText: 'Keine Fragebögen zu finden',
                     propertyNames: {
                         text: 'title',
                         children: 'items',

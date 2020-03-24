@@ -131,7 +131,7 @@
                         strokeWidth: 5,
                         step: function(state, circle) {
                             const value = Math.round(circle.value() * 100);
-                            circle.setText(value);
+                            circle.setText(value+'%');
 
                         },
                         easing: 'easeInOut',
