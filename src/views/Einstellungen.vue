@@ -49,6 +49,7 @@
                 }).then(value => {
                     if (value) {
                         deleteAllListen();
+                        this.$ls.clear();
                     }
                 })
             }
