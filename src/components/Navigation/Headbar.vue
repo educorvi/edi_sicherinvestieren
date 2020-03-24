@@ -2,7 +2,7 @@
     <div id="bar">
         <b-navbar toggleable="lg">
             <b-navbar-brand :to="'/'" class="mr-5">
-                <b-img id="logo" src="/images/bg-etem.svg"/>
+                <b-img id="logo" src="images/bg-etem.svg"/>
             </b-navbar-brand>
             <b-navbar-toggle target="collapse"></b-navbar-toggle>
 
