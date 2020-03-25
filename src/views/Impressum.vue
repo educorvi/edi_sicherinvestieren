@@ -19,8 +19,7 @@
         },
         //Daten werden aus dem bgetem Impressum ausgelesen
         created() {
-            //@TODO cors anywhere entfernen
-            this.http.get("https://cors-anywhere.herokuapp.com/https://www.bgetem.de/die-bgetem/impressum/impressum").then(res => {
+            this.http.get("https://www.bgetem.de/die-bgetem/impressum/impressum").then(res => {
                 this.html = res.data.text.data;
                 // const el = document.createElement('html');
                 // el.innerHTML = res.data;

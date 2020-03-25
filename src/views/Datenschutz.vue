@@ -19,9 +19,8 @@
         },
         //Daten werden aus dem bgetem Impressum ausgelesen
         created() {
-            //@TODO cors anywhere entfernen
             //@TODO Eigene Datenschutzerklärung
-            this.http.get("https://cors-anywhere.herokuapp.com/https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung").then(res => {
+            this.http.get("https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung").then(res => {
                 this.html = res.data.text.data;
             })
         }
