@@ -89,10 +89,8 @@
     //Item, das Daten zu einer Liste anzeigt
 
     import 'progressbar.js'
-    // import ProgressCircle from "./ProgressCircle";
     export default {
         name: "Listenitem",
-        // components: {ProgressCircle},
         data() {
             return {
                 bar: null
@@ -112,7 +110,19 @@
         methods: {
             //Wenn zu löschen
             deleteListeWrapper() {
-                this.$emit("deleted")
+                this.$bvModal.msgBoxConfirm(`Wollen Sie die Liste ${this.item.name} wirklich löschen?`, {
+                    title: "Bestätigen",
+                    size: "sm",
+                    okVariant: "danger",
+                    okTitle: "Löschen",
+                    cancelTitle: "Abbrechen",
+                    centered: true
+                }).then(value => {
+                    if (value) {
+                        this.$emit("deleted")
+                    }
+                })
+
             },
 
             //Laden des verknüpften Fragebogens

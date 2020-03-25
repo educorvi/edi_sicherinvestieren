@@ -212,6 +212,11 @@
         watch: {
             //Speichern bei ändern der Frage und aktualisieren von NotizVisible
             frageIndex: function (newValue) {
+                window.scroll({
+                    top: 0,
+                    left: 0,
+                    behavior: "smooth"
+                });
                 if (this.fragebogen) {
                     db.putListe(this.createDatabaseObject());
                     this.notizVisible = (this.notizen[newValue] && this.notizen[newValue] !== "");
