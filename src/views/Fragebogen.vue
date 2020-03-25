@@ -172,13 +172,19 @@
             this.http.get(this.$route.query.id + "?fullobjects=true").then(res => {
                 const data = res.data;
                 this.fragebogen = data;
-                // db.putListe(this.createDatabaseObject());
                 this.$store.commit("setFragebogenData", {
                     title: data.title,
                     thema: data.items[this.frageIndex].thema.title,
                     progress: this.frageIndex / this.fragebogen.items.length * 100
                 });
                 db.putListe(this.createDatabaseObject());
+            }).catch(()=>{
+                this.$root.$bvToast.toast("Laden des Fragebogens fehlgeschlagen", {
+                    title: "Fehler",
+                    variant: "danger",
+                    autoHideDelay: 5000
+                })
+                this.$router.push("/?subito=true");
             });
         },
 

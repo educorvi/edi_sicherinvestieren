@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="folders.length>0">
         <transition name="fade" v-if="folders && folders.length === finished">
             <tree :data="folders" :options="treeOptions" @node:clicked="newSelected"/>
         </transition>
@@ -94,6 +94,7 @@
 
         </b-modal>
     </div>
+    <p v-else class="text-muted">Keine Fragebögen zu finden...</p>
 
 </template>
 
@@ -138,7 +139,7 @@
             }
         },
         computed: {
-            ...mapGetters(["config", "listen"])
+            ...mapGetters(["config", "listen", "frageboegen"])
         },
         created() {
             if (this.config === undefined || this.config === null) {
@@ -163,21 +164,32 @@
             },
             //Abrufen der Ordnerstruktur, um die Fragebogen zu bekommen
             getOrdner() {
-                this.http.get(this.config.rootURL).then(res => {
-                    this.folders = res.data.items;
-                    for (let i = 0; i < this.folders.length; i++) {
-                        let folder = this.folders[i];
-                        this.http.get(folder['@id']).then(res => {
-                                let data = res.data;
-                                if (data['@type'] !== 'Folder') {
-                                    data.items = null;
-                                }
-                                this.folders[i] = data;
+                if (this.frageboegen) {
+                    this.folders = this.frageboegen;
+                } else {
+                    this.http.get(this.config.rootURL).then(res => {
+                        this.folders = res.data.items;
+                        for (let i = 0; i < this.folders.length; i++) {
+                            let folder = this.folders[i];
+                            this.http.get(folder['@id']).then(res => {
+                                    let data = res.data;
+                                    if (data['@type'] !== 'Folder') {
+                                        data.items = null;
+                                    }
+                                    this.folders[i] = data;
 
-                            }
-                        ).finally(() => this.finished++);
-                    }
-                }).catch(err => console.log(err));
+                                }
+                            ).catch(() => this.folders[i] = null).finally(() => this.finished++);
+                        }
+                    }).catch(() => {
+                        this.folders = [];
+                        this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Bitte lade die Seite neu oder probiere es später noch einmal", {
+                            title: "Fehler",
+                            variant: "danger",
+                            autoHideDelay: 5000
+                        })
+                    }).finally(() => this.$store.commit("setFrageboegen", this.folders));
+                }
             },
             cancelForm() {
                 this.$bvModal.hide('startModal');

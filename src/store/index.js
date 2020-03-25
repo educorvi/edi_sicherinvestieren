@@ -23,7 +23,9 @@ export default new Vuex.Store({
         //Adresse zur remote CouchDB
         remoteCouch: null,
         //hinweise
-        hinweise
+        hinweise,
+    //    Fragebögen
+        frageboegen: null
     },
     mutations: {
         setConfig(state, config) {
@@ -53,6 +55,9 @@ export default new Vuex.Store({
             }
 
             state.userID = id;
+        },
+        setFrageboegen(state, f) {
+            state.frageboegen = f;
         }
     },
     actions: {},
@@ -66,6 +71,7 @@ export default new Vuex.Store({
         listen: state => state.listen,
         userID: state => state.userID,
         loggedIn: state => !!state.userID,
-        hinweise: state => state.hinweise
+        hinweise: state => state.hinweise,
+        frageboegen: state => state.frageboegen
     },
 })
