@@ -166,6 +166,7 @@
             getOrdner() {
                 if (this.frageboegen) {
                     this.folders = this.frageboegen;
+                    this.finished = this.folders.length;
                 } else {
                     this.http.get(this.config.rootURL).then(res => {
                         this.folders = res.data.items;
