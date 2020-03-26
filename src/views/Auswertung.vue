@@ -31,7 +31,6 @@
         mounted() {
             getAllListen().then(() => {
                 this.item = getListe(this.$route.query.name)[0];
-                console.log(this.item);
                 //Abrufen des Fragebogens
                 this.http.get(this.item.fragebogen + "?fullobjects=true").then(res => {
                     this.fragebogen = res.data;
