@@ -24,6 +24,10 @@
             selected: {
                 type: String,
                 required: true
+            },
+            notiz: {
+                type: String,
+                required: true
             }
         },
         computed: {

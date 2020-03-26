@@ -1,5 +1,5 @@
 <template>
-    <div v-if="folders.length>0">
+    <div v-if="!folders || folders.length>0">
         <transition name="fade" v-if="folders && folders.length === finished">
             <tree :data="folders" :options="treeOptions" @node:clicked="newSelected"/>
         </transition>
