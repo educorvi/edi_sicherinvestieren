@@ -1,9 +1,8 @@
 <template>
     <b-card :id="'card_'+frage['@id']"
             :style="'border-color: '+Color+'; background-color: '+Color" class="mt-2" no-body
-            v-b-toggle="'col_'+frage['@id']"
             v-if="selected !== undefined">
-        <b-card-header>
+        <b-card-header v-b-toggle="'col_'+frage['@id']">
             <h5 :style="getStyle(getOption().color)" class="mb-0">{{frage.title}}</h5>
             <p :style="getStyle(getOption().color)">Gewählte Antwort: <b>{{selected}}</b></p>
         </b-card-header>

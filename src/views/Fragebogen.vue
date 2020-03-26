@@ -5,10 +5,10 @@
 
 <!--        Hinweis-->
         <b-card class="mb-3" no-body v-if="frage.tipp">
-            <b-card-header v-b-toggle.Hinweis>
+            <b-card-header @click="hinweisVisible = !hinweisVisible">
                 Hinweis
             </b-card-header>
-            <b-collapse id="Hinweis">
+            <b-collapse v-model="hinweisVisible" id="Hinweis">
                 <b-card-body>
                     <span v-html="frage.tipp.data"/>
                 </b-card-body>
@@ -61,6 +61,7 @@
                 history: [],
                 notizen: [],
                 notizVisible: false,
+                hinweisVisible: false,
                 globalData: null,
             }
         },
@@ -220,6 +221,7 @@
                 if (this.fragebogen) {
                     db.putListe(this.createDatabaseObject());
                     this.notizVisible = (this.notizen[newValue] && this.notizen[newValue] !== "");
+                    this.hinweisVisible = false
                 }
 
             }
