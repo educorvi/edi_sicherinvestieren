@@ -105,7 +105,7 @@
                     const i = this.getIndex(aktion);
                     if (i >= this.fragebogen.items.length) {
                         db.putListe(this.createDatabaseObject(true));
-                        this.$router.push("/auswertung?subito=true&id=" + this.fragebogen["@id"] + "&selected=" + JSON.stringify(this.selected) + "&history=" + JSON.stringify(this.history));
+                        this.$router.push(`/auswertung?subito=true&name=${this.globalData.name}`);
                     } else {
                         this.frageIndex = i;
                         this.$store.commit("setFragebogenData", {progress: this.frageIndex / this.fragebogen.items.length * 100});

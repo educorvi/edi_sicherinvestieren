@@ -130,7 +130,7 @@
                 if (this.item.fertig === 0) {
                     this.$router.push("/fragebogen?data=" + JSON.stringify(this.item) + "&id=" + this.item.fragebogen + "&load=true");
                 } else {
-                    this.$router.push("/auswertung?history=" + JSON.stringify(this.item.history) + "&id=" + this.item.fragebogen + "&selected=" + JSON.stringify(this.item.selected));
+                    this.$router.push(`/auswertung?name=${this.item.name}`);
                 }
             },
             loadBar() {

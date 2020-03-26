@@ -25,7 +25,9 @@ export default new Vuex.Store({
         //hinweise
         hinweise,
     //    Fragebögen
-        frageboegen: null
+        frageboegen: null,
+    //    Die zu ladende Liste
+        load: null
     },
     mutations: {
         setConfig(state, config) {
@@ -58,6 +60,9 @@ export default new Vuex.Store({
         },
         setFrageboegen(state, f) {
             state.frageboegen = f;
+        },
+        setLoad(state, l) {
+            state.load = l;
         }
     },
     actions: {},
@@ -72,6 +77,7 @@ export default new Vuex.Store({
         userID: state => state.userID,
         loggedIn: state => !!state.userID,
         hinweise: state => state.hinweise,
-        frageboegen: state => state.frageboegen
+        frageboegen: state => state.frageboegen,
+        load: state => state.load
     },
 })
