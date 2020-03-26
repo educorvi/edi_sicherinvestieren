@@ -1,8 +1,8 @@
 <template>
     <div>
         <div v-if="fragebogen">
-            <Auswertungsfrage :frage="fragebogen.items[i]" :key="i" :selected="selected[i]"
-                              v-for="i in history"></Auswertungsfrage>
+            <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString" :selected="item.selected[i]"
+                              v-for="i in item.history" :notiz="item.notizen[i]"></Auswertungsfrage>
         </div>
         <custom-spinner v-else/>
         <Hinweis hinweis="rechtlicheEinschraenkung"/>
@@ -16,6 +16,7 @@
     import CustomSpinner from "../components/Helper/CustomSpinner";
     import Auswertungsfrage from "../components/Helper/Auswertungsfrage";
     import Hinweis from "../components/Hinweis";
+    import {getAllListen, getListe} from "../js/localDatabase";
 
     export default {
         name: "Auswertung",
@@ -23,18 +24,19 @@
         data() {
             return {
                 fragebogen: null,
-                history: null,
-                selected: null
+                item: null
             }
         },
-        created() {
-            //Abrufen des Fragebogens
-            this.http.get(this.$route.query.id + "?fullobjects=true").then(res => {
-                this.history = JSON.parse(this.$route.query.history);
-                this.selected = JSON.parse(this.$route.query.selected);
-                this.fragebogen = res.data;
 
-            });
+        mounted() {
+            getAllListen().then(() => {
+                this.item = getListe(this.$route.query.name)[0];
+                console.log(this.item);
+                //Abrufen des Fragebogens
+                this.http.get(this.item.fragebogen + "?fullobjects=true").then(res => {
+                    this.fragebogen = res.data;
+                });
+            })
         }
     }
 </script>

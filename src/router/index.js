@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'Übersicht',
+        name: 'Fragebögen',
         component: Home
     },
     {

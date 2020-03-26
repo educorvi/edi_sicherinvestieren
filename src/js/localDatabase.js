@@ -105,6 +105,10 @@ export function getListen(fertig) {
     return store.state.listen.filter(list => fertig === list.fertig);
 }
 
+export function getListe(name) {
+    return store.state.listen.filter(list => name === list.name);
+}
+
 function log(text, bg) {
     setTimeout(console.log.bind(console, `%c${text}`, `background: ${bg};color:#FFF;padding-left:5px;padding-right:5px;border-radius: 5px;line-height: 26px;`));
 }

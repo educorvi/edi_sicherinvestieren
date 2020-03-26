@@ -25,7 +25,7 @@ export default new Vuex.Store({
         //hinweise
         hinweise,
     //    Fragebögen
-        frageboegen: null
+        frageboegen: null,
     },
     mutations: {
         setConfig(state, config) {
