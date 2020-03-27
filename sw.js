@@ -11,7 +11,7 @@ if (workbox) {
 
 workbox.core.setCacheNameDetails({ prefix: 'siInvest' })
 //Change this value every time before you build
-const LATEST_VERSION = 'v0.8.7'
+const LATEST_VERSION = 'v0.8.7_hf1'
 self.addEventListener('activate', (event) => {
     console.log(`%c ${LATEST_VERSION} `, 'background: #ddd; color: #0000ff')
     if (caches) {
@@ -45,12 +45,12 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
 workbox.routing.registerRoute(
     /\.(?:js|css|html|json)$/,
     new workbox.strategies.NetworkFirst({
-        chacheName: 'app'
+        cacheName: 'app'
     })
 );
 workbox.routing.registerRoute(
-    /\.(?:png|jpg|ico|svg)$/,
+    /\.(?:png|jpg|ico|svg|jpeg)$/,
     new workbox.strategies.StaleWhileRevalidate({
-        chacheName: 'images'
+        cacheName: 'images'
     })
 );
