@@ -49,7 +49,7 @@ export default new Vuex.Store({
         },
         setUserID(state, id) {
             if (id) {
-                state.remoteCouch = `https://${id}:${id}@couch.kraeks.de/listen_user_` + id;
+                state.remoteCouch = `https://${id}:${id}@${state.config.database}/listen_user_` + id;
             } else {
                 state.remoteCouch = null;
             }

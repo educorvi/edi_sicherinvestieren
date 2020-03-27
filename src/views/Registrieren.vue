@@ -53,12 +53,14 @@
         <b-form-group label="E-Mail" label-for="mail">
             <b-form-input id="mail" v-model="form.mail" type="email" required/>
         </b-form-group>
-        <b-form-group label="Passwort" label-for="passwort">
-            <b-form-input id="passwort" v-model="form.passwort" type="password" :state="passwortState" required/>
-            <b-form-invalid-feedback :state="passwortState">Passwörter stimmen nicht überein</b-form-invalid-feedback>
+        <b-form-group :description="passwortLongEnough?null : 'Das Passwort muss mindestens 8 Zeichen lang sein'" label="Passwort" label-for="passwort">
+            <b-form-input id="passwort" v-model="form.passwort" type="password" :state="passwortsMatch" required/>
+            <b-form-invalid-feedback :state="passwortsMatch">Passwörter stimmen nicht überein</b-form-invalid-feedback>
+<!--            <b-form-invalid-feedback :state="passwortLongEnough">Das Passwort ist zu kurz</b-form-invalid-feedback>-->
+            <b-form-valid-feedback :state="passwortLongEnough">Das Passwort muss mindestens 8 Zeichen lang sein</b-form-valid-feedback>
         </b-form-group>
         <b-form-group label="Passwort wiederholen" label-for="passwortWDH">
-            <b-form-input id="passwortWDH" v-model="form.passwortWDH" type="password" :state="passwortState" required/>
+            <b-form-input id="passwortWDH" v-model="form.passwortWDH" type="password" :state="passwortsMatch" required/>
         </b-form-group>
         <b-form-group label="Datenschutzerklärung" label-for="datenschutz">
             <b-form-invalid-feedback :state="form.datenschutz">Bitte akzeptieren Sie die Datenschutzerklärung</b-form-invalid-feedback>
@@ -75,6 +77,8 @@
     //@group Helper
     //@vuese
     //Formular zum Registrieren
+
+    import {mapGetters} from "vuex"
     export default {
         name: "Registrieren",
         data() {
@@ -97,17 +101,41 @@
             //Registrieren
             onSubmit(evt) {
                 evt.preventDefault();
-                if (this.form.passwort.length + this.form.passwortWDH.length > 0 && (this.form.passwort === this.form.passwortWDH) && this.form.datenschutz) {
-                    //@TODO Register
-                    console.log("register")
+                if (this.form.passwort.length  >= 8 && (this.form.passwort === this.form.passwortWDH) && this.form.datenschutz) {
+                    this.http.post(this.config["register"], this.form).then(res => {
+                        if (res.status === 200 || res.status === 201) {
+                            this.$root.$bvToast.toast("Registrierung erfolgreich abgeschlossen. Bitte aktivieren Sie das Konto mithilfe des an Ihre E-Mail zugesendeten Aktivierungslinks", {
+                                title: "Registierung erfolgreich",
+                                variant: "success",
+                                autoHideDelay: 10000
+                            });
+                            this.$router.push("/login");
+                        } else {
+                            this.$bvToast.toast("Etwas ist schief gegangen", {
+                                title: "Registrierung fehlgeschlagen",
+                                variant: "danger",
+                                autoHideDelay: 5000
+                            })
+                        }
+                    }).catch(()=> {
+                        this.$bvToast.toast("Etwas ist schief gegangen", {
+                            title: "Registrierung fehlgeschlagen",
+                            variant: "danger",
+                            autoHideDelay: 5000
+                        })
+                    });
                 }
             }
         },
         computed: {
             //check if passwords match
-            passwortState() {
-                return this.form.passwort.length + this.form.passwortWDH.length > 0 ? (this.form.passwort === this.form.passwortWDH) : null;
-            }
+            passwortsMatch() {
+                return this.form.passwortWDH.length > 0 ? (this.form.passwort === this.form.passwortWDH) : null;
+            },
+            passwortLongEnough() {
+                return this.form.passwort.length > 0 ? this.form.passwort.length >= 8 : null;
+            },
+            ...mapGetters(["config"])
         },
     }
 </script>

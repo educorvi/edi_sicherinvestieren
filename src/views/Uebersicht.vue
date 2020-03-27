@@ -168,7 +168,7 @@
                     this.folders = this.frageboegen;
                     this.finished = this.folders.length;
                 } else {
-                    this.http.get(this.config.rootURL).then(res => {
+                    this.http.get(this.config.frageboegen).then(res => {
                         this.folders = res.data.items;
                         for (let i = 0; i < this.folders.length; i++) {
                             let folder = this.folders[i];

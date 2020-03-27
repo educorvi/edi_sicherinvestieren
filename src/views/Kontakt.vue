@@ -60,15 +60,27 @@
     //@group Views
     //@vuese
     //View für ein Kontaktformular
+    import {mapGetters} from "vuex"
     export default {
         name: "Kontakt",
+        computed: {
+            ...mapGetters(["config"])
+        },
         methods: {
 
             //Absenden des Kontaktformulars
             onSubmit(evt) {
                 evt.preventDefault()
-            //    @TODO gimme contact
-                console.log("Nach Hause telefonieren")
+                this.http.post(this.config["contact"], this.form).then(res => {
+                    if (res.status === 200 || res.status === 201) {
+                        this.$root.$bvToast.toast("Kontaktanfrage erfolgreich abgesendet", {
+                            title: "Erfolgreich",
+                            variant: "success",
+                            autoHideDelay: 5000
+                        });
+                        this.$router.push("/")
+                    }
+                });
             }
         },
         data() {

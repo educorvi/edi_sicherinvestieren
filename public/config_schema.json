@@ -1,0 +1,36 @@
+{
+  "$id": "https://sicherinvestieren.educorvi.de/config_schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Config Schema",
+  "description": "Ein Schema, das die Config Datei beschreibt",
+  "type": "object",
+  "properties": {
+    "frageboegen": {
+      "description": "Die URL zu dem Ordner, in dem sich die Fragebögen befinden",
+      "type": "string"
+    },
+    "login": {
+      "description": "Die URL zu dem Endpunkt, an dem die Anmeldung stattfindet",
+      "type": "string"
+    },
+    "register": {
+      "description": "Die URL zu dem Endpunkt, an dem die Registrierung stattfindet",
+      "type": "string"
+    },
+    "contact": {
+      "description": "Die URL zu dem Endpunkt, an dem die Kontaktanfrage stattfindet",
+      "type": "string"
+    },
+    "database": {
+      "description": "Die URL zur CouchDB. Wichtig: Ohne https:// am Anfang und ohne / am Ende, also z. B. couch.kraeks.de",
+      "type": "string"
+    }
+  },
+  "required": [
+    "frageboegen",
+    "login",
+    "register",
+    "contact",
+    "database"
+  ]
+}

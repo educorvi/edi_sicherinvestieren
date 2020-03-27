@@ -33,6 +33,7 @@
     //@vuese
     //LoginView
     import {sync} from "../js/localDatabase";
+    import {mapGetters} from "vuex"
 
     export default {
         name: "Login",
@@ -43,11 +44,14 @@
                 valid: null
             }
         },
+        computed: {
+            ...mapGetters(["config"])
+        },
         methods: {
             //Login
             submit(evt) {
                 evt.preventDefault();
-                this.http.post("https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/medialogin", {
+                this.http.post(this.config["login"], {
                     username: this.username,
                     password: this.password
                 }).then(res => {

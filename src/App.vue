@@ -99,13 +99,26 @@
       ...mapGetters(["fragebogenData", "loggedIn"])
     },
     created() {
-      this.$store.commit('setUserID',this.$ls.get('userID', null));
-      if (this.loggedIn) {
-        //Starte Synchronisation mit remote
-        sync()
+      if (this.config === undefined || this.config === null) {
+        this.http.get("./config.json").then(res => {
+          this.$store.commit("setConfig", res.data);
+          this.$store.commit('setUserID',this.$ls.get('userID', null));
+          if (this.loggedIn) {
+            //Starte Synchronisation mit remote
+            sync()
+          }
+          //Alle Listen abrufen und in store speichern
+          db.getAllListen();
+        });
+      } else {
+        this.$store.commit('setUserID',this.$ls.get('userID', null));
+        if (this.loggedIn) {
+          //Starte Synchronisation mit remote
+          sync()
+        }
+        //Alle Listen abrufen und in store speichern
+        db.getAllListen();
       }
-      //Alle Listen abrufen und in store speichern
-      db.getAllListen();
     },
     data() {
       return {
