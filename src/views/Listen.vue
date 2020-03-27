@@ -1,10 +1,10 @@
 <template>
     <p class="text-muted" v-if="listen.length<=0">Noch keine {{$route.params.fertig === "true"?"beendeten":"offenen"}} Listen</p>
     <div v-else>
-        <transition-group mode="out-in" name="fade">
+<!--        <transition-group mode="out-in" name="fade">-->
             <Listenitem :item="list" :key="list.name" :last="index===listen.length-1" @deleted="deleteList(list)"
                         v-for="(list, index) in listen"/>
-        </transition-group>
+<!--        </transition-group>-->
     </div>
 </template>
 
