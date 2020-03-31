@@ -27,7 +27,7 @@ export function sync() {
         remoteCouch: store.state.remoteCouch,
         loggedIn: store.getters.loggedIn
     }
-    const opts = {live: true};
+    const opts = {live: true, retry: true};
     db.replicate.to(config.remoteCouch, opts, syncErrorTo);
     db.replicate.from(config.remoteCouch, opts, syncErrorFrom);
     log("Syncing Database", "#32bd04")
