@@ -172,7 +172,7 @@
                         this.folders = res.data.items;
                         for (let i = 0; i < this.folders.length; i++) {
                             let folder = this.folders[i];
-                            this.http.get(folder['@id']).then(res => {
+                            this.http.get(folder['@id']+ "?fullobjects=true").then(res => {
                                     let data = res.data;
                                     if (data['@type'] !== 'Folder') {
                                         data.items = null;
