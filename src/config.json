@@ -1,8 +1,10 @@
 {
-  "$schema": "./config_schema.json",
+  "$schema": "config_schema.json",
   "frageboegen": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren",
   "login": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/medialogin",
   "register": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/checkregister",
   "contact": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/checkkontakt",
-  "database": "couch.kraeks.de"
+  "database": "couch.kraeks.de",
+  "impressum": "https://www.bgetem.de/die-bgetem/impressum/impressum",
+  "datenschutz": "https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung"
 }

@@ -172,12 +172,19 @@
                         this.folders = res.data.items;
                         for (let i = 0; i < this.folders.length; i++) {
                             let folder = this.folders[i];
-                            this.http.get(folder['@id']).then(res => {
+                            //Ja, fullobjects ist hier eigentlich unnötig, ist aber, wie der Aufruf weiter unten für Dirty Precaching gedacht
+                            this.http.get(folder['@id']+ "?fullobjects=true").then(res => {
                                     let data = res.data;
-                                    if (data['@type'] !== 'Folder') {
-                                        data.items = null;
+                                if (data['@type'] !== 'Folder') {
+                                    data.items = null;
+                                } else {
+                                    for (const item of data.items) {
+                                        //Dirty Precaching
+                                        this.http.get(item['@id'] + "?fullobjects=true");
                                     }
+                                }
                                     this.folders[i] = data;
+
 
                                 }
                             ).catch(() => this.folders[i] = null).finally(() => this.finished++);
