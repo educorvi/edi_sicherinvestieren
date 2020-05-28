@@ -40,10 +40,6 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || [])
 // workbox.precaching.suppressWarnings()
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
-workbox.precaching.precacheAndRoute([
-    {url: "https://www.bgetem.de/die-bgetem/impressum/impressum", revision: "1"},
-    {url: "https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung", revision: "1"}
-]);
 
 //Source Dateien
 workbox.routing.registerRoute(

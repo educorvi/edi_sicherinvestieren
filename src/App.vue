@@ -121,6 +121,12 @@
                 //Alle Listen abrufen und in store speichern
                 db.getAllListen();
             }
+
+
+
+        //    Dirty PreCaching
+            this.http.get(config.impressum);
+            this.http.get(config.datenschutz);
         },
         data() {
             return {}
