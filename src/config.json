@@ -1,5 +1,5 @@
 {
-  "$schema": "./config_schema.json",
+  "$schema": "config_schema.json",
   "frageboegen": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren",
   "login": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/medialogin",
   "register": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/checkregister",
