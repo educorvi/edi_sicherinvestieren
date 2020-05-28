@@ -42,15 +42,41 @@ self.__precacheManifest = [].concat(self.__precacheManifest || [])
 // workbox.precaching.suppressWarnings()
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
 
+//Source Dateien
 workbox.routing.registerRoute(
     /\.(?:js|css|html|json)$/,
     new workbox.strategies.NetworkFirst({
         cacheName: 'app'
     })
 );
+//Bilder
 workbox.routing.registerRoute(
     /\.(?:png|jpg|ico|svg|jpeg)$/,
     new workbox.strategies.StaleWhileRevalidate({
         cacheName: 'images'
+    })
+);
+//Fragebögen und andere ApiDaten
+workbox.routing.registerRoute(
+    ({url}) => url.origin === 'https://new-etem-praev.bg-kooperation.de',
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'app',
+        plugins: [new workbox.cacheableResponse.CacheableResponse({statuses:[0, 200]})]
+    })
+);
+//Datenbank
+workbox.routing.registerRoute(
+    ({url}) => url.origin === 'https://couch.kraeks.de',
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'app',
+        plugins: [new workbox.cacheableResponse.CacheableResponse({statuses:[0, 200]})]
+    })
+);
+//BgEtem (Impressum, ...)
+workbox.routing.registerRoute(
+    ({url}) => url.origin === 'https://www.bgetem.de',
+    new workbox.strategies.NetworkFirst({
+        cacheName: 'app',
+        plugins: [new workbox.cacheableResponse.CacheableResponse({statuses:[0, 200]})]
     })
 );
