@@ -22,7 +22,7 @@
             //@TODO Eigene Datenschutzerklärung
             this.http.get("https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung").then(res => {
                 this.html = res.data.text.data;
-            })
+            }).catch(()=>this.html = "<h6>Es ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.</h6>")
         }
     }
 </script>
