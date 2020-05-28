@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars,no-undef */
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.0.0/workbox-sw.js');
-
+const config = import("./src/config.json")
 
 if (workbox) {
     console.log(`Yay! Workbox is loaded 🎉`);
@@ -11,7 +11,7 @@ if (workbox) {
 
 workbox.core.setCacheNameDetails({ prefix: 'siInvest' })
 //Change this value every time before you build
-const LATEST_VERSION = 'v0.9.0_a1'
+const LATEST_VERSION = 'v0.9.0a2'
 self.addEventListener('activate', (event) => {
     console.log(`%c ${LATEST_VERSION} `, 'background: #ddd; color: #0000ff')
     if (caches) {
@@ -41,6 +41,10 @@ workbox.core.clientsClaim();
 self.__precacheManifest = [].concat(self.__precacheManifest || [])
 // workbox.precaching.suppressWarnings()
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {})
+workbox.precaching.precacheAndRoute([
+    {url: config.impressum, revision: "1"},
+    {url: config.datenschutz, revision: "1"}
+]);
 
 //Source Dateien
 workbox.routing.registerRoute(

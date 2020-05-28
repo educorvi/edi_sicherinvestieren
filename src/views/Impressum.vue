@@ -8,6 +8,7 @@
     //@vuese
     //Impressum
     import CustomSpinner from "../components/Helper/CustomSpinner";
+    import config from "../config.json"
 
     export default {
         name: "Impressum",
@@ -19,7 +20,7 @@
         },
         //Daten werden aus dem bgetem Impressum ausgelesen
         created() {
-            this.http.get("https://www.bgetem.de/die-bgetem/impressum/impressum").then(res => {
+            this.http.get(config.impressum).then(res => {
                 this.html = res.data.text.data;
                 // const el = document.createElement('html');
                 // el.innerHTML = res.data;
