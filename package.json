@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "release": "dotenv release-it"
   },
   "dependencies": {
     "axios": "^0.19.2",
@@ -26,6 +27,7 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@release-it/bumper": "^1.4.1",
     "@vue/cli-plugin-babel": "^4.2.3",
     "@vue/cli-plugin-eslint": "^4.2.3",
     "@vue/cli-plugin-pwa": "^4.2.3",
@@ -33,8 +35,11 @@
     "@vue/cli-plugin-vuex": "^4.2.3",
     "@vue/cli-service": "^4.2.3",
     "babel-eslint": "^10.0.3",
+    "dotenv-cli": "^3.2.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
+    "npx": "^10.2.2",
+    "release-it": "^13.6.6",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
