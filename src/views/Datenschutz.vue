@@ -23,7 +23,7 @@
             //@TODO Eigene Datenschutzerklärung
             this.http.get(config.datenschutz).then(res => {
                 this.html = res.data.text.data;
-            }).catch(()=>this.html = "<h6>Es ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.</h6>")
+            }).catch(()=>this.html = "<h6  class='text-danger'>Es ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.</h6>")
         }
     }
 </script>

@@ -25,7 +25,7 @@
                 // const el = document.createElement('html');
                 // el.innerHTML = res.data;
                 // this.html = el.querySelector("#content-core").innerHTML;
-            }).catch(()=>this.html = "<h6>Es ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.</h6>")
+            }).catch(()=>this.html = "<h6 class='text-danger'>Es ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.</h6>")
         }
     }
 </script>
