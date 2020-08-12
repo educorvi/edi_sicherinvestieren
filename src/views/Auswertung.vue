@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="fragebogen">
-            <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString" :selected="item.selected[i]"
+            <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString()" :selected="item.selected[i]"
                               v-for="i in item.history" :notiz="item.notizen[i]"></Auswertungsfrage>
         </div>
         <custom-spinner v-else/>
@@ -32,9 +32,17 @@
             getAllListen().then(() => {
                 this.item = getListe(this.$route.query.name)[0];
                 //Abrufen des Fragebogens
-                this.http.get(this.item.fragebogen + "?fullobjects=true").then(res => {
-                    this.fragebogen = res.data;
-                });
+              this.http.get(this.item.fragebogen + "?fullobjects=true").then(res => {
+                this.fragebogen = res.data;
+              }).catch(err => {
+                console.error(err);
+                this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen", {
+                  title: "Fehler",
+                  variant: "danger",
+                  autoHideDelay: 5000
+                })
+                this.$router.push("/?subito=true");
+              });
             })
         }
     }

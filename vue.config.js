@@ -15,7 +15,7 @@ module.exports = {
     pwa: {
         name: 'Sicher Investieren',
         themeColor: '#014B94',
-        backgroundColor: '#014B94',
+        backgroundColor: '#fff',
         msTileColor: '#014B94',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
