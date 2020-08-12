@@ -183,35 +183,7 @@ export default {
         this.finished = this.folders.length;
       } else {
         this.creep(this.config.frageboegen).then(res => this.folders = res);
-        // this.http.get(this.config.frageboegen).then(res => {
-        //   this.folders = res.data.items;
-        //   for (let i = 0; i < this.folders.length; i++) {
-        //     let folder = this.folders[i];
-        //     //Ja, fullobjects ist hier eigentlich unnötig, ist aber, wie der Aufruf weiter unten für Dirty Precaching gedacht
-        //     this.http.get(folder['@id'] + "?fullobjects=true").then(res => {
-        //           let data = res.data;
-        //           if (data['@type'] !== 'Folder') {
-        //             data.items = null;
-        //           } else {
-        //             for (const item of data.items) {
-        //               //Dirty Precaching
-        //               this.http.get(item['@id'] + "?fullobjects=true");
-        //             }
-        //           }
-        //           this.folders[i] = data;
-        //
-        //
-        //         }
-        //     ).catch(() => this.folders[i] = null).finally(() => this.finished++);
-        //   }
-        // }).catch(() => {
-        //   this.folders = [];
-        //   this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Bitte lade die Seite neu oder probiere es später noch einmal", {
-        //     title: "Fehler",
-        //     variant: "danger",
-        //     autoHideDelay: 5000
-        //   })
-        // }).finally(() => this.$store.commit("setFrageboegen", this.folders));
+        this.$store.commit("setFrageboegen", this.folders);
       }
     },
     cancelForm() {
