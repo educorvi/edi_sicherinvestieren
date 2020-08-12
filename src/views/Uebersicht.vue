@@ -113,6 +113,7 @@ export default {
   data() {
     return {
       folders: null,
+      errorOcurred: null,
       treeOptions: {
         emptyText: 'Keine Fragebögen zu finden',
         propertyNames: {
@@ -166,7 +167,20 @@ export default {
 
     async creep(base) {
       let struct = [];
-      const res = await this.http.get(base + "?fullobjects=true");
+      let res;
+      try{
+        res = await this.http.get(base + "?fullobjects=true");
+      }catch (e) {
+        if (!this.errorOcurred) {
+            this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Die abgerufene Liste der Fragebögen ist möglicherweise nicht vollständig.", {
+              title: "Fehler",
+              variant: "danger",
+              autoHideDelay: 10000
+            })
+          this.errorOcurred = e;
+        }
+      }
+
       struct = res.data.items;
 
       for (let i = 0; i < struct.length; i++) {
