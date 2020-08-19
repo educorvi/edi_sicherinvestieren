@@ -28,5 +28,8 @@ module.exports = {
             // ...other Workbox options...
         }
     },
+    devServer: {
+        disableHostCheck: true
+    },
     publicPath: ''
 }
