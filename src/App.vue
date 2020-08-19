@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Headbar/>
-    <div class="container-fluid pt-3 pb-3" id="view">
+    <div class="container-fluid pt-3" id="view">
       <b-card no-body>
         <b-card-header>
           <h5>{{ $route.name !== "Fragebogen" ? $route.name : fragebogenData.title }}</h5>
@@ -42,9 +42,7 @@
 
 #view {
   max-width: 800px;
-  max-height: 100%;
-  overflow: hidden;
-  margin-bottom: 60px;
+  padding-bottom: 80px;
 }
 
 $breakpoint: 576px;
