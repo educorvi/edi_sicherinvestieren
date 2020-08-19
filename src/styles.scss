@@ -14,27 +14,40 @@ html body {
 }
 
 ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-    }
+  width: 5px;
+  height: 5px;
+}
 
-    /* Track */
-    ::-webkit-scrollbar-track {
-        /*box-shadow: inset 0 0 5px darkgray;*/
-        /*border-radius: 10px;*/
-        background-color: transparent;
-    }
+/* Track */
+::-webkit-scrollbar-track {
+  /*box-shadow: inset 0 0 5px darkgray;*/
+  /*border-radius: 10px;*/
+  background-color: $primary;
+  //border-bottom: solid 55px white;
+}
 
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: white;
-        /*border-radius: 10px;*/
-    }
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: lightgrey;
+  //border-bottom: solid 55px rgba(0, 0, 0, 0);
+  /*border-radius: 10px;*/
+}
 
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: white;
-    }
+$border-radius-scroll: 8px;
+
+#view{
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: $border-radius-scroll;
+    background-color: lightgrey;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $primary_light;
+    border-radius: $border-radius-scroll;
+  }
+}
 
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
