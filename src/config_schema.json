@@ -32,6 +32,15 @@
     "impressum": {
       "description": "Die URL zum Impressum",
       "type": "string"
+    },
+    "hiddenFromMenue": {
+      "description": "Gibt an, welche Menüpunkte der Navigationsleiste versteckt werden sollen",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["login", "register", "info", "contact", "impressum", "datenschutz", "beratung"],
+        "uniqueItems": true
+      }
     }
   },
   "required": [
@@ -41,6 +50,7 @@
     "contact",
     "database",
     "datenschutz",
-    "impressum"
+    "impressum",
+    "hiddenFromMenue"
   ]
 }

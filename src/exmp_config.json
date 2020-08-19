@@ -6,5 +6,6 @@
   "contact": "https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/checkkontakt",
   "database": "couch.kraeks.de",
   "impressum": "https://www.bgetem.de/die-bgetem/impressum/impressum",
-  "datenschutz": "https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung"
+  "datenschutz": "https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung",
+  "hiddenFromMenue": []
 }
