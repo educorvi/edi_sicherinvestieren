@@ -104,6 +104,7 @@
 //Übersicht über die verfügbaren Fragebögen
 import {mapGetters} from "vuex";
 import CustomSpinner from "../components/Helper/CustomSpinner";
+import configImp from "../config.json"
 
 export default {
   name: 'Uebersicht',
@@ -145,10 +146,8 @@ export default {
   },
   created() {
     if (this.config === undefined || this.config === null) {
-      this.http.get("./config.json").then(res => {
-        this.$store.commit("setConfig", res.data);
-        this.getOrdner();
-      });
+      this.$store.commit("setConfig", configImp);
+      this.getOrdner();
     } else {
       this.getOrdner()
     }
@@ -169,15 +168,15 @@ export default {
     async creep(base) {
       let struct = [];
       let res;
-      try{
+      try {
         res = await this.http.get(base + "?fullobjects=true");
-      }catch (e) {
+      } catch (e) {
         if (!this.errorOcurred) {
-            this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Die abgerufene Liste der Fragebögen ist möglicherweise nicht vollständig.", {
-              title: "Fehler",
-              variant: "danger",
-              autoHideDelay: 10000
-            })
+          this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Die abgerufene Liste der Fragebögen ist möglicherweise nicht vollständig.", {
+            title: "Fehler",
+            variant: "danger",
+            autoHideDelay: 10000
+          })
           this.errorOcurred = e;
         }
       }
