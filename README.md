@@ -1,7 +1,7 @@
 # Sicher Investieren
 [![GitHub version](https://badge.fury.io/gh/educorvi%2Fedi_sicherinvestieren.svg)](https://badge.fury.io/gh/educorvi%2Fedi_sicherinvestieren)
 [![Requirements Status](https://requires.io/github/educorvi/edi_sicherinvestieren/requirements.svg?branch=master)](https://requires.io/github/educorvi/edi_sicherinvestieren/requirements/?branch=master)
-![GitHub issues](https://img.shields.io/github/issues/educorvi/edi_sicherinvestieren)
+[![GitHub issues](https://img.shields.io/github/issues/educorvi/edi_sicherinvestieren)](https://github.com/educorvi/edi_sicherinvestieren/issues)
 ## Initiales Projektsetup
 ``
 npm install
