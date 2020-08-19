@@ -40,7 +40,8 @@
         "type": "string",
         "enum": ["login", "register", "info", "contact", "impressum", "datenschutz", "beratung"],
         "uniqueItems": true
-      }
+      },
+      "default": []
     }
   },
   "required": [
