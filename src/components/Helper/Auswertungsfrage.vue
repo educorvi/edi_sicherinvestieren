@@ -8,16 +8,16 @@
         </b-card-header>
         <b-collapse  :id="'col_'+frage['@id']" accordion="auswertung">
             <b-card-body style="background-color: white; text-align: left">
-                <span v-html="frage.frage.data"></span>
+                <span v-html="frageOrData(frage.frage).data"></span>
                <div v-if="notiz">
                    <hr>
                    <p><b>Eigene Notizen:</b></p>
                    <p>{{notiz}}</p>
                </div>
-                <div v-if="frage.tipp.data">
+                <div v-if="frageOrData(frage.tipp).data">
                     <hr>
                     <p><b>Hinweis:</b></p>
-                    <span v-html="frage.tipp.data"></span>
+                    <span v-html="frageOrData(frage.tipp).data"></span>
                 </div>
             </b-card-body>
         </b-collapse>
@@ -47,6 +47,9 @@
             }
         },
         methods: {
+          frageOrData(obj) {
+            return obj || {data: null}
+          },
             getOption() {
                 for (const option of this.frage.optionen) {
                     if (option.antwort === this.selected) {
