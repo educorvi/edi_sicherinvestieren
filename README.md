@@ -13,14 +13,7 @@ yarn install
 
 Anschließend die Datei `` config.json `` im Ordner `` src `` erstellen und entsprechend des Schemas in `` config_schema.json `` den eigenen Wünschen anpassen. (Als Beispiel dient hierbei `` exmp_config.json ``) 
 
-### Verwenden eines Hot-Reloading Development Servers
-``
-npm run serve
-``
-oder
-``
-yarn serve
-``
+## Anwendung verwenden
 
 ### Build für Produktion
 ``
@@ -29,4 +22,12 @@ npm run build
 oder
 ``
 yarn build
+``
+### Verwenden eines Hot-Reloading Development Servers
+``
+npm run serve
+``
+oder
+``
+yarn serve
 ``
