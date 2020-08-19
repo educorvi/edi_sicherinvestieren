@@ -24,7 +24,6 @@
               type="text"
               v-model="modalData.name"
           ></b-form-input>
-          <!--                    <b-form-invalid-feedback :state="modalData.name.length>0">Bitte geben Sie einen Namen ein</b-form-invalid-feedback>-->
         </b-form-group>
         <b-form-group
             id="typgroup"
@@ -163,8 +162,12 @@ export default {
       }
 
     },
-    //Abrufen der Ordnerstruktur, um die Fragebogen zu bekommen
 
+    /**
+     * Abrufen der Ordnerstruktur, um die Fragebögen zu bekommen
+     * @param base Basisverzeichnis der rekursiven Suche
+     * @returns {Promise<*|[]>} des Abrufes
+     */
     async creep(base) {
       let struct = [];
       let res;

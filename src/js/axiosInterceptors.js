@@ -1,6 +1,5 @@
 export const setDefaultInterceptor = (axios) => {
     const interceptor = function (config) {
-        //     config.headers.Authentication = "Basic YmdldGVtOnJoZWlu";
         if (!config.headers.Accept) {
             config.headers.Accept = "application/json";
         }
