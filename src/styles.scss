@@ -1,4 +1,5 @@
 $primary: #014B94;
+$primary_light: #0072d4;
 $success: rgb(81, 174, 49);
 $warning: rgb(243, 146, 0);
 $danger: rgb(212, 15, 20);
@@ -7,6 +8,33 @@ $breakpoint-mobile: 992px;
 ::selection {
   background-color: $primary !important;
 }
+
+html body {
+  background-color: $primary !important;
+}
+
+::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        /*box-shadow: inset 0 0 5px darkgray;*/
+        /*border-radius: 10px;*/
+        background-color: transparent;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: white;
+        /*border-radius: 10px;*/
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: white;
+    }
 
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
