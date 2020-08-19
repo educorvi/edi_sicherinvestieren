@@ -78,6 +78,12 @@ const routes = [
         component: Datenschutz
     },
     {
+        path: "/beratung",
+        name: "Beratungsmöglichkeiten",
+        bezeichnung: "beratung",
+        component: () => import('../views/Beratung')
+    },
+    {
         path: '*',
         name: 'Fehler 404',
         component: () => import('../views/notFound')
