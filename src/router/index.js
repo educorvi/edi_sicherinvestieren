@@ -3,8 +3,14 @@ import VueRouter from 'vue-router'
 import Home from '../views/Uebersicht.vue'
 import Impressum from "../views/Impressum";
 import Datenschutz from "../views/Datenschutz";
+import config from "../config.json";
 
 Vue.use(VueRouter)
+
+
+// eslint-disable-next-line no-unused-vars
+const allowed = (s) => !config.hiddenFromMenue.includes(s)
+
 
 const routes = [
     {
@@ -15,6 +21,7 @@ const routes = [
     {
         path: '/about',
         name: 'Über',
+        bezeichnung: "info",
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -28,6 +35,7 @@ const routes = [
     {
         path: '/impressum',
         name: 'Impressum',
+        bezeichnung: "impressum",
         component: Impressum
     },
     {
@@ -43,16 +51,19 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
+        bezeichnung: "login",
         component: () => import('../views/Login')
     },
     {
         path: "/register",
         name: "Registrieren",
+        bezeichnung: "register",
         component: () => import('../views/Registrieren')
     },
     {
         path: "/kontakt",
         name: "Kontakt",
+        bezeichnung: "contact",
         component: () => import('../views/Kontakt')
     },
     {
@@ -63,6 +74,7 @@ const routes = [
     {
         path: "/datenschutz",
         name: "Datenschutzerklärung",
+        bezeichnung: "datenschutz",
         component: Datenschutz
     },
     {
@@ -74,6 +86,12 @@ const routes = [
 
 const router = new VueRouter({
     routes
+})
+
+// eslint-disable-next-line no-unused-vars
+router.beforeEach((to, from, next) => {
+    const t = routes[routes.findIndex(a => a.path === to.path)] || {bezeichnung: undefined};
+    next(allowed(t.bezeichnung));
 })
 
 export default router
