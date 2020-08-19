@@ -1,24 +1,32 @@
 # Sicher Investieren
-
-## Project setup
-```
+[![GitHub version](https://badge.fury.io/gh/educorvi%2Fedi_sicherinvestieren.svg)](https://badge.fury.io/gh/educorvi%2Fedi_sicherinvestieren)
+[![Requirements Status](https://requires.io/github/educorvi/edi_sicherinvestieren/requirements.svg?branch=master)](https://requires.io/github/educorvi/edi_sicherinvestieren/requirements/?branch=master)
+![GitHub issues](https://img.shields.io/github/issues/educorvi/edi_sicherinvestieren)
+## Initiales Projektsetup
+``
+npm install
+``
+oder
+``
 yarn install
-```
+``
 
-### Compiles and hot-reloads for development
-```
+Anschließend die Datei `` config.json `` erstellen und entsprechend des Schemas in `` config_schema.json `` den eigenen Wünschen anpassen. (Als Beispiel dient hierbei `` exmp_config.json ``) 
+
+### Verwenden eines Hot-Reloading Development Servers
+``
+npm run serve
+``
+oder
+``
 yarn serve
-```
+``
 
-### Compiles and minifies for production
-```
+### Build für Produktion
+``
+npm run build
+``
+oder
+``
 yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+``
