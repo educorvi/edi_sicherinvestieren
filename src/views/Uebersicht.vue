@@ -1,6 +1,6 @@
 <template>
   <div v-if="!folders || folders.length>0">
-    <transition name="fade" v-if="folders && folders.length === finished">
+    <transition name="fade" v-if="folders && toLoad <= finished">
       <tree :data="folders" :options="treeOptions" @node:clicked="newSelected"/>
     </transition>
     <custom-spinner v-else/>
@@ -113,6 +113,7 @@ export default {
   data() {
     return {
       folders: null,
+      toLoad: 0,
       errorOcurred: null,
       treeOptions: {
         emptyText: 'Keine Fragebögen zu finden',
@@ -182,6 +183,7 @@ export default {
       }
 
       struct = res.data.items;
+      this.toLoad += struct.length;
 
       for (let i = 0; i < struct.length; i++) {
         if (struct[i]['@type'] === 'Folder') {
