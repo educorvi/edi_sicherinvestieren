@@ -49,5 +49,9 @@ $border-radius-scroll: 8px;
   }
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 @import 'node_modules/bootstrap/scss/bootstrap';
 @import 'node_modules/bootstrap-vue/src/index.scss';
