@@ -31,7 +31,12 @@ export default {
     return {
       fragebogen: null,
       item: null,
-      link: ""
+      link: "",
+      linkstatus: 0,
+      linkstati: {
+        SUCCESS: 0,
+        REMOVED_NOTES: 1
+      }
     }
   },
 
@@ -69,7 +74,14 @@ export default {
   methods: {
     shareLink() {
       this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(this.item)))));
-      console.log(this.link.length)
+      if (this.link.length > 2048) {
+        this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify({...this.item, notizen: []})))));
+        this.$bvToast.toast("Beim Teilen wurden die Notizen ausgeblendet, da zu viele Notizen im Fragebogen enthalten sind", {
+          title: "Notizen ausgeblendet",
+          autoHideDelay: 10000
+        })
+        this.linkstatus = this.linkstati.REMOVED_NOTES;
+      }
       const shareData = {
         title: "Auswertung von \"" + this.item.name + "\"",
         text: "Auswertung von \"" + this.item.name + "\" bezüglich des Fragebogens \"" + this.item.fragebogenName + "\"",
@@ -83,7 +95,6 @@ export default {
         navigator.clipboard.writeText(this.link);
         this.$bvToast.toast("Link zum Teilen in das Clipboard kopiert. Sie können ihn nun an einem beliebigen Ort einfügen", {
           title: "Kopiert",
-          // variant: "danger",
           autoHideDelay: 10000
         })
       }
