@@ -42,7 +42,7 @@ export default {
   computed: {
     ...mapGetters(["loggedIn", "config"]),
     menCfg() {
-      return this.config.hiddenFromMenue;
+      return this.config.disabledFeatures;
     }
   },
   methods: {

@@ -33,7 +33,7 @@
       "description": "Die URL zum Impressum",
       "type": "string"
     },
-    "hiddenFromMenue": {
+    "disabledFeatures": {
       "description": "Gibt an, welche Menüpunkte der Navigationsleiste versteckt werden sollen",
       "type": "array",
       "items": {
@@ -52,6 +52,6 @@
     "database",
     "datenschutz",
     "impressum",
-    "hiddenFromMenue"
+    "disabledFeatures"
   ]
 }

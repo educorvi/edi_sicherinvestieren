@@ -7,5 +7,5 @@
   "database": "couch.kraeks.de",
   "impressum": "https://www.bgetem.de/die-bgetem/impressum/impressum",
   "datenschutz": "https://www.bgetem.de/die-bgetem/datenschutz/datenschutzerklaerung",
-  "hiddenFromMenue": []
+  "disabledFeatures": []
 }

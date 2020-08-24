@@ -21,7 +21,7 @@
                     :state="valid"
             ></b-form-input>
             <b-button-group class="float-lg-right">
-                <b-button :disabled="config.hiddenFromMenue.includes('register')" @click="$router.push('/register')">{{config.hiddenFromMenue.includes('register')?'Eine Registrierung ist momentan leider nicht möglich':'Registrierung'}}</b-button>
+                <b-button :disabled="config.disabledFeatures.includes('register')" @click="$router.push('/register')">{{config.disabledFeatures.includes('register')?'Eine Registrierung ist momentan leider nicht möglich':'Registrierung'}}</b-button>
                 <b-button type="submit" variant="primary">Anmelden</b-button>
             </b-button-group>
         </b-form>

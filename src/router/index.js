@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 
 
 // eslint-disable-next-line no-unused-vars
-const allowed = (s) => !config.hiddenFromMenue.includes(s)
+const allowed = (s) => !config.disabledFeatures.includes(s)
 
 
 const routes = [
