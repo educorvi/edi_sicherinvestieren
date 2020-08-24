@@ -25,6 +25,10 @@
       "description": "Die URL zur CouchDB. Wichtig: Ohne https:// am Anfang und ohne / am Ende, also z. B. couch.kraeks.de",
       "type": "string"
     },
+    "baseURL": {
+      "description": "Die URL, unter der die Anwendung selbst aufzufinden ist",
+      "type": "string"
+    },
     "datenschutz": {
       "description": "Die URL zur Datenschutzerklärung",
       "type": "string"
@@ -42,6 +46,11 @@
         "uniqueItems": true
       },
       "default": []
+    },
+    "limitURLLength": {
+      "description": "Wenn true wird versucht die Länge der zu teilenden URLs auf unter 2048 Zeichen zu halten",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [
@@ -52,6 +61,7 @@
     "database",
     "datenschutz",
     "impressum",
-    "disabledFeatures"
+    "disabledFeatures",
+    "baseURL"
   ]
 }
