@@ -1,11 +1,47 @@
 <template>
   <div class="text-center">
     <div v-if="fragebogen">
+      <table style="width: 100%">
+        <tr>
+          <td>Dateiname:</td>
+          <td><b>{{ item.name }}</b></td>
+        </tr>
+
+        <tr>
+          <td>Fragebogen:</td>
+          <td><b>{{ item.fragebogenName }}</b></td>
+        </tr>
+
+        <tr v-if="item.maschinentyp">
+          <td>Maschinentyp:</td>
+          <td><b>{{ item.maschinentyp }}</b></td>
+        </tr>
+
+        <tr v-if="item.maschinennummer">
+          <td>Maschinennummer:</td>
+          <td><b>{{ item.maschinennummer }}</b></td>
+        </tr>
+
+        <tr v-if="item.hersteller">
+          <td>Hersteller:</td>
+          <td><b>{{ item.hersteller }}</b></td>
+        </tr>
+
+        <tr v-if="item.jahr">
+          <td>Baujahr:</td>
+          <td><b>{{ item.jahr }}</b></td>
+        </tr>
+
+        <tr v-if="item.globalNotizen">
+          <td>Notizen:</td>
+          <td><b>{{ item.globalNotizen }}</b></td>
+        </tr>
+      </table>
+      <hr>
       <div v-if="!config.disabledFeatures.includes('share')">
         <b-button @click="shareLink" variant="primary" class="w-100">Teilen</b-button>
         <hr>
       </div>
-
       <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString()"
                         :selected="item.selected[i]"
                         v-for="i in item.history" :notiz="item.notizen[i]"></Auswertungsfrage>
