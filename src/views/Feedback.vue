@@ -6,6 +6,9 @@
     <b-form-textarea v-model="comment" placeholder="Optional" rows="3" id="comment"></b-form-textarea>
     <b-button class="mt-2 float-right" variant="primary" @click="send">Senden</b-button>
   </div>
+  <div v-else>
+    <p>Vielen Dank, Ihr Feedback wurde gesendet</p>
+  </div>
 </template>
 
 <script>
@@ -25,6 +28,10 @@ name: "Feedback",
     },
     send() {
       this.check();
+      if (!this.invalid) {
+        //@TODO Senden
+        this.sent = true;
+      }
     }
   },
 }
