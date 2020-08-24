@@ -78,6 +78,13 @@ const routes = [
         component: Datenschutz
     },
     {
+        path: "/feedback",
+        name: "Feedback",
+        bezeichnung: "feedback",
+        component: () => import("../views/Feedback")
+
+    },
+    {
         path: '*',
         name: 'Fehler 404',
         component: () => import('../views/notFound')
