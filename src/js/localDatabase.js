@@ -58,7 +58,7 @@ export default retObject;
 
 export function getAllListen() {
     return db.find({
-        selector: {user: {$ne: ""}}
+        selector: {name: {$ne: ""}}
     }).then(res => store.commit("setListen", res.docs));
 }
 
