@@ -34,7 +34,7 @@
       "type": "string"
     },
     "disabledFeatures": {
-      "description": "Gibt an, welche Menüpunkte der Navigationsleiste versteckt werden sollen",
+      "description": "Gibt an, welche Features versteckt bzw disabled werden sollen",
       "type": "array",
       "items": {
         "type": "string",
