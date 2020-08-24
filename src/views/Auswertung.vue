@@ -122,7 +122,7 @@ export default {
           ...this.item,
           notizen: []
         })))));
-        this.$bvToast.toast("Beim Teilen wurden die Notizen ausgeblendet, da zu viele Notizen im Fragebogen enthalten sind", {
+        this.$bvToast.toast("Es werden die Notizen ausgeblendet, da zu viele Notizen im Fragebogen enthalten sind", {
           title: "Notizen ausgeblendet",
           autoHideDelay: 10000
         })
