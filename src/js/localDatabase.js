@@ -13,7 +13,7 @@ let config = {
 
 db.createIndex({
     index: {
-        fields: ['user']
+        fields: ['name']
     }
 }).catch(err => console.error(err));
 
