@@ -1,8 +1,11 @@
 <template>
   <div class="text-center">
     <div v-if="fragebogen">
-      <b-button @click="shareLink" variant="primary" class="w-100">Teilen</b-button>
-      <hr>
+      <div v-if="!config.disabledFeatures.includes('share')">
+        <b-button @click="shareLink" variant="primary" class="w-100">Teilen</b-button>
+        <hr>
+      </div>
+
       <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString()"
                         :selected="item.selected[i]"
                         v-for="i in item.history" :notiz="item.notizen[i]"></Auswertungsfrage>
@@ -36,6 +39,11 @@ export default {
         SUCCESS: 0,
         REMOVED_NOTES: 1
       }
+    }
+  },
+  computed: {
+    config() {
+      return config;
     }
   },
 
@@ -74,7 +82,10 @@ export default {
     shareLink() {
       this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(this.item)))));
       if (this.link.length > 2048 && config.limitURLLength) {
-        this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify({...this.item, notizen: []})))));
+        this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify({
+          ...this.item,
+          notizen: []
+        })))));
         this.$bvToast.toast("Beim Teilen wurden die Notizen ausgeblendet, da zu viele Notizen im Fragebogen enthalten sind", {
           title: "Notizen ausgeblendet",
           autoHideDelay: 10000

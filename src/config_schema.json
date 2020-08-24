@@ -42,7 +42,7 @@
       "type": "array",
       "items": {
         "type": "string",
-        "enum": ["login", "register", "info", "contact", "impressum", "datenschutz", "beratung"],
+        "enum": ["login", "register", "info", "contact", "impressum", "datenschutz", "beratung", "share", "shareLink"],
         "uniqueItems": true
       },
       "default": []
