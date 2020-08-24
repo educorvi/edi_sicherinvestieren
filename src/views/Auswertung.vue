@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <div v-if="fragebogen">
-      <table style="width: 100%">
+      <table style="width: 100%" class="text-left">
         <tr>
           <td>Dateiname:</td>
           <td><b>{{ item.name }}</b></td>
