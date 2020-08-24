@@ -46,6 +46,11 @@
         "uniqueItems": true
       },
       "default": []
+    },
+    "limitURLLength": {
+      "description": "Wenn true wird versucht die Länge der zu teilenden URLs auf unter 2048 Zeichen zu halten",
+      "type": "boolean",
+      "default": false
     }
   },
   "required": [

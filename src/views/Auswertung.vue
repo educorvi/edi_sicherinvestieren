@@ -20,7 +20,6 @@ import CustomSpinner from "../components/Helper/CustomSpinner";
 import Auswertungsfrage from "../components/Helper/Auswertungsfrage";
 import Hinweis from "../components/Hinweis";
 import {getAllListen, getListe} from "../js/localDatabase";
-// eslint-disable-next-line no-unused-vars
 import LZString from "../libs/lz-string";
 import config from "../config.json";
 
@@ -74,7 +73,7 @@ export default {
   methods: {
     shareLink() {
       this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(this.item)))));
-      if (this.link.length > 2048) {
+      if (this.link.length > 2048 && config.limitURLLength) {
         this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify({...this.item, notizen: []})))));
         this.$bvToast.toast("Beim Teilen wurden die Notizen ausgeblendet, da zu viele Notizen im Fragebogen enthalten sind", {
           title: "Notizen ausgeblendet",
