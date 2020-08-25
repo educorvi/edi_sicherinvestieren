@@ -15,8 +15,13 @@
   </div>
 </template>
 <script>
+import {mapGetters} from 'vuex';
+
 export default {
-  name: 'main-view'
+  name: 'main-view',
+  computed: {
+    ...mapGetters(["fragebogenData"])
+  }
 }
 </script>
 <style lang="scss">
