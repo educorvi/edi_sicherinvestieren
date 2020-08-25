@@ -51,6 +51,23 @@ export default {
   computed: {
     ...mapGetters(["config"])
   },
+  created() {
+    try{
+      // eslint-disable-next-line no-undef
+      if (navigator.credentials && PasswordCredential && !this.loggedIn) {
+        navigator.credentials.get({password: true}).then(cred => {
+          if (cred != null) {
+            this.$store.commit("setUserID", cred.name);
+            this.$ls.set('userID', cred.name);
+            sync()
+            this.$router.push("/");
+          }
+        });
+      }
+    }catch (e){
+      console.error(e);
+    }
+  },
   methods: {
     //Login
     submit(evt) {
@@ -70,8 +87,8 @@ export default {
             if (navigator.credentials && PasswordCredential) {
               // eslint-disable-next-line no-undef
               const credential = new PasswordCredential({
-                id: this.username,
                 name: res.data.token,
+                id: this.username,
                 password: this.password
               })
 
