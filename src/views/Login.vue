@@ -1,73 +1,98 @@
 <template>
-    <div>
-        <b-form @submit="submit">
-            <b-form-invalid-feedback :state="valid"><h5>Falscher Benutzername/Passwort</h5></b-form-invalid-feedback>
-            <b-form-input
-                    class="mb-2"
-                    v-model="username"
-                    id="user"
-                    placeholder="Benutzername"
-                    :required="true"
-                    type="text"
-                    :state="valid"
-            ></b-form-input>
-            <b-form-input
-                    class="mb-2"
-                    v-model="password"
-                    placeholder="Passwort"
-                    type="password"
-                    id="password"
-                    :required="true"
-                    :state="valid"
-            ></b-form-input>
-            <b-button-group class="float-lg-right">
-                <b-button :disabled="config.disabledFeatures.includes('register')" @click="$router.push('/register')">{{config.disabledFeatures.includes('register')?'Eine Registrierung ist momentan leider nicht möglich':'Registrierung'}}</b-button>
-                <b-button type="submit" variant="primary">Anmelden</b-button>
-            </b-button-group>
-        </b-form>
-    </div>
+  <div>
+    <b-form @submit="submit">
+      <b-form-invalid-feedback :state="valid"><h5>Falscher Benutzername/Passwort</h5></b-form-invalid-feedback>
+      <b-form-input
+          :required="true"
+          :state="valid"
+          class="mb-2"
+          id="user"
+          placeholder="Benutzername"
+          type="text"
+          v-model="username"
+      ></b-form-input>
+      <b-form-input
+          :required="true"
+          :state="valid"
+          class="mb-2"
+          id="password"
+          placeholder="Passwort"
+          type="password"
+          v-model="password"
+      ></b-form-input>
+      <b-button-group class="float-lg-right">
+        <b-button :disabled="config.disabledFeatures.includes('register')" @click="$router.push('/register')">
+          {{
+            config.disabledFeatures.includes('register') ? 'Eine Registrierung ist momentan leider nicht möglich' : 'Registrierung'
+          }}
+        </b-button>
+        <b-button type="submit" variant="primary">Anmelden</b-button>
+      </b-button-group>
+    </b-form>
+  </div>
 </template>
 
 <script>
-    //@group Views
-    //@vuese
-    //LoginView
-    import {sync} from "../js/localDatabase";
-    import {mapGetters} from "vuex"
+//@group Views
+//@vuese
+//LoginView
+import {sync} from "../js/localDatabase";
+import {mapGetters} from "vuex"
 
-    export default {
-        name: "Login",
-        data() {
-            return {
-                username: "",
-                password: "",
-                valid: null
-            }
-        },
-        computed: {
-            ...mapGetters(["config"])
-        },
-        methods: {
-            //Login
-            submit(evt) {
-                evt.preventDefault();
-                this.http.post(this.config["login"], {
-                    username: this.username,
-                    password: this.password
-                }).then(res => {
-                    //Wenn erfolgreich, setzen des Tokens, sonst Feedback
-                    if (res.data.token) {
-                        this.$store.commit("setUserID", res.data.token);
-                        this.$ls.set('userID', res.data.token);
-                        sync()
-                        this.$router.replace("/")
-                    } else {
-                        this.valid = false;
-                    }
-                })
-            }
-        },
+export default {
+  name: "Login",
+  data() {
+    return {
+      username: "",
+      password: "",
+      valid: null
     }
+  },
+  computed: {
+    ...mapGetters(["config"])
+  },
+  methods: {
+    //Login
+    submit(evt) {
+      evt.preventDefault();
+      this.http.post(this.config["login"], {
+        username: this.username,
+        password: this.password
+      }).then(res => {
+        //Wenn erfolgreich, setzen des Tokens, sonst Feedback
+        if (res.data.token) {
+          this.$store.commit("setUserID", res.data.token);
+          this.$ls.set('userID', res.data.token);
+          sync()
+
+          try {
+            // eslint-disable-next-line no-undef
+            if (navigator.credentials && PasswordCredential) {
+              // eslint-disable-next-line no-undef
+              const credential = new PasswordCredential({
+                id: this.username,
+                name: res.data.token,
+                password: this.password
+              })
+
+              navigator.credentials.store(credential)
+                  .then(() => console.log('Storing credential for ' + credential.id + ' (result cannot be checked by the website).'))
+                  .catch((err) => console.log('Error storing credentials: ' + err));
+            } else {
+              console.log("Credentials API not supported")
+            }
+          } catch (e){
+            console.error(e);
+          }finally {
+            this.$router.replace("/")
+          }
+        } else {
+          this.valid = false;
+        }
+      })
+    }
+  },
+}
 </script>
 
 <style scoped>
