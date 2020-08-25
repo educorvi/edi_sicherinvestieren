@@ -182,6 +182,7 @@ export default {
           })
           this.errorOcurred = e;
         }
+        return [];
       }
 
       struct = res.data.items;
