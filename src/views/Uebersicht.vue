@@ -206,6 +206,7 @@ export default {
       }
     },
     async reload() {
+      this.folders = null;
       this.finished = 0;
       this.toLoad = 0;
       this.errorOcurred = null;
