@@ -54,7 +54,7 @@ export default {
   created() {
     try{
       // eslint-disable-next-line no-undef
-      if (navigator.credentials && PasswordCredential && !this.loggedIn) {
+      if (navigator.credentials && PasswordCredential && !this.loggedIn && !this.config.disabledFeatures.includes('credentialsAPI')) {
         navigator.credentials.get({password: true}).then(cred => {
           if (cred != null) {
             this.http.post(this.config["login"], {
@@ -94,7 +94,7 @@ export default {
 
           try {
             // eslint-disable-next-line no-undef
-            if (navigator.credentials && PasswordCredential) {
+            if (navigator.credentials && PasswordCredential && !this.config.disabledFeatures.includes('credentialsAPI')) {
               // eslint-disable-next-line no-undef
               const credential = new PasswordCredential({
                 id: this.username,

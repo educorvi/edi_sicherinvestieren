@@ -28,6 +28,7 @@
 <script>
 import {mapGetters} from "vuex"
 import {deleteAllListen} from "../js/localDatabase";
+import config from '../config.json'
 
 export default {
   name: "Einstellungen",
@@ -36,7 +37,7 @@ export default {
     logout() {
       this.$store.commit("setUserID", null)
       this.$ls.set('userID', null)
-      if (navigator.credentials) {
+      if (navigator.credentials && !config.disabledFeatures.includes('credentialsAPI')) {
         navigator.credentials.preventSilentAccess()
       }
       location.reload();
