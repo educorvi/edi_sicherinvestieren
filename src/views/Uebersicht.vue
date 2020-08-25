@@ -144,6 +144,7 @@ export default {
     ...mapGetters(["config", "listen", "frageboegen"])
   },
   created() {
+    this.$store.commit("setReloadFunction", this.reload)
     if (this.config === undefined || this.config === null) {
       this.$store.commit("setConfig", configImp);
       this.getOrdner();
@@ -199,11 +200,17 @@ export default {
     getOrdner() {
       if (this.frageboegen) {
         this.folders = this.frageboegen;
-        this.finished = this.folders.length;
+        this.finished = this.toLoad;
       } else {
-        this.creep(this.config.frageboegen).then(res => this.folders = res);
-        this.$store.commit("setFrageboegen", this.folders);
+        this.reload();
       }
+    },
+    async reload() {
+      this.finished = 0;
+      this.toLoad = 0;
+      this.errorOcurred = null;
+      this.folders = await this.creep(this.config.frageboegen);
+      this.$store.commit("setFrageboegen", this.folders);
     },
     cancelForm() {
       this.$bvModal.hide('startModal');

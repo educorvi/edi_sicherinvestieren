@@ -1,21 +1,13 @@
 <template>
   <div id="app">
     <Headbar/>
-    <div class="container-fluid pt-3" id="view">
-      <b-card no-body>
-        <b-card-header>
-          <h5>{{ $route.name !== "Fragebogen" ? $route.name : fragebogenData.title }}</h5>
-          <p class="mb-0" v-if="$route.name==='Fragebogen'">{{ fragebogenData.thema }}</p>
-        </b-card-header>
-        <b-card-body>
-          <transition mode="out-in" name="fade">
-            <router-view/>
-          </transition>
-
-        </b-card-body>
-      </b-card>
+    <vue-pull-refresh v-if="$route.name === 'Fragebögen' && scrollBehaviourSupported" :onRefresh="reload" :config="refreshConfig">
+      <main-view/>
+    </vue-pull-refresh>
+    <div v-else>
+      <main-view/>
     </div>
-    <div id="bottomDiv" class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" id="bottomDiv">
       <BottomBar id="bottombar"/>
     </div>
 
@@ -23,6 +15,69 @@
     <Hinweis hinweis="begruessung"/>
   </div>
 </template>
+
+
+<script>
+//@vuese
+//Startpunkt der App
+import Headbar from "./components/Navigation/Headbar";
+import BottomBar from "./components/Navigation/BottomBar";
+import {mapGetters} from "vuex";
+import db, {sync} from "./js/localDatabase";
+import Hinweis from "./components/Hinweis";
+import config from './config.json'
+import VuePullRefresh from 'vue-pull-refresh'
+import MainView from "@/MainView";
+
+export default {
+  components: {MainView, Hinweis, BottomBar, Headbar, VuePullRefresh},
+  computed: {
+    ...mapGetters(["fragebogenData", "loggedIn", "reload"]),
+    scrollBehaviourSupported() {
+      return CSS.supports('overscroll-behavior-y', 'none');
+    }
+  },
+  created() {
+    if (this.config === undefined || this.config === null) {
+      this.$store.commit("setConfig", config);
+      this.$store.commit('setUserID', this.$ls.get('userID', null));
+      if (this.loggedIn) {
+        //Starte Synchronisation mit remote
+        sync()
+      }
+      //Alle Listen abrufen und in store speichern
+      db.getAllListen();
+
+    } else {
+      this.$store.commit('setUserID', this.$ls.get('userID', null));
+      if (this.loggedIn) {
+        //Starte Synchronisation mit remote
+        sync()
+      }
+      //Alle Listen abrufen und in store speichern
+      db.getAllListen();
+    }
+
+
+    //    Dirty PreCaching
+    this.http.get(config.impressum);
+    this.http.get(config.datenschutz);
+  },
+  methods: {
+  },
+  data() {
+    return {
+      refreshConfig: {
+        startLabel: "Fragebögen aktualisieren",
+        errorLabel: "Aktualisierung fehlgeschlagen",
+        readyLabel: "Fragebögen aktualisieren",
+        loadingLabel: "Lädt..."
+      }
+    }
+  },
+}
+</script>
+
 
 <style lang="scss">
 @import "styles";
@@ -38,11 +93,6 @@
 
 #app {
   text-align: center;
-}
-
-#view {
-  max-width: 800px;
-  padding-bottom: 80px;
 }
 
 $breakpoint: 576px;
@@ -82,50 +132,3 @@ $breakpoint: 576px;
   opacity: 0;
 }
 </style>
-<script>
-//@vuese
-//Startpunkt der App
-import Headbar from "./components/Navigation/Headbar";
-import BottomBar from "./components/Navigation/BottomBar";
-import {mapGetters} from "vuex";
-import {sync} from "./js/localDatabase";
-import db from './js/localDatabase'
-import Hinweis from "./components/Hinweis";
-import config from './config.json'
-
-export default {
-  components: {Hinweis, BottomBar, Headbar},
-  computed: {
-    ...mapGetters(["fragebogenData", "loggedIn"])
-  },
-  created() {
-    if (this.config === undefined || this.config === null) {
-      this.$store.commit("setConfig", config);
-      this.$store.commit('setUserID', this.$ls.get('userID', null));
-      if (this.loggedIn) {
-        //Starte Synchronisation mit remote
-        sync()
-      }
-      //Alle Listen abrufen und in store speichern
-      db.getAllListen();
-
-    } else {
-      this.$store.commit('setUserID', this.$ls.get('userID', null));
-      if (this.loggedIn) {
-        //Starte Synchronisation mit remote
-        sync()
-      }
-      //Alle Listen abrufen und in store speichern
-      db.getAllListen();
-    }
-
-
-    //    Dirty PreCaching
-    this.http.get(config.impressum);
-    this.http.get(config.datenschutz);
-  },
-  data() {
-    return {}
-  },
-}
-</script>

@@ -26,6 +26,7 @@ export default new Vuex.Store({
         hinweise,
     //    Fragebögen
         frageboegen: null,
+        reload: null
     },
     mutations: {
         setConfig(state, config) {
@@ -58,6 +59,9 @@ export default new Vuex.Store({
         },
         setFrageboegen(state, f) {
             state.frageboegen = f;
+        },
+        setReloadFunction(state, f) {
+            state.reload = f;
         }
     },
     actions: {},
@@ -72,6 +76,8 @@ export default new Vuex.Store({
         userID: state => state.userID,
         loggedIn: state => !!state.userID,
         hinweise: state => state.hinweise,
-        frageboegen: state => state.frageboegen
+        frageboegen: state => state.frageboegen,
+        reload: state => state.reload
+
     },
 })

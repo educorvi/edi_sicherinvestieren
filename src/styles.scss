@@ -11,6 +11,7 @@ $breakpoint-mobile: 992px;
 
 html body {
   background-color: $primary !important;
+  overscroll-behavior-y: none;
 }
 
 ::-webkit-scrollbar {
