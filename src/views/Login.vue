@@ -57,12 +57,22 @@ export default {
       if (navigator.credentials && PasswordCredential && !this.loggedIn) {
         navigator.credentials.get({password: true}).then(cred => {
           if (cred != null) {
-            this.$store.commit("setUserID", cred.name);
-            this.$ls.set('userID', cred.name);
-            sync()
-            this.$router.push("/");
+            this.http.post(this.config["login"], {
+              username: cred.name,
+              password: cred.password
+            }).then(res => {
+              //Wenn erfolgreich, setzen des Tokens, sonst Feedback
+              if (res.data.token) {
+                this.$store.commit("setUserID", res.data.token);
+                this.$ls.set('userID', res.data.token);
+                sync()
+                this.$router.push("/");
+              }else {
+                this.valid = false;
+              }
+            });
           }
-        });
+        })
       }
     }catch (e){
       console.error(e);
@@ -87,8 +97,8 @@ export default {
             if (navigator.credentials && PasswordCredential) {
               // eslint-disable-next-line no-undef
               const credential = new PasswordCredential({
-                name: res.data.token,
                 id: this.username,
+                name: this.username,
                 password: this.password
               })
 
