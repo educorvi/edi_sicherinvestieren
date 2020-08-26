@@ -38,11 +38,8 @@
         </tr>
       </table>
       <hr>
-      <div>
-        <b-button-group v-if="isEnabled('share')">
-          <b-button v-if="isEnabled('shareLink')" @click="shareLink" variant="primary">Teilen</b-button>
-          <b-button v-if="isEnabled('sharePDF')" @click="downloadPDF" variant="primary">PDF Download</b-button>
-        </b-button-group>
+      <div v-if="isEnabled('share')">
+        <b-button class="w-100" v-b-modal.share variant="primary">Teilen und Exportieren</b-button>
         <hr>
       </div>
       <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString()"
@@ -51,6 +48,18 @@
     </div>
     <custom-spinner v-else/>
     <Hinweis hinweis="rechtlicheEinschraenkung"/>
+    <b-modal id="share" ok-only ok-title="Schließen" title="Teilen" centered>
+      <b-button-group vertical class="w-100">
+
+        <b-button @click="downloadPDF" :disabled="!isEnabled('sharePDF')" variant="light">
+          PDF Datei herunterladen <i v-if="!isEnabled('sharePDF')">(Momentan leider nicht verfügbar)</i>
+        </b-button>
+        <b-button @click="shareLink" :disabled="!isEnabled('shareLink')" variant="light">
+          Als Link teilen <i v-if="!isEnabled('shareLink')">(Momentan leider nicht verfügbar)</i>
+        </b-button>
+
+      </b-button-group>
+    </b-modal>
   </div>
 </template>
 
@@ -141,8 +150,14 @@ export default {
       link.setAttribute('download', this.item.name + '.pdf');
       document.body.appendChild(link);
       link.click()
+      this.$bvModal.hide("share")
+      this.$bvToast.toast("Das Herunterladen der PDF Datei wurde gestartet", {
+        title: "Herunterladen gestartet",
+        autoHideDelay: 10000
+      })
     },
     shareLink() {
+      this.$bvModal.hide("share");
       this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(this.item)))));
       if (this.link.length > 2048 && config.limitURLLength) {
         this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify({
