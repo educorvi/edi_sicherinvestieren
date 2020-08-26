@@ -7,7 +7,7 @@
         <div style="text-align: left">
           <h5 class="mb-0">{{ item.name }}</h5>
           <p class="text-muted" v-if="item.fragebogenName">{{ item.fragebogenName }}</p>
-          <b-progress v-if="item.fertig===0" :max="100" class="mt-n3" height="12px">
+          <b-progress :max="100" class="mt-n3" height="12px" v-if="item.fertig===0">
             <b-progress-bar :value="item.fortschritt"></b-progress-bar>
           </b-progress>
         </div>
@@ -23,51 +23,53 @@
     <hr v-if="!last"/>
 
 
-    <b-modal @shown="loadBar" :ok-title="item.fertig===0?'Laden':'Auswertung laden'" cancel-title="Schließen" @ok="load"
-             :id="`modal_zu_${item.name}`" :title="`Daten zu ${item.name}`" centered scrollable>
+    <b-modal :id="`modal_zu_${item.name}`" :ok-title="item.fertig===0?'Laden':'Auswertung laden'" :title="`Daten zu ${item.name}`" @ok="load"
+             @shown="loadBar" cancel-title="Schließen" centered scrollable>
       <!--            <b-progress :value="Math.round(item['fortschritt']||0)" :max="100" class="mt-n3 ml-n3 mr-n3 rounded-0" variant="success" style="height: 6px"></b-progress>-->
 
       <!--            <ProgressCircle :progress="Math.round(item['fortschritt']||0)"/>-->
-      <div v-if="item.fertig===0" class="d-flex justify-content-center mb-4">
-        <div style="width: 100px; height: 100px" :id="'container_progress_'+this.item.name.replace(/ /g,'_')"/>
+      <div class="d-flex justify-content-center mb-4" v-if="item.fertig===0">
+        <div :id="'container_progress_'+this.item.name.replace(/ /g,'_')" style="width: 100px; height: 100px"/>
       </div>
 
-      <table style="width: 100%">
-        <tr>
-          <td>Dateiname:</td>
-          <td><b>{{ item.name }}</b></td>
-        </tr>
+      <div style="max-width: 100%; overflow-x: scroll;">
+        <table style="max-width: 100%">
+          <tr>
+            <td>Dateiname:</td>
+            <td><b>{{ item.name }}</b></td>
+          </tr>
 
-        <tr>
-          <td>Fragebogen:</td>
-          <td><b>{{ item.fragebogenName }}</b></td>
-        </tr>
+          <tr>
+            <td>Fragebogen:</td>
+            <td><b>{{ item.fragebogenName }}</b></td>
+          </tr>
 
-        <tr v-if="item.maschinentyp">
-          <td>Maschinentyp:</td>
-          <td><b>{{ item.maschinentyp }}</b></td>
-        </tr>
+          <tr v-if="item.maschinentyp">
+            <td>Maschinentyp:</td>
+            <td><b>{{ item.maschinentyp }}</b></td>
+          </tr>
 
-        <tr v-if="item.maschinennummer">
-          <td>Maschinennummer:</td>
-          <td><b>{{ item.maschinennummer }}</b></td>
-        </tr>
+          <tr v-if="item.maschinennummer">
+            <td>Maschinennummer:</td>
+            <td><b>{{ item.maschinennummer }}</b></td>
+          </tr>
 
-        <tr v-if="item.hersteller">
-          <td>Hersteller:</td>
-          <td><b>{{ item.hersteller }}</b></td>
-        </tr>
+          <tr v-if="item.hersteller">
+            <td>Hersteller:</td>
+            <td><b>{{ item.hersteller }}</b></td>
+          </tr>
 
-        <tr v-if="item.jahr">
-          <td>Baujahr:</td>
-          <td><b>{{ item.jahr }}</b></td>
-        </tr>
+          <tr v-if="item.jahr">
+            <td>Baujahr:</td>
+            <td><b>{{ item.jahr }}</b></td>
+          </tr>
 
-        <tr v-if="item.globalNotizen">
-          <td>Notizen:</td>
-          <td><b>{{ item.globalNotizen }}</b></td>
-        </tr>
-      </table>
+          <tr v-if="item.globalNotizen">
+            <td>Notizen:</td>
+            <td><b>{{ item.globalNotizen }}</b></td>
+          </tr>
+        </table>
+      </div>
     </b-modal>
   </div>
 
