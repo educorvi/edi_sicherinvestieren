@@ -13,11 +13,11 @@
           <!--                    <b-nav-item href="#">Hilfe</b-nav-item>-->
           <b-nav-item :to="'/settings'">Einstellungen</b-nav-item>
           <b-nav-item-dropdown text="Über">
-            <b-dropdown-item v-if="!menCfg.includes('info')" :to="'/about'">Info</b-dropdown-item>
-            <b-dropdown-item v-if="!menCfg.includes('contact')" :to="'/kontakt'">Kontakt</b-dropdown-item>
-            <b-dropdown-item v-if="!menCfg.includes('impressum')" :to="'/impressum'">Impressum</b-dropdown-item>
-            <b-dropdown-item v-if="!menCfg.includes('datenschutz')" :to="'/datenschutz'">Datenschutz</b-dropdown-item>
-            <b-dropdown-item v-if="!menCfg.includes('beratung')" :to="'/beratung'">Beratungsmöglichkeiten</b-dropdown-item>
+            <b-dropdown-item v-if="isEnabled('info')" :to="'/about'">Info</b-dropdown-item>
+            <b-dropdown-item v-if="isEnabled('contact')" :to="'/kontakt'">Kontakt</b-dropdown-item>
+            <b-dropdown-item v-if="isEnabled('impressum')" :to="'/impressum'">Impressum</b-dropdown-item>
+            <b-dropdown-item v-if="isEnabled('datenschutz')" :to="'/datenschutz'">Datenschutz</b-dropdown-item>
+            <b-dropdown-item v-if="isEnabled('beratung')" :to="'/beratung'">Beratungsmöglichkeiten</b-dropdown-item>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
@@ -35,6 +35,7 @@
 
 import ProgressBar from "@/components/Helper/ProgressBar";
 import {mapGetters} from "vuex"
+import {isEnabled} from "@/js/globalMethods";
 
 export default {
   name: "Headbar",
@@ -46,7 +47,7 @@ export default {
     }
   },
   methods: {
-
+    isEnabled,
     //Ausloggen
     logout() {
       this.$store.commit("setUserID", null)

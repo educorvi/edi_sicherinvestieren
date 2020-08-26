@@ -64,7 +64,8 @@ export default new Vuex.Store({
             state.reload = f;
         }
     },
-    actions: {},
+    actions: {
+    },
     modules: {},
     getters: {
         appVersion: (state) => {

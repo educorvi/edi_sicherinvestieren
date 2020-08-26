@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <div v-if="fragebogen">
-      <table style="width: 100%" class="text-left">
+      <table class="text-left" style="width: 100%">
         <tr>
           <td>Dateiname:</td>
           <td><b>{{ item.name }}</b></td>
@@ -38,13 +38,16 @@
         </tr>
       </table>
       <hr>
-      <div v-if="!config.disabledFeatures.includes('share')">
-        <b-button @click="shareLink" variant="primary" class="w-100">Teilen</b-button>
+      <div>
+        <b-button-group v-if="isEnabled('share')">
+          <b-button v-if="isEnabled('shareLink')" @click="shareLink" variant="primary">Teilen</b-button>
+          <b-button v-if="isEnabled('sharePDF')" @click="downloadPDF" variant="primary">PDF Download</b-button>
+        </b-button-group>
         <hr>
       </div>
       <Auswertungsfrage :frage="fragebogen.items[i]" :key="i+fragebogen.items[i].toString()"
-                        :selected="item.selected[i]"
-                        v-for="i in item.history" :notiz="item.notizen[i]"></Auswertungsfrage>
+                        :notiz="item.notizen[i]"
+                        :selected="item.selected[i]" v-for="i in item.history"></Auswertungsfrage>
     </div>
     <custom-spinner v-else/>
     <Hinweis hinweis="rechtlicheEinschraenkung"/>
@@ -61,6 +64,8 @@ import Hinweis from "../components/Hinweis";
 import {getAllListen, getListe} from "../js/localDatabase";
 import LZString from "../libs/lz-string";
 import config from "../config.json";
+import {mapGetters} from "vuex"
+import {isEnabled} from "@/js/globalMethods";
 
 export default {
   name: "Auswertung",
@@ -78,9 +83,7 @@ export default {
     }
   },
   computed: {
-    config() {
-      return config;
-    }
+    ...mapGetters(["config"])
   },
 
   created() {
@@ -115,6 +118,30 @@ export default {
     })
   },
   methods: {
+    isEnabled,
+    downloadPDF() {
+      let sendItem = {
+        ...this.item,
+        result: this.fragebogen
+      };
+      sendItem.result.items = sendItem.result.items.map((x, i) => (
+          {
+            ...x,
+            selected: this.item.selected[i],
+            notiz: this.item.notizen[i],
+            seen: this.item.history.includes(i)
+          }))
+      this.http.post("https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/pdf", sendItem)
+          .then(res => this.forceFileDownload(res));
+    },
+    forceFileDownload(response) {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', this.item.name + '.pdf');
+      document.body.appendChild(link);
+      link.click()
+    },
     shareLink() {
       this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(this.item)))));
       if (this.link.length > 2048 && config.limitURLLength) {
