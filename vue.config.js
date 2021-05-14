@@ -33,5 +33,12 @@ module.exports = {
     devServer: {
         disableHostCheck: true
     },
-    publicPath: ''
+    publicPath: '',
+    css: {
+        loaderOptions: {
+            sass: {
+                implementation: require('sass'), // This line must in sass option
+            },
+        },
+    }
 }
