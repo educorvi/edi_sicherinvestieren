@@ -25,6 +25,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
+    - run: cp src/exmp_config.json src/config.json
     - run: npm run build --if-present
     - run: npm run lint
 
