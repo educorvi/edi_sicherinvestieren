@@ -22,7 +22,7 @@ export function loginNavCredentials(ls) {
     return new Promise((resolve, reject) => {
         try {
             // eslint-disable-next-line no-undef
-            if (navigator.credentials && PasswordCredential && !store.loggedIn && !config?.disabledFeatures?.includes('credentialsAPI')) {
+            if (navigator.credentials && PasswordCredential && !store.loggedIn && isEnabled('credentialsAPI') && isEnabled('login')) {
                 navigator.credentials.get({password: true}).then(cred => {
                     if (cred != null) {
                         axios.post(config["login"], {
