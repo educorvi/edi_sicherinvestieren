@@ -28,6 +28,7 @@ import Hinweis from "./components/Hinweis";
 import config from './config.json'
 import VuePullRefresh from 'vue-pull-refresh'
 import MainView from "@/MainView";
+import {loginNavCredentials} from "@/js/globalMethods";
 
 export default {
   components: {MainView, Hinweis, BottomBar, Headbar, VuePullRefresh},
@@ -58,6 +59,8 @@ export default {
       db.getAllListen();
     }
 
+
+    loginNavCredentials(this.$ls);
 
     //    Dirty PreCaching
     this.http.get(config.impressum);
