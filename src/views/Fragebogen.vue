@@ -191,7 +191,7 @@
 
         //Verhindern dass der Fragebogen versehentlich verlassen wird
         beforeRouteLeave(to, from, next) {
-            //Möglichkeit die Frage beim Verlassen zu überspringen mithilfe von subito
+            //Möglichkeit die Frage beim Verlassen zu überspringen mithilfe des Parameters subito, z. B. '/path?subito=true'
             if (to.query.subito) {
                 next();
             } else {

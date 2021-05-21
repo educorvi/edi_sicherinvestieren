@@ -22,9 +22,6 @@
         created() {
             this.http.get(config.impressum).then(res => {
                 this.html = res.data.text.data;
-                // const el = document.createElement('html');
-                // el.innerHTML = res.data;
-                // this.html = el.querySelector("#content-core").innerHTML;
             }).catch(()=>this.html = "<h6 class='text-danger'>Es ist ein Fehler aufgetreten. Bitte versuchen Sie es zu einem späteren Zeitpunkt erneut.</h6>")
         }
     }

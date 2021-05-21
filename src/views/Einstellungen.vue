@@ -27,7 +27,7 @@
 
 <script>
 import {mapGetters} from "vuex"
-import {deleteAllListen} from "../js/localDatabase";
+import {deleteAllListen} from "@/js/localDatabase";
 import config from '../config.json'
 
 export default {

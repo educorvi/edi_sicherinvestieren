@@ -36,7 +36,7 @@
 //@group Views
 //@vuese
 //LoginView
-import {sync} from "../js/localDatabase";
+import {sync} from "@/js/localDatabase";
 import {mapGetters} from "vuex"
 import {isEnabled, loginNavCredentials} from "@/js/globalMethods";
 
