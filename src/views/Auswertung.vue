@@ -70,7 +70,7 @@
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import Auswertungsfrage from "../components/Helper/Auswertungsfrage";
 import Hinweis from "../components/Hinweis";
-import {getAllListen, getListe} from "../js/localDatabase";
+import {getAllListen, getListe} from "@/js/localDatabase";
 import LZString from "../libs/lz-string";
 import config from "../config.json";
 import {mapGetters} from "vuex"

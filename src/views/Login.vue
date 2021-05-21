@@ -36,9 +36,9 @@
 //@group Views
 //@vuese
 //LoginView
-import {sync} from "../js/localDatabase";
+import {sync} from "@/js/localDatabase";
 import {mapGetters} from "vuex"
-import {isEnabled} from "@/js/globalMethods";
+import {isEnabled, loginNavCredentials} from "@/js/globalMethods";
 
 export default {
   name: "Login",
@@ -53,31 +53,12 @@ export default {
     ...mapGetters(["config"])
   },
   created() {
-    try{
-      // eslint-disable-next-line no-undef
-      if (navigator.credentials && PasswordCredential && !this.loggedIn && !this.config.disabledFeatures.includes('credentialsAPI')) {
-        navigator.credentials.get({password: true}).then(cred => {
-          if (cred != null) {
-            this.http.post(this.config["login"], {
-              username: cred.name,
-              password: cred.password
-            }).then(res => {
-              //Wenn erfolgreich, setzen des Tokens, sonst Feedback
-              if (res.data.token) {
-                this.$store.commit("setUserID", res.data.token);
-                this.$ls.set('userID', res.data.token);
-                sync()
-                this.$router.push("/");
-              }else {
-                this.valid = false;
-              }
-            });
-          }
-        })
+    loginNavCredentials().then(res => {
+      this.valid = res;
+      if (res) {
+        this.$router.push("/");
       }
-    }catch (e){
-      console.error(e);
-    }
+    }).catch(console.error);
   },
   methods: {
     isEnabled,
