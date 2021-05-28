@@ -22,7 +22,7 @@
             </b-card-header>
             <b-collapse id="Notizen" v-model="notizVisible">
 
-                <b-form-textarea class="rounded-0" v-model="notizen[frageIndex]"/>
+                <b-form-textarea class="rounded-0" v-model="notizen[frageIndex]" rows="4"/>
 
             </b-collapse>
         </b-card>
