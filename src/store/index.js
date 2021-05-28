@@ -6,26 +6,34 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        //Version der App
+        /** Version der App */
         packageVersion: process.env.PACKAGE_VERSION || '0.0.0',
-        //Globale Config
+
+        /** Globale Config */
         config: null,
-        //Aktueller Fragebogen (Schnittstelle)
+
+        /** Aktueller Fragebogen (Schnittstelle) */
         fragebogenData: {
             title: "",
             progress: 0,
             thema: ""
         },
-        //Alle Listen, fertig und bearbeitet
+
+        /** Alle Listen, fertig und in Bearbeitung */
         listen: [],
-        //ID/Token des Users
+
+        /** ID bzw. Token des Users */
         userID: null,
-        //Adresse zur remote CouchDB
+
+        /** Adresse zur remote CouchDB */
         remoteCouch: null,
-        //hinweise
+
+        /** Hinweise */
         hinweise,
-    //    Fragebögen
+
+        /** Fragebögen */
         frageboegen: null,
+
         reload: null
     },
     mutations: {
@@ -39,6 +47,11 @@ export default new Vuex.Store({
                 thema: ""
             }
         },
+        /**
+         * Overwrites the data with given data
+         * @param state
+         * @param p {{title?: String, progress?:Number, thema?:String}} given data
+         */
         setFragebogenData(state, p) {
             state.fragebogenData = {
                 ...state.fragebogenData,
@@ -64,8 +77,7 @@ export default new Vuex.Store({
             state.reload = f;
         }
     },
-    actions: {
-    },
+    actions: {},
     modules: {},
     getters: {
         appVersion: (state) => {
