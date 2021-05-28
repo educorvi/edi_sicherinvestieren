@@ -82,7 +82,7 @@
 //Item, das Daten zu einer Liste anzeigt
 
 import 'progressbar.js'
-import LZString from "@/libs/lz-string";
+import {urlCompressData} from "@/js/globalMethods";
 
 export default {
   name: "Listenitem",
@@ -123,7 +123,7 @@ export default {
     //Laden des verknüpften Fragebogens
     load() {
       if (this.item.fertig === 0) {
-        this.$router.push("/fragebogen?data=" + encodeURIComponent(JSON.stringify(LZString.compress(JSON.stringify(this.item)))) + "&id=" + this.item.fragebogen + "&load=true");
+        this.$router.push("/fragebogen?data=" + urlCompressData(this.item) + "&id=" + this.item.fragebogen + "&load=true");
       } else {
         this.$router.push(`/auswertung?name=${this.item.name}`);
       }

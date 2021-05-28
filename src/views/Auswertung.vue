@@ -71,10 +71,9 @@ import CustomSpinner from "../components/Helper/CustomSpinner";
 import Auswertungsfrage from "../components/Helper/Auswertungsfrage";
 import Hinweis from "../components/Hinweis";
 import {getAllListen, getListe} from "@/js/localDatabase";
-import LZString from "../libs/lz-string";
 import config from "../config.json";
 import {mapGetters} from "vuex"
-import {isEnabled} from "@/js/globalMethods";
+import {isEnabled, decompressData, urlCompressData} from "@/js/globalMethods";
 
 export default {
   name: "Auswertung",
@@ -98,7 +97,7 @@ export default {
   created() {
     getAllListen().then(() => {
       if (this.$route.query.shared) {
-        this.item = JSON.parse(LZString.decompress(JSON.parse(this.$route.query.data)));
+        this.item = decompressData(this.$route.query.data);
       } else {
         this.item = getListe(this.$route.query.name)[0];
       }
@@ -158,12 +157,12 @@ export default {
     },
     shareLink() {
       this.$bvModal.hide("share");
-      this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(this.item)))));
+      this.link = config.baseURL + "auswertung?shared=true&data=" + urlCompressData(this.item);
       if (this.link.length > 2048 && config.limitURLLength) {
-        this.link = config.baseURL + "auswertung?shared=true&data=" + encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify({
+        this.link = config.baseURL + "auswertung?shared=true&data=" + urlCompressData({
           ...this.item,
           notizen: []
-        })))));
+        });
         this.$bvToast.toast("Es werden die Notizen ausgeblendet, da zu viele Notizen im Fragebogen enthalten sind", {
           title: "Notizen ausgeblendet",
           autoHideDelay: 10000
