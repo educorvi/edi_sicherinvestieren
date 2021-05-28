@@ -103,14 +103,24 @@
                 if (this.frageIndex !== undefined) {
                     this.$set(this.selected, this.frageIndex, antwort);
                     this.history.push(this.frageIndex);
-                    const i = this.getIndex(aktion);
-                    if (i >= this.fragebogen.items.length) {
+                    try{
+                      const i = this.getIndex(aktion);
+                      if (i >= this.fragebogen.items.length) {
                         db.putListe(this.createDatabaseObject(true));
                         this.$router.push(`/auswertung?subito=true&name=${this.globalData.name}`);
-                    } else {
+                      } else {
                         this.frageIndex = i;
                         this.$store.commit("setFragebogenData", {progress: this.frageIndex / this.fragebogen.items.length * 100});
+                      }
+                    }catch (e) {
+                      console.error(e);
+                      this.$bvToast.toast("Frage konnte nicht gefunden werden. Es liegt wahrscheinlich ein Fehler in der Konfiguration des Fragebogens vor.",{
+                        title: 'Fehler',
+                        variant: 'danger',
+                        autoHideDelay: 10000
+                      })
                     }
+
 
                 }
             },
