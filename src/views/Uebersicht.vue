@@ -78,6 +78,7 @@
               id="input-5"
               type="text"
               v-model="modalData.globalNotizen"
+              rows="4"
           ></b-form-textarea>
         </b-form-group>
 
