@@ -78,6 +78,7 @@
               id="input-5"
               type="text"
               v-model="modalData.globalNotizen"
+              rows="4"
           ></b-form-textarea>
         </b-form-group>
 
@@ -104,6 +105,7 @@
 import {mapGetters} from "vuex";
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import configImp from "../config.json"
+import {urlCompressData} from "@/js/globalMethods";
 
 export default {
   name: 'Uebersicht',
@@ -133,7 +135,7 @@ export default {
         maschinentyp: "",
         maschinennummer: "",
         hersteller: "",
-        jahr: new Date().getFullYear(),
+        jahr: undefined,
         globalNotizen: ""
       },
       validForm: false
@@ -229,7 +231,7 @@ export default {
     //Starten eines Fragebogens
     submit() {
       if (this.validForm) {
-        this.$router.push("/fragebogen?id=" + this.lastSelected.id + "&data=" + JSON.stringify(this.modalData));
+        this.$router.push("/fragebogen?id=" + this.lastSelected.id + "&data=" + urlCompressData(this.modalData));
       }
     },
   },

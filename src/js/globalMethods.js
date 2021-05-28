@@ -2,6 +2,7 @@ import config from "@/config.json";
 import {sync} from "@/js/localDatabase";
 import axios from "axios";
 import vuex from "../store"
+import LZString from "@/libs/lz-string";
 const store = vuex.state
 
 /**
@@ -11,6 +12,24 @@ const store = vuex.state
  */
 export function isEnabled(name) {
     return !config.disabledFeatures.includes(name)
+}
+
+/**
+ * compress data and make it suitable to pass in an url
+ * @param data {any} The data to be compressed
+ * @return {string} Data as compressed string
+ */
+export function urlCompressData(data) {
+    return encodeURIComponent(JSON.stringify(LZString.compress((JSON.stringify(data)))))
+}
+
+/**
+ * Decompresses data compressed by method {@link urlCompressData}
+ * @param string {string} Data as compressed string
+ * @return {any}
+ */
+export function decompressData(string) {
+    return JSON.parse(LZString.decompress(JSON.parse(string)))
 }
 
 /**
@@ -29,7 +48,6 @@ export function loginNavCredentials(ls) {
                             username: cred.name,
                             password: cred.password
                         }).then(res => {
-                            console.log(res)
                             //Wenn erfolgreich, setzen des Tokens, sonst Feedback
                             if (res.data.token) {
                                 vuex.commit("setUserID", res.data.token);
