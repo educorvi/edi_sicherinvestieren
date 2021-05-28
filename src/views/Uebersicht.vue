@@ -104,6 +104,7 @@
 import {mapGetters} from "vuex";
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import configImp from "../config.json"
+import LZString from "../libs/lz-string"
 
 export default {
   name: 'Uebersicht',
@@ -229,7 +230,7 @@ export default {
     //Starten eines Fragebogens
     submit() {
       if (this.validForm) {
-        this.$router.push("/fragebogen?id=" + this.lastSelected.id + "&data=" + JSON.stringify(this.modalData));
+        this.$router.push("/fragebogen?id=" + this.lastSelected.id + "&data=" + encodeURIComponent(JSON.stringify(LZString.compress(JSON.stringify(this.modalData)))));
       }
     },
   },

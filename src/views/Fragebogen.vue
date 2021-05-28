@@ -49,6 +49,7 @@
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import db from "../js/localDatabase";
 import {mapGetters} from "vuex"
+import LZString from "../libs/lz-string"
 
 export default {
   name: "Fragebogen",
@@ -168,7 +169,7 @@ export default {
 
   created() {
     this.$store.commit("resetFragebogenData");
-    this.globalData = JSON.parse(this.$route.query.data);
+    this.globalData = JSON.parse(LZString.decompress(JSON.parse(this.$route.query.data)))
     const data = this.globalData;
 
     //Falls ein bereits begonnener Fragebogen geladen werden soll
