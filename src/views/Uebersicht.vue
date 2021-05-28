@@ -133,7 +133,7 @@ export default {
         maschinentyp: "",
         maschinennummer: "",
         hersteller: "",
-        jahr: new Date().getFullYear(),
+        jahr: undefined,
         globalNotizen: ""
       },
       validForm: false
