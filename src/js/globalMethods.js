@@ -48,7 +48,6 @@ export function loginNavCredentials(ls) {
                             username: cred.name,
                             password: cred.password
                         }).then(res => {
-                            console.log(res)
                             //Wenn erfolgreich, setzen des Tokens, sonst Feedback
                             if (res.data.token) {
                                 vuex.commit("setUserID", res.data.token);
