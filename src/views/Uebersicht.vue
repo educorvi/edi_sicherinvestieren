@@ -158,8 +158,7 @@ export default {
     //Wird ausgeführt wenn neuer Fragebogen ausgewählt
     newSelected(payload) {
       if (payload.children.length === 0) {
-        const id = Object.values(JSON.parse(JSON.stringify(payload.data))).join("").replace(payload.text, "");
-        this.lastSelected.id = id;
+        this.lastSelected.id = Object.values(JSON.parse(JSON.stringify(payload.data))).join("").replace(payload.text, "");
         this.lastSelected.text = payload.text
         this.$bvModal.show("startModal")
       }
@@ -169,9 +168,10 @@ export default {
     /**
      * Abrufen der Ordnerstruktur, um die Fragebögen zu bekommen
      * @param base Basisverzeichnis der rekursiven Suche
+     * @param root Das Rootverzeichnis
      * @returns {Promise<*|[]>} des Abrufes
      */
-    async creep(base) {
+    async creep(base, root) {
       let struct = [];
       let res;
       try {
@@ -193,7 +193,16 @@ export default {
 
       for (let i = 0; i < struct.length; i++) {
         if (struct[i]['@type'] === 'Folder') {
-          struct[i].items = await this.creep(struct[i]['@id']);
+          struct[i].items = await this.creep(struct[i]['@id'], root);
+        } else {
+          if (struct[i]['@type'] === 'Link') {
+            const linkobject = struct[i];
+            struct[i] = (await this.http.get(struct[i]['remoteUrl'].replaceAll('${portal_url}', root))).data;
+            struct[i].title = linkobject.title;
+            struct[i].description = linkobject.description || struct[i].description;
+          }
+          struct[i].items = undefined;
+
         }
         this.finished++;
       }
@@ -212,7 +221,7 @@ export default {
       this.finished = 0;
       this.toLoad = 0;
       this.errorOcurred = null;
-      this.folders = await this.creep(this.config.frageboegen);
+      this.folders = await this.creep(this.config.frageboegen, this.config.frageboegen);
       this.$store.commit("setFrageboegen", this.folders);
     },
     cancelForm() {
