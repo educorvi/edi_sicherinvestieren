@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.educorvi.sicherinvestieren.twa",
+      "sha256_cert_fingerprints": [
+        "B9:61:B2:D5:B4:2D:C6:AE:65:D0:55:10:81:63:7E:A6:AD:B5:2B:11:14:C0:35:B0:0B:CB:9F:54:94:17:17:19"
+      ]
+    }
+  }
+]

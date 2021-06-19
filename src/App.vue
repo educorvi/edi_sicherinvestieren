@@ -28,6 +28,7 @@ import Hinweis from "./components/Hinweis";
 import config from './config.json'
 import VuePullRefresh from 'vue-pull-refresh'
 import MainView from "@/MainView";
+import {loginNavCredentials} from "@/js/globalMethods";
 
 export default {
   components: {MainView, Hinweis, BottomBar, Headbar, VuePullRefresh},
@@ -58,6 +59,8 @@ export default {
       db.getAllListen();
     }
 
+
+    loginNavCredentials(this.$ls);
 
     //    Dirty PreCaching
     this.http.get(config.impressum);
@@ -109,16 +112,21 @@ $breakpoint: 576px;
   left: 0; /* top left corner should start at leftmost spot */
   bottom: 0; /* top left corner should start at topmost spot */
   z-index: 200; /* high z index so other content scrolls underneath */
-  height: 55px;
+  height: 70px;
   width: 100vw;
   background-color: white;
+  padding-top: 0;
+  padding-bottom: 20px;
+}
+
+#bottombar {
+  box-shadow: none;
 }
 
 @media(min-width: $breakpoint) {
   #bottombar {
     width: fit-content;
     min-width: fit-content !important;
-    box-shadow: none;
   }
 }
 
