@@ -51,10 +51,10 @@
     <b-modal id="share" ok-only ok-title="Schließen" title="Teilen" centered>
       <b-button-group vertical class="w-100">
 
-        <b-button @click="downloadPDF" :disabled="!isEnabled('sharePDF')" variant="light">
+        <b-button v-if="isEnabled('sharePDF')" @click="downloadPDF" :disabled="!isEnabled('sharePDF')" variant="light">
           PDF Datei herunterladen <i v-if="!isEnabled('sharePDF')">(Momentan leider nicht verfügbar)</i>
         </b-button>
-        <b-button @click="shareLink" :disabled="!isEnabled('shareLink')" variant="light">
+        <b-button v-if="isEnabled('shareLink')" @click="shareLink" :disabled="!isEnabled('shareLink')" variant="light">
           Als Link teilen <i v-if="!isEnabled('shareLink')">(Momentan leider nicht verfügbar)</i>
         </b-button>
 
