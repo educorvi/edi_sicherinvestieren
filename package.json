@@ -9,6 +9,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
+    "@educorvi/file_save_tools": "^1.0.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",

@@ -74,6 +74,7 @@ import {getAllListen, getListe} from "@/js/localDatabase";
 import config from "../config.json";
 import {mapGetters} from "vuex"
 import {isEnabled, decompressData, urlCompressData} from "@/js/globalMethods";
+import {downloadBase64} from "@educorvi/file_save_tools"
 
 export default {
   name: "Auswertung",
@@ -144,31 +145,7 @@ export default {
           .then(res => this.forceFileDownload(res));
     },
     forceFileDownload(response) {
-      // create blob from base64
-      function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
-        const byteCharacters = atob(b64Data);
-        const byteArrays = [];
-
-        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-          const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-          const byteNumbers = new Array(slice.length);
-          for (let i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
-          }
-
-          const byteArray = new Uint8Array(byteNumbers);
-          byteArrays.push(byteArray);
-        }
-
-        return new Blob(byteArrays, {type: contentType});
-      }
-      const url = window.URL.createObjectURL(b64toBlob(response.data, 'application/pdf'));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', this.item.name + '.pdf');
-      document.body.appendChild(link);
-      link.click()
+      downloadBase64(response.data, {contentType: 'application/pdf', filename: this.item.name + '.pdf'})
       this.$bvModal.hide("share")
       this.$bvToast.toast("Das Herunterladen der PDF Datei wurde gestartet", {
         title: "Herunterladen gestartet",
