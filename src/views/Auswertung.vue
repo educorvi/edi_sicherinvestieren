@@ -132,6 +132,7 @@ export default {
         ...this.item,
         result: this.fragebogen
       };
+      console.log(sendItem);
       sendItem.result.items = sendItem.result.items.map((x, i) => (
           {
             ...x,
@@ -143,7 +144,26 @@ export default {
           .then(res => this.forceFileDownload(res));
     },
     forceFileDownload(response) {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      // create blob from base64
+      function b64toBlob(b64Data, contentType = '', sliceSize = 512) {
+        const byteCharacters = atob(b64Data);
+        const byteArrays = [];
+
+        for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+          const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+          const byteNumbers = new Array(slice.length);
+          for (let i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+          }
+
+          const byteArray = new Uint8Array(byteNumbers);
+          byteArrays.push(byteArray);
+        }
+
+        return new Blob(byteArrays, {type: contentType});
+      }
+      const url = window.URL.createObjectURL(b64toBlob(response.data, 'application/pdf'));
       const link = document.createElement('a');
       link.href = url;
       link.setAttribute('download', this.item.name + '.pdf');
