@@ -141,8 +141,7 @@ export default {
             notiz: this.item.notizen[i],
             seen: this.item.history.includes(i)
           }))
-      this.http.post(config.pdf, sendItem)
-          .then(res => this.forceFileDownload(res));
+      this.http.post(config.pdf, sendItem).then(res => this.forceFileDownload(res));
     },
     forceFileDownload(response) {
       downloadBase64(response.data, {contentType: 'application/pdf', filename: this.item.name + '.pdf'})
