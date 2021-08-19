@@ -12,6 +12,5 @@ module.exports = {
             "assets": ["package.json", "sw.js"],
             "message": "Chore: ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }]
-    ],
-    "preset": "eslint"
+    ]
 }
