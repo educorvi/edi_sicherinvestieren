@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <Headbar/>
-    <vue-pull-refresh v-if="$route.name === 'Fragebögen' && scrollBehaviourSupported" :onRefresh="reload" :config="refreshConfig">
+    <vue-pull-refresh v-if="$route.name === 'Fragebögen' && scrollBehaviourSupported" :onRefresh="reload"
+                      :config="refreshConfig">
       <main-view/>
     </vue-pull-refresh>
     <div v-else>
@@ -12,7 +13,7 @@
     </div>
 
 
-    <Hinweis hinweis="begruessung"/>
+    <Hinweis hinweis="appInfo"/>
   </div>
 </template>
 
@@ -65,9 +66,16 @@ export default {
     //    Dirty PreCaching
     this.http.get(config.impressum);
     this.http.get(config.datenschutz);
+
+    // Get AppInfo
+    this.http.get(config.appInfo)
+        .then(res => this.$store.commit("setAppInfo", res.data))
+        .catch(() => this.$store.commit("setAppInfo", {
+          title: "Fehler",
+          text: "Es gab einen Fehler beim Abrufen der Informationen"
+        }));
   },
-  methods: {
-  },
+  methods: {},
   data() {
     return {
       refreshConfig: {
