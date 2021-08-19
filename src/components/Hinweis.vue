@@ -1,6 +1,7 @@
 <template>
-  <b-modal :id="`hinweis_${hinweis}`" v-model="show" :title="hinweise[hinweis].title" visible scrollable centered>
-    <p>{{ hinweise[hinweis].text }}</p>
+  <b-modal :id="`hinweis_${hinweis}`" v-model="show" :title="(hinweise[hinweis]|| {title: 'Lädt...'}).title" visible scrollable centered>
+    <span v-if="hinweise[hinweis]" v-html="hinweise[hinweis].text"/>
+    <div v-else><custom-spinner/></div>
     <template v-slot:modal-footer>
       <div class="w-100" style="display: flex; justify-content: space-between">
         <b-form-checkbox v-model="futureHide" switch>
@@ -15,9 +16,11 @@
 //@vuese
 //Modal zum Anzeigen von Hinweisen
 import {mapGetters} from 'vuex';
+import CustomSpinner from "./Helper/CustomSpinner";
 
 export default {
   name: "Hinweis",
+  components: {CustomSpinner},
   props: {
     //Name des Hinweises, wie in hinweise.js festgelegt
     hinweis: {

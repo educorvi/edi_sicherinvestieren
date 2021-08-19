@@ -34,6 +34,9 @@ export default new Vuex.Store({
         /** Fragebögen */
         frageboegen: null,
 
+        /** Titel, Beschreibung und Hinweis */
+        appInfo: null,
+
         reload: null
     },
     mutations: {
@@ -75,6 +78,13 @@ export default new Vuex.Store({
         },
         setReloadFunction(state, f) {
             state.reload = f;
+        },
+        setAppInfo(state, a) {
+            state.appInfo = a;
+            Vue.set(state.hinweise, "appInfo", {
+                sichtbar: true,
+                ...a
+            });
         }
     },
     actions: {},
@@ -90,7 +100,7 @@ export default new Vuex.Store({
         loggedIn: state => !!state.userID,
         hinweise: state => state.hinweise,
         frageboegen: state => state.frageboegen,
-        reload: state => state.reload
-
+        reload: state => state.reload,
+        appInfo: state => state.appInfo
     },
 })

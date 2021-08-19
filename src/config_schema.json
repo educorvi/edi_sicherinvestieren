@@ -25,6 +25,14 @@
       "description": "Die URL zur CouchDB. Wichtig: Ohne https:// am Anfang und ohne / am Ende, also z. B. couch.kraeks.de",
       "type": "string"
     },
+    "pdf": {
+      "description": "Die URL zum PDF-Service",
+      "type": "string"
+    },
+    "appInfo": {
+      "description": "Die URL zum AppInfo-Service",
+      "type": "string"
+    },
     "baseURL": {
       "description": "Die URL, unter der die Anwendung selbst aufzufinden ist",
       "type": "string"
@@ -62,6 +70,8 @@
     "datenschutz",
     "impressum",
     "disabledFeatures",
-    "baseURL"
+    "baseURL",
+    "pdf",
+    "appInfo"
   ]
 }

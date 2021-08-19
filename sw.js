@@ -64,13 +64,13 @@ workbox.routing.registerRoute(
     })
 );
 //Datenbank
-workbox.routing.registerRoute(
-    ({url}) => url.origin === 'https://couch.kraeks.de',
-    new workbox.strategies.NetworkFirst({
-        cacheName: 'app',
-        plugins: [new workbox.cacheableResponse.CacheableResponse({statuses:[0, 200]})]
-    })
-);
+// workbox.routing.registerRoute(
+//     ({url}) => url.origin === 'https://couch.kraeks.de',
+//     new workbox.strategies.NetworkFirst({
+//         cacheName: 'app',
+//         plugins: [new workbox.cacheableResponse.CacheableResponse({statuses:[0, 200]})]
+//     })
+// );
 //BgEtem (Impressum, ...)
 workbox.routing.registerRoute(
     ({url}) => url.origin === 'https://www.bgetem.de',
