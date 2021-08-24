@@ -38,7 +38,7 @@
 //LoginView
 import {sync} from "@/js/localDatabase";
 import {mapGetters} from "vuex"
-import {isEnabled, loginNavCredentials} from "@/js/globalMethods";
+import {isEnabled, loginNavCredentials, reportError} from "@/js/globalMethods";
 
 export default {
   name: "Login",
@@ -91,9 +91,9 @@ export default {
             } else {
               console.log("Credentials API not supported")
             }
-          } catch (e){
-            console.error(e);
-          }finally {
+          } catch (e) {
+            reportError(e)
+          } finally {
             this.$router.replace("/")
           }
         } else {

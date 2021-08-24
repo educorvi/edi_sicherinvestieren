@@ -105,7 +105,7 @@
 import {mapGetters} from "vuex";
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import configImp from "../config.json"
-import {urlCompressData} from "@/js/globalMethods";
+import {reportError, urlCompressData} from "@/js/globalMethods";
 
 export default {
   name: 'Uebersicht',
@@ -167,7 +167,7 @@ export default {
 
     /**
      * Abrufen der Ordnerstruktur, um die Fragebögen zu bekommen
-     * @param base Basisverzeichnis der rekursiven Suche
+     * @param base Aktueller Punkt der rekursiven Suche
      * @param root Das Rootverzeichnis
      * @returns {Promise<*|[]>} des Abrufes
      */
@@ -177,6 +177,7 @@ export default {
       try {
         res = await this.http.get(base + "?fullobjects=true");
       } catch (e) {
+        reportError(e);
         if (!this.errorOcurred) {
           this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Die abgerufene Liste der Fragebögen ist möglicherweise nicht vollständig.", {
             title: "Fehler",
@@ -189,9 +190,9 @@ export default {
       }
 
       struct = res.data.items;
-      this.toLoad += struct.length;
+      this.toLoad += struct?.length;
 
-      for (let i = 0; i < struct.length; i++) {
+      for (let i = 0; i < struct?.length; i++) {
         if (struct[i]['@type'] === 'Folder') {
           struct[i].items = await this.creep(struct[i]['@id'], root);
         } else {

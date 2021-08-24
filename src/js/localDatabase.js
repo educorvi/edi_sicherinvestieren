@@ -39,11 +39,11 @@ if (config.remoteCouch && config.loggedIn) {
 }
 
 
-function syncErrorTo(err) {
+function syncErrorTo() {
     log("Failed to sync to Database", "#ff0000")
 }
 
-function syncErrorFrom(err) {
+function syncErrorFrom() {
     log("Failed to sync from Database", "#ff0000")
 }
 
@@ -106,7 +106,7 @@ export function getListen(fertig) {
 }
 
 export function getListe(name) {
-    return store.state.listen.filter(list => name === list.name);
+    return store.state.listen.filter(list => name === list.name)[0];
 }
 
 function log(text, bg) {
