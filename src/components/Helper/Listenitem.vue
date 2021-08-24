@@ -105,7 +105,7 @@ export default {
   methods: {
     //Wenn zu löschen
     deleteListeWrapper() {
-      this.$bvModal.msgBoxConfirm(`Wollen Sie die Liste ${this.item.name} wirklich löschen?`, {
+      this.$bvModal.msgBoxConfirm(`Wollen Sie die Liste "${this.item.name}" wirklich löschen?`, {
         title: "Bestätigen",
         size: "sm",
         okVariant: "danger",
