@@ -49,7 +49,7 @@
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import db from "../js/localDatabase";
 import {mapGetters} from "vuex"
-import {decompressData} from "@/js/globalMethods";
+import {decompressData, reportError} from "@/js/globalMethods";
 
 export default {
   name: "Fragebogen",
@@ -114,7 +114,7 @@ export default {
             this.$store.commit("setFragebogenData", {progress: this.frageIndex / this.fragebogen.items.length * 100});
           }
         } catch (e) {
-          console.error(e);
+          reportError(e)
           this.$bvToast.toast("Frage konnte nicht gefunden werden. Es liegt wahrscheinlich ein Fehler in der Konfiguration des Fragebogens vor.", {
             title: 'Fehler',
             variant: 'danger',
@@ -190,7 +190,8 @@ export default {
         progress: this.frageIndex / this.fragebogen.items.length * 100
       });
       db.putListe(this.createDatabaseObject());
-    }).catch(() => {
+    }).catch(err => {
+      reportError(err)
       this.$root.$bvToast.toast("Laden des Fragebogens fehlgeschlagen", {
         title: "Fehler",
         variant: "danger",

@@ -66,3 +66,19 @@ export function loginNavCredentials(ls) {
         }
     });
 }
+
+/**
+ * Reports an error
+ * @param err {Error}
+ */
+export function reportError(err) {
+    console.error(err);
+    axios.post("https://new-etem-praev.bg-kooperation.de/anwendungen/sicher-investieren/logger", {
+        error: err.message,
+        details: {
+            name: err.name,
+            message: err.message,
+            stacktrace: err.stack
+        }
+    }).then(console.log).catch(console.error)
+}

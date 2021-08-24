@@ -73,7 +73,7 @@ import Hinweis from "../components/Hinweis";
 import {getAllListen, getListe} from "@/js/localDatabase";
 import config from "../config.json";
 import {mapGetters} from "vuex"
-import {isEnabled, decompressData, urlCompressData} from "@/js/globalMethods";
+import {isEnabled, decompressData, urlCompressData, reportError} from "@/js/globalMethods";
 import {downloadBase64} from "@educorvi/file_save_tools"
 
 export default {
@@ -108,7 +108,7 @@ export default {
         this.http.get(this.item.fragebogen + "?fullobjects=true").then(res => {
           this.fragebogen = res.data;
         }).catch(err => {
-          console.error(err);
+          reportError(err)
           this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen: Fragebogen konnte nicht abgerufen werden", {
             title: "Fehler",
             variant: "danger",
@@ -117,6 +117,7 @@ export default {
           this.$router.push("/?subito=true");
         });
       } else {
+        reportError(new Error("Geladene Daten sind null"))
         this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen: Laden der Daten fehlgeschlagen", {
           title: "Fehler",
           variant: "danger",
@@ -174,7 +175,7 @@ export default {
       if (navigator.canShare && navigator.canShare(shareData)) {
         navigator.share(shareData)
             .then(() => console.log('Share was successful.'))
-            .catch((error) => console.log('Sharing failed', error));
+            .catch((error) => console.warning('Sharing failed', error));
       } else {
         navigator.clipboard.writeText(this.link);
         this.$bvToast.toast("Link zum Teilen in das Clipboard kopiert. Sie können ihn nun an einem beliebigen Ort einfügen", {

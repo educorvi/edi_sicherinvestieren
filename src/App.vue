@@ -29,7 +29,7 @@ import Hinweis from "./components/Hinweis";
 import config from './config.json'
 import VuePullRefresh from 'vue-pull-refresh'
 import MainView from "@/MainView";
-import {loginNavCredentials} from "@/js/globalMethods";
+import {loginNavCredentials, reportError} from "@/js/globalMethods";
 
 export default {
   components: {MainView, Hinweis, BottomBar, Headbar, VuePullRefresh},
@@ -70,10 +70,13 @@ export default {
     // Get AppInfo
     this.http.get(config.appInfo)
         .then(res => this.$store.commit("setAppInfo", res.data))
-        .catch(() => this.$store.commit("setAppInfo", {
-          title: "Fehler",
-          text: "Es gab einen Fehler beim Abrufen der allgemeinen Informationen"
-        }));
+        .catch(err => {
+          this.$store.commit("setAppInfo", {
+            title: "Fehler",
+            text: "Es gab einen Fehler beim Abrufen der allgemeinen Informationen"
+          });
+          reportError(err);
+        });
   },
   methods: {},
   data() {

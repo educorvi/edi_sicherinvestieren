@@ -105,7 +105,7 @@
 import {mapGetters} from "vuex";
 import CustomSpinner from "../components/Helper/CustomSpinner";
 import configImp from "../config.json"
-import {urlCompressData} from "@/js/globalMethods";
+import {reportError, urlCompressData} from "@/js/globalMethods";
 
 export default {
   name: 'Uebersicht',
@@ -177,6 +177,7 @@ export default {
       try {
         res = await this.http.get(base + "?fullobjects=true");
       } catch (e) {
+        reportError(e);
         if (!this.errorOcurred) {
           this.$bvToast.toast("Es gab einen Fehler beim Abrufen der Fragebögen. Die abgerufene Liste der Fragebögen ist möglicherweise nicht vollständig.", {
             title: "Fehler",
