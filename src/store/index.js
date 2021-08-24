@@ -100,6 +100,21 @@ export default new Vuex.Store({
         loggedIn: state => !!state.userID,
         hinweise: state => state.hinweise,
         frageboegen: state => state.frageboegen,
+        frageboegenFlattend: state => {
+            function getChildren(items) {
+                let res = [];
+                for (const item of items) {
+                    if (item["@type"] === "Folder") {
+                        res = res.concat(getChildren(item.items));
+                    } else {
+                        res.push(item);
+                    }
+                }
+                return res;
+            }
+            if(!state.frageboegen) return null;
+            return getChildren(state.frageboegen)
+        },
         reload: state => state.reload,
         appInfo: state => state.appInfo
     },

@@ -167,7 +167,7 @@ export default {
 
     /**
      * Abrufen der Ordnerstruktur, um die Fragebögen zu bekommen
-     * @param base Basisverzeichnis der rekursiven Suche
+     * @param base Aktueller Punkt der rekursiven Suche
      * @param root Das Rootverzeichnis
      * @returns {Promise<*|[]>} des Abrufes
      */
@@ -189,9 +189,9 @@ export default {
       }
 
       struct = res.data.items;
-      this.toLoad += struct.length;
+      this.toLoad += struct?.length;
 
-      for (let i = 0; i < struct.length; i++) {
+      for (let i = 0; i < struct?.length; i++) {
         if (struct[i]['@type'] === 'Folder') {
           struct[i].items = await this.creep(struct[i]['@id'], root);
         } else {

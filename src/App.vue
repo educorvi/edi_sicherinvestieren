@@ -72,7 +72,7 @@ export default {
         .then(res => this.$store.commit("setAppInfo", res.data))
         .catch(() => this.$store.commit("setAppInfo", {
           title: "Fehler",
-          text: "Es gab einen Fehler beim Abrufen der Informationen"
+          text: "Es gab einen Fehler beim Abrufen der allgemeinen Informationen"
         }));
   },
   methods: {},

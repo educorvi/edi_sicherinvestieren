@@ -92,18 +92,19 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["config"])
+    ...mapGetters(["config", "frageboegenFlattend"])
   },
 
   created() {
     getAllListen().then(() => {
+      // Wenn die Liste geteilt ist, werden die Daten aus der URL geladen, sonst aus der pouchDB
       if (this.$route.query.shared) {
         this.item = decompressData(this.$route.query.data);
       } else {
-        this.item = getListe(this.$route.query.name)[0];
+        this.item = getListe(this.$route.query.name);
       }
       if (this.item) {
-        //Abrufen des Fragebogens
+        //Laden des Fragebogens
         this.http.get(this.item.fragebogen + "?fullobjects=true").then(res => {
           this.fragebogen = res.data;
         }).catch(err => {
@@ -116,7 +117,7 @@ export default {
           this.$router.push("/?subito=true");
         });
       } else {
-        this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen: Übergabe der Daten fehlgeschlagen", {
+        this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen: Laden der Daten fehlgeschlagen", {
           title: "Fehler",
           variant: "danger",
           autoHideDelay: 5000
