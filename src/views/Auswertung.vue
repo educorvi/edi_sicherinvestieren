@@ -108,7 +108,7 @@ export default {
           this.fragebogen = res.data;
         }).catch(err => {
           console.error(err);
-          this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen", {
+          this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen: Fragebogen konnte nicht abgerufen werden", {
             title: "Fehler",
             variant: "danger",
             autoHideDelay: 5000
@@ -116,7 +116,7 @@ export default {
           this.$router.push("/?subito=true");
         });
       } else {
-        this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen", {
+        this.$root.$bvToast.toast("Laden der Auswertung fehlgeschlagen: Übergabe der Daten fehlgeschlagen", {
           title: "Fehler",
           variant: "danger",
           autoHideDelay: 5000
