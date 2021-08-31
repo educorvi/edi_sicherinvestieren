@@ -60,6 +60,19 @@
 
       </b-button-group>
     </b-modal>
+    <b-modal v-model="showPdfViewer" centered hide-footer size="xl" title="PDF Dokument">
+      <template #modal-header>
+        <div>
+          <h5 class="mb-0">PDF Dokument</h5>
+        </div>
+        <b-button-close @click="showPdfViewer=false"></b-button-close>
+      </template>
+      <div id="viewerContent" class="m-n3">
+        <iframe :src="'/pdfjs-2.9.359-dist/web/viewer.html?file='+pdfData" id="pdf_frame" allowfullscreen>
+          This browser does not support PDF!
+        </iframe>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -74,7 +87,7 @@ import {getAllListen, getListe} from "@/js/localDatabase";
 import config from "../config.json";
 import {mapGetters} from "vuex"
 import {isEnabled, decompressData, urlCompressData, reportError} from "@/js/globalMethods";
-import {downloadBase64} from "@educorvi/file_save_tools"
+import {createObjectURL} from "@educorvi/file_save_tools"
 
 export default {
   name: "Auswertung",
@@ -88,7 +101,9 @@ export default {
       linkstati: {
         SUCCESS: 0,
         REMOVED_NOTES: 1
-      }
+      },
+      showPdfViewer: false,
+      pdfData: null
     }
   },
   computed: {
@@ -144,14 +159,16 @@ export default {
             seen: this.item.history.includes(i)
           }))
       this.http.post(config.pdf, sendItem).then(res => this.forceFileDownload(res));
-    },
-    forceFileDownload(response) {
-      downloadBase64(response.data, {contentType: 'application/pdf', filename: this.item.name + '.pdf'})
       this.$bvModal.hide("share")
       this.$bvToast.toast("Das Herunterladen der PDF Datei wurde gestartet", {
         title: "Herunterladen gestartet",
         autoHideDelay: 10000
       })
+    },
+    forceFileDownload(response) {
+      // downloadBase64(response.data, {contentType: 'application/pdf', filename: this.item.name + '.pdf'})
+      this.pdfData = createObjectURL(response.data);
+      this.showPdfViewer = true;
     },
     shareLink() {
       this.$bvModal.hide("share");
@@ -188,6 +205,14 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+@import "./../styles";
+#pdf_frame {
+  height: 75vh;
+  width: 100%;
+  max-width: 100% !important;
+  border: none;
+  border-bottom-left-radius: $border-radius !important;
+  border-bottom-right-radius: $border-radius !important;
+}
 </style>
